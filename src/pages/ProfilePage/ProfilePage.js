@@ -1,50 +1,21 @@
-import React, { useState } from "react";
-import ProfileForm from "../../components/ProfileComponent/ProfileForm";
-import { addProfile } from "../../services/ProfileService";
+import React from "react";
+import "./ProfilePage.css"; // Import file CSS
+import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
 
-const ProfilePage = () => {
-  const [profile, setProfile] = useState({
-    title: "",
-    content: "",
-    type: "",
-    published_date: "",
-    organ: "",
-    quantity: "",
-    note: "",
-  });
+const ProfilePagePage = () => {
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProfile((prevProfile) => ({
-      ...prevProfile,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = () => {
-    addProfile(profile)
-      .then(() => {
-        // Xử lý sau khi thêm hồ sơ thành công
-        console.log("Profile added successfully!");
-      })
-      .catch((error) => {
-        // Xử lý khi có lỗi xảy ra
-        console.error("Error:", error);
-      });
+  const navigateToAddProfile = () => {
+    navigate("/add-profile");
   };
 
   return (
-    <div>
-      <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
-        <h2>Create Profile</h2>
-        <ProfileForm
-          profile={profile}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-        />
-      </div>
+    <div className="container">
+      <h2 className="home-page">Quản lý hồ sơ</h2>
+      <Button onClick={navigateToAddProfile}>Thêm hồ sơ</Button>
     </div>
   );
 };
 
-export default ProfilePage;
+export default ProfilePagePage;

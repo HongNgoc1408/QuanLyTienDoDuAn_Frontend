@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    /* Đặt khoảng cách giữa chữ và button */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    padding: 20px;
+    /* Thêm khoảng đệm xung quanh */
+}
+
+.home-page {
+    font-size: 24px;
+    /* Kích thước chữ */
+}
+
