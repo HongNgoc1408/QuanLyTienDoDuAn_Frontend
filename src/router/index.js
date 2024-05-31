@@ -46,7 +46,7 @@ const routes = [
     isShowHeader: true,
   },
   {
-    path: "/add-profile",
+    path: "/profile/add",
     name: "AddProfile",
     page: AddProfile,
     isShowHeader: true,

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ProfileForm from "../../../components/ProfileComponent/ProfileForm";
 import { addProfile } from "../../../services/ProfileService";
+import { message } from "antd"; 
 
 const AddProfile = () => {
   const [profile, setProfile] = useState({
@@ -25,10 +26,12 @@ const AddProfile = () => {
     addProfile(profile)
       .then(() => {
         // Xử lý sau khi thêm hồ sơ thành công
-        console.log("Profile added successfully!");
+        message.success("Hồ sơ đã được lưu thành công!");
+        
       })
       .catch((error) => {
         // Xử lý khi có lỗi xảy ra
+        message.error("Lỗi: Hồ sơ không thể được lưu.");
         console.error("Error:", error);
       });
   };

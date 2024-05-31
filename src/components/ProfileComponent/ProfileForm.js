@@ -1,7 +1,8 @@
 import { Button, Form, Input } from "antd";
-import React from "react";
+import React, { } from "react";
 
 const ProfileForm = ({ profile, handleChange, handleSubmit }) => {
+  
   return (
     <Form
       name="profile_form"
