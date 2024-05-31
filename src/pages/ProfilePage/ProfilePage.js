@@ -7,7 +7,7 @@ const ProfilePagePage = () => {
   const navigate = useNavigate();
 
   const navigateToAddProfile = () => {
-    navigate("/add-profile");
+    navigate("/profile/add");
   };
 
   return (
