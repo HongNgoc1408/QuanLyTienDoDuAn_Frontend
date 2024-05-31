@@ -1,0 +1,34 @@
+import axios from "axios";
+
+// Thiết lập base URL
+axios.defaults.baseURL = "http://localhost:3001/api";
+
+export const addProgress = async (progressData) => {
+  try {
+    const response = await axios.post("/progress/add", progressData);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo dự án:", error);
+    throw error;
+  }
+};
+
+export const getProgresses = async () => {
+  try {
+    const response = await axios.get("/progress/getall");
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo dự án:", error);
+    throw error;
+  }
+};
+
+export const deleteProgress = async (id) => {
+  try {
+    const response = await axios.delete(`/progress/delete/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo dự án:", error);
+    throw error;
+  }
+};

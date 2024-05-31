@@ -1,6 +1,9 @@
 import HomePage from "../pages/HomePage/HomePage";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
+import AddProfile from "../pages/ProfilePage/AddProfile/AddProfile";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import AddProgressPage from "../pages/ProgressPage/AddProgressPage/AddProgressPage";
+import EditProgressPage from "../pages/ProgressPage/EditProgressPage/EditProgressPage";
 import ProgressPage from "../pages/ProgressPage/ProgressPage";
 import AddUser from "../pages/UserPage/AddUser/AddUser";
 import UserPage from "../pages/UserPage/UserPage";
@@ -33,10 +36,35 @@ const routes = [
     isShowHeader: true,
   },
   {
+    path: "/progress/add",
+    name: "AddProgressPage",
+    page: AddProgressPage,
+    isShowHeader: true,
+  },
+  {
+    path: "/progress/edit/:id",
+    name: "EditProgressPage",
+    page: EditProgressPage,
+    isShowHeader: true,
+  },
+  {
     path: "/profile",
-    name: "ProfilePage",
+    name: "Profile",
     page: ProfilePage,
     isShowHeader: true,
+  },
+  {
+    path: "/add-profile",
+    name: "AddProfile",
+    page: AddProfile,
+    isShowHeader: true,
+  },
+  {
+    path: "/user",
+    name: "UserPage",
+    page: UserPage,
+    isShowHeader: true,
+    isShowFooter: true,
   },
   {
     path: "*",
