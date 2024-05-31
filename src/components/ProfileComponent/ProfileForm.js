@@ -1,8 +1,13 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import React, { } from "react";
 
-const ProfileForm = ({ profile, handleChange, handleSubmit }) => {
-  
+const ProfileForm = ({
+  options,
+  profile,
+  handleChange,
+  handleSubmit,
+  handleSelectChange,
+}) => {
   return (
     <Form
       name="profile_form"
@@ -35,7 +40,16 @@ const ProfileForm = ({ profile, handleChange, handleSubmit }) => {
         name="type"
         rules={[{ required: true, message: "Nhập loại văn bản" }]}
       >
-        <Input name="type" value={profile.type} onChange={handleChange} />
+        {/* <Input name="type" value={profile.type} onChange={handleChange} /> */}
+        <Select
+          allowClear
+          style={{ width: "100%" }}
+          name="type"
+          value={profile.type}
+          placeholder="Vui lòng chọn"
+          onChange={(value) => handleSelectChange("type", value)}
+          options={options}
+        />
       </Form.Item>
 
       <Form.Item
