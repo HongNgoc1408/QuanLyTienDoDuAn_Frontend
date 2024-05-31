@@ -2,6 +2,8 @@ import HomePage from "../pages/HomePage/HomePage";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import AddProfile from "../pages/ProfilePage/AddProfile/AddProfile";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import AddProgressPage from "../pages/ProgressPage/AddProgressPage/AddProgressPage";
+import EditProgressPage from "../pages/ProgressPage/EditProgressPage/EditProgressPage";
 import ProgressPage from "../pages/ProgressPage/ProgressPage";
 import UserPage from "../pages/UserPage/UserPage";
 
@@ -23,6 +25,18 @@ const routes = [
     path: "/progress",
     name: "ProgressPage",
     page: ProgressPage,
+    isShowHeader: true,
+  },
+  {
+    path: "/progress/add",
+    name: "AddProgressPage",
+    page: AddProgressPage,
+    isShowHeader: true,
+  },
+  {
+    path: "/progress/edit/:id",
+    name: "EditProgressPage",
+    page: EditProgressPage,
     isShowHeader: true,
   },
   {
