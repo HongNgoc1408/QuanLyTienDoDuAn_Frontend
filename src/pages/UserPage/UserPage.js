@@ -1,45 +1,32 @@
-import React, { useState } from "react";
-import UserForm from "../../components/UserComponent/UserForm";
-import { registerUser } from "../../services/UserService";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./UserPage.css";
 
 const UserPage = () => {
-  const [user, setUser] = useState({
-    username: "",
-    password: "",
-    id_user: "",
-    email: "",
-    fullName: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
+  const navigate = useNavigate();
+  const navigateToAdduser = () => {
+    navigate("/user/add");
   };
 
-  const handleSubmit = () => {
-    registerUser(user)
-      .then(() => {
-        // Xử lý sau khi thêm người dùng thành công
-        console.log("User added successfully!");
-      })
-      .catch((error) => {
-        // Xử lý khi có lỗi xảy ra
-        console.error("Error:", error);
-      });
-  };
+  const [setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/user/all")
+      .then((response) => response.json())
+      .then((data) => setUsers(data))
+      .catch((error) => console.error("Error fetching users:", error));
+  }, []);
 
   return (
     <div>
-      <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
-        <h2>Register User</h2>
-        <UserForm
-          user={user}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-        />
+      <div className="contain-page">
+        <h2 style={{ textAlign: "center" }}>Quản lý nhân viên</h2>
+        <button className="btn-add" onClick={navigateToAdduser}>
+          Thêm nhân viên
+        </button>
+      </div>
+      <div className="user-list">
+        <h3>Danh sách nhân viên</h3>
       </div>
     </div>
   );
