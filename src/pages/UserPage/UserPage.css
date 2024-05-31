@@ -1,0 +1,62 @@
+.contain-page {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 60px;
+  height: 100px;
+}
+
+.btn-add {
+  background-image: linear-gradient(
+    to right,
+    #00c6ff 0%,
+    #0072ff 51%,
+    #00c6ff 100%
+  );
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: black;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+  font-weight: bold;
+  border: none;
+}
+.btn-add:focus,
+.btn-add:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.user-list {
+  margin-top: 20px;
+  margin: 0 60px;
+}
+
+.user-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-info-item {
+  flex: 1;
+}
+
+.user-info-item label {
+  font-weight: bold;
+}
+
+.user-info-item span {
+  margin-left: 5px;
+}

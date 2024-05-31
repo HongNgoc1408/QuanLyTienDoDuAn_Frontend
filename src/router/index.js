@@ -2,6 +2,7 @@ import HomePage from "../pages/HomePage/HomePage";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import ProgressPage from "../pages/ProgressPage/ProgressPage";
+import AddUser from "../pages/UserPage/AddUser/AddUser";
 import UserPage from "../pages/UserPage/UserPage";
 
 const routes = [
@@ -15,6 +16,13 @@ const routes = [
     path: "/user",
     name: "UserPage",
     page: UserPage,
+    isShowHeader: true,
+    isShowFooter: true,
+  },
+  {
+    path: "/user/add",
+    name: "AddUserPage",
+    page: AddUser,
     isShowHeader: true,
     isShowFooter: true,
   },

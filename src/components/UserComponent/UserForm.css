@@ -1,0 +1,41 @@
+/* src/components/UserForm.css */
+
+.user-form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.ant-form-item {
+  margin-bottom: 20px;
+}
+
+.ant-form-item-label {
+  text-align: left;
+  font-weight: bold;
+}
+
+.ant-form-item-explain-error {
+  color: #ff4d4f;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  max-width: 200px;
+}
+
+.contain-btn {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button {
+  margin-right: 5px;
+}
