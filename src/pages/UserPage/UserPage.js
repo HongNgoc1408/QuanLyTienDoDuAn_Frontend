@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserTable from "../../components/UserComponent/UserTable";
 import "./UserPage.css";
 
 const UserPage = () => {
@@ -15,18 +16,22 @@ const UserPage = () => {
       .then((response) => response.json())
       .then((data) => setUsers(data))
       .catch((error) => console.error("Error fetching users:", error));
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
       <div className="contain-page">
         <h2 style={{ textAlign: "center" }}>Quản lý nhân viên</h2>
-        <button className="btn-add" onClick={navigateToAdduser}>
-          Thêm nhân viên
-        </button>
       </div>
       <div className="user-list">
-        <h3>Danh sách nhân viên</h3>
+        <div className="user-list-header">
+          <h3>Danh sách nhân viên</h3>
+          <button className="btn-add" onClick={navigateToAdduser}>
+            Thêm nhân viên
+          </button>
+        </div>
+
+        <UserTable />
       </div>
     </div>
   );

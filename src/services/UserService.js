@@ -12,3 +12,23 @@ export const registerUser = async (userData) => {
     throw error;
   }
 };
+
+export const getUsers = async () => {
+  try {
+    const response = await axios.get("/user/all");
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo dự án:", error);
+    throw error;
+  }
+};
+
+export const deleteUser = async (id) => {
+  try {
+    const response = await axios.delete(`/user/delete/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo dự án:", error);
+    throw error;
+  }
+};
