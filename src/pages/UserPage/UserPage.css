@@ -60,3 +60,9 @@
 .user-info-item span {
   margin-left: 5px;
 }
+
+.user-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
