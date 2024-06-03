@@ -1,6 +1,10 @@
+import { message } from "antd";
 import React, { useState } from "react";
 import UserForm from "../../../components/UserComponent/UserForm";
-import { registerUser } from "../../../services/UserService";
+import {
+  checkUserExistence,
+  registerUser,
+} from "../../../services/UserService";
 
 const AddUser = () => {
   const [user, setUser] = useState({
@@ -20,12 +24,24 @@ const AddUser = () => {
   };
 
   const handleSubmit = () => {
-    registerUser(user)
-      .then(() => {
-        window.alert("User added successfully!");
+    checkUserExistence(user)
+      .then((isExisting) => {
+        if (isExisting) {
+          message.error("Người dùng đã tồn tại trong hệ thống!");
+        } else {
+          registerUser(user)
+            .then(() => {
+              message.success("Thêm nhân viên thành công");
+              window.location.reload();
+            })
+            .catch((error) => {
+              message.error("Có lỗi xãy ra khi thêm nhân viên!");
+              console.error("Error:", error);
+            });
+        }
       })
       .catch((error) => {
-        window.alert("Failed to add user!");
+        message.error("Có lỗi xãy ra khi kiểm tra người dùng!");
         console.error("Error:", error);
       });
   };
