@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProgressForm from "../../../components/ProgressComponent/ProgressForm";
-import { addProgress } from "../../../services/ProgressService";
+import { editProgress } from "../../../services/ProgressService";
 import { message } from "antd";
 
 const EditProgressPage = () => {
@@ -35,10 +35,9 @@ const EditProgressPage = () => {
   };
 
   const handleSubmit = () => {
-    addProgress(progress)
+    editProgress(progress)
       .then(() => {
-        window.location.reload();
-        message.success("Thêm tiến độ dự án thành công");
+        console.log("Edit progress");
       })
       .catch((error) => {
         message.error("Có lỗi xảy ra khi thêm tiến độ dự án");

@@ -1,7 +1,13 @@
-import { Button, Form, Input } from "antd";
+import { Button, DatePicker, Form, Input, Select, InputNumber } from "antd";
 import React from "react";
 
-const ProfileForm = ({ profile, handleChange, handleSubmit }) => {
+const ProfileForm = ({
+  options,
+  profile,
+  handleChange,
+  handleSubmit,
+  handleSelectChange,
+}) => {
   return (
     <Form
       name="profile_form"
@@ -34,7 +40,16 @@ const ProfileForm = ({ profile, handleChange, handleSubmit }) => {
         name="type"
         rules={[{ required: true, message: "Nhập loại văn bản" }]}
       >
-        <Input name="type" value={profile.type} onChange={handleChange} />
+        {/* <Input name="type" value={profile.type} onChange={handleChange} /> */}
+        <Select
+          allowClear
+          style={{ width: "100%" }}
+          name="type"
+          value={profile.type}
+          placeholder="Vui lòng chọn"
+          onChange={(value) => handleSelectChange("type", value)}
+          options={options}
+        />
       </Form.Item>
 
       <Form.Item
@@ -42,10 +57,14 @@ const ProfileForm = ({ profile, handleChange, handleSubmit }) => {
         name="published_date"
         rules={[{ required: true, message: "Nhập ngày phát hành" }]}
       >
-        <Input
+        <DatePicker
+          style={{ width: "100%" }}
           name="published_date"
-          value={profile.published_date}
-          onChange={handleChange}
+          onChange={(date, dateString) =>
+            handleChange({
+              target: { name: "published_date", value: dateString },
+            })
+          }
         />
       </Form.Item>
 
@@ -62,10 +81,15 @@ const ProfileForm = ({ profile, handleChange, handleSubmit }) => {
         name="quantity"
         rules={[{ required: true, message: "Nhập số lượng bản" }]}
       >
-        <Input
+        <InputNumber
+          style={{ width: "100%" }}
           name="quantity"
           value={profile.quantity}
-          onChange={handleChange}
+          onChange={(value) =>
+            handleChange({
+              target: { name: "quantity", value },
+            })
+          }
         />
       </Form.Item>
 
@@ -74,13 +98,28 @@ const ProfileForm = ({ profile, handleChange, handleSubmit }) => {
         name="note"
         rules={[{ required: true, message: "Nhập ghi chú" }]}
       >
-        <Input name="note" value={profile.note} onChange={handleChange} />
+        <Input.TextArea
+          name="content"
+          value={profile.content}
+          onChange={handleChange}
+        />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Lưu
-        </Button>
+        <div style={{ textAlign: "center" }}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{
+              width: "25%",
+              height: "50px",
+              fontSize: "15px",
+              fontWeight: "bold",
+            }}
+          >
+            Thêm
+          </Button>
+        </div>
       </Form.Item>
     </Form>
   );

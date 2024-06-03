@@ -43,6 +43,9 @@ const ProgressPage = () => {
           </Button>
         </Col>
       </Row>
+      {/* <h3 style={{ paddingLeft: 10, fontWeight: "bold" }}>
+        Danh sách tiến độ dự án
+      </h3> */}
       <ProgressTable />
     </Content>
   );
