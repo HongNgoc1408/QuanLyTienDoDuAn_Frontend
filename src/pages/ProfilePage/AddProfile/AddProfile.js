@@ -49,7 +49,7 @@ const AddProfile = () => {
     addProfile(profile)
       .then(() => {
         message.success("Hồ sơ đã được lưu thành công!");
-        
+        window.location.reload();
       })
       .catch((error) => {
         message.error("Lỗi: Hồ sơ không thể được lưu.");
@@ -66,8 +66,22 @@ const AddProfile = () => {
 
   return (
     <div>
-      <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
-        <h2>Thêm hồ sơ</h2>
+      <div
+        style={{
+          padding: "20px",
+          maxWidth: "600px",
+          margin: "0 auto",
+        }}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            textTransform: "uppercase",
+            color: "#1677FF",
+          }}
+        >
+          Thêm hồ sơ dự án
+        </h2>
         <ProfileForm
           options={options}
           profile={profile}

@@ -182,8 +182,9 @@ const ProfileTable = () => {
       key: "7",
       title: "Số lượng bản",
       dataIndex: "quantity",
+      sorter: (a, b) => a.quantity - b.quantity,
 
-      ...getColumnSearchProps("quantity"),
+      // ...getColumnSearchProps("quantity"),
     },
     {
       key: "8",
