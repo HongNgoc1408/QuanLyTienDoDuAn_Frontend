@@ -32,3 +32,22 @@ export const deleteUser = async (id) => {
     throw error;
   }
 };
+
+export const getUserCount = async () => {
+  try {
+    const response = await axios.get("/user/count");
+    return response.data;
+  } catch (error) {
+    console.error("Error getting user count:", error);
+    throw error;
+  }
+};
+
+export const checkUserExistence = async (user) => {
+  try {
+    const response = await axios.post("/api/check", user);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
