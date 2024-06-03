@@ -124,9 +124,20 @@ const ProgressForm = ({
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Thêm
-        </Button>
+        <div style={{ textAlign: "center" }}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{
+              width: "25%",
+              height: "50px",
+              fontSize: "15px",
+              fontWeight: "bold",
+            }}
+          >
+            Thêm
+          </Button>
+        </div>
       </Form.Item>
     </Form>
   );
