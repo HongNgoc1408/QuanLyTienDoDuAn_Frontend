@@ -48,8 +48,22 @@ const AddProgressPage = () => {
 
   return (
     <div>
-      <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
-        <h2>Thêm tiến dộ dự án</h2>
+      <div
+        style={{
+          padding: "20px",
+          maxWidth: "600px",
+          margin: "0 auto",
+        }}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            textTransform: "uppercase",
+            color: "#1677FF",
+          }}
+        >
+          Thêm tiến độ dự án
+        </h2>
         <ProgressForm
           options={options}
           progress={progress}

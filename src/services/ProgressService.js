@@ -23,6 +23,16 @@ export const getProgresses = async () => {
   }
 };
 
+export const editProgress = async (id) => {
+  try {
+    const response = await axios.put(`/progress/edit/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo dự án:", error);
+    throw error;
+  }
+};
+
 export const deleteProgress = async (id) => {
   try {
     const response = await axios.delete(`/progress/delete/${id}`);
