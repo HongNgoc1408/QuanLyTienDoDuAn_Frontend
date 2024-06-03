@@ -1,18 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProgressForm from "../../../components/ProgressComponent/ProgressForm";
-import { editProgress } from "../../../services/ProgressService";
-import { message } from "antd";
+import {
+  editProgress,
+  getProgressById,
+} from "../../../services/ProgressService";
+import { Spin, message } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
+import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
 
 const EditProgressPage = () => {
-  const [progress, setProgress] = useState({
-    title: "",
-    description: "",
-    assigned_to: [],
-    status: "",
-    priority: "",
-    start_date: "",
-    end_date: "",
-  });
+  const { id } = useParams();
+  const [progress, setProgress] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProgress = async () => {
+      try {
+        const response = await getProgressById(id);
+        setProgress({
+          ...response,
+        });
+      } catch (error) {
+        message.error("Không thể tải dữ liệu tiến độ dự án");
+        console.error("Error fetching progress:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProgress();
+  }, [id]);
 
   const options = [
     { label: "Option 1", value: "1" },
@@ -35,25 +53,53 @@ const EditProgressPage = () => {
   };
 
   const handleSubmit = () => {
-    editProgress(progress)
+    setLoading(true);
+
+    editProgress(id, progress)
       .then(() => {
-        console.log("Edit progress");
+        message.success("Tiến độ dự án đã được chỉnh sửa thành công");
+        navigate("/progress");
       })
       .catch((error) => {
-        message.error("Có lỗi xảy ra khi thêm tiến độ dự án");
+        message.error("Có lỗi xảy ra khi chỉnh sửa tiến độ dự án");
         console.error("Error:", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
+
   return (
     <div>
+      <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
+        <BreadcrumbComponent />
+      </div>
       <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
-        <h2>Hiệu chỉnh tiến dộ dự án</h2>
+        <h2
+          style={{
+            textAlign: "center",
+            textTransform: "uppercase",
+            color: "#1677FF",
+          }}
+        >
+          Hiệu chỉnh tiến độ dự án
+        </h2>
         <ProgressForm
+          textButton="Hiệu chỉnh"
           options={options}
           progress={progress}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           handleSelectChange={handleSelectChange}
+          loading={loading}
         />
       </div>
     </div>
