@@ -1,6 +1,5 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
-import { format } from "date-fns";
 import React, { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { Link } from "react-router-dom";
@@ -156,16 +155,15 @@ const UserTable = () => {
       key: "6",
       title: "Created At",
       dataIndex: "created_at",
-      render: (created_at) => formatDate(created_at),
       ...getColumnSearchProps("created_at"),
     },
     {
       key: "7",
       title: "Updated At",
       dataIndex: "updated_at",
-      render: (updated_at) => formatDate(updated_at),
       ...getColumnSearchProps("updated_at"),
     },
+
     {
       key: "8",
       title: "Actions",
@@ -190,15 +188,6 @@ const UserTable = () => {
     },
   ];
 
-  const formatDate = (dateString) => {
-    try {
-      return format(new Date(dateString), "yyyy-MM-dd");
-    } catch (error) {
-      console.error("Error formatting date:", error);
-      return dateString;
-    }
-  };
-
   const handleDelete = async (id) => {
     try {
       await deleteUser(id);
@@ -222,8 +211,8 @@ const UserTable = () => {
           email: user.email,
           fullName: user.fullName,
           id_user: user.id_user,
-          created_at: user.created_at,
-          updated_at: user.updated_at,
+          created_at: user.formattedCreatedAt,
+          updated_at: user.formattedUpdatedAt,
         }));
         setData(formattedData);
       } catch (error) {
