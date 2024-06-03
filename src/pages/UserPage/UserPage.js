@@ -1,39 +1,51 @@
-import React, { useEffect, useState } from "react";
+import { PlusOutlined } from "@ant-design/icons";
+import { Button, Col, Row, theme } from "antd";
+import { Content } from "antd/es/layout/layout";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import UserTable from "../../components/UserComponent/UserTable";
-import "./UserPage.css";
+import UserTable from "../../components/UserComponent/UserTable"; // Adjust the import path as needed
 
 const UserPage = () => {
   const navigate = useNavigate();
-  const navigateToAdduser = () => {
-    navigate("/user/add");
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
+  const navigateToAddUserPage = () => {
+    navigate("/user/add"); // Adjust the path as needed
   };
 
-  const [setUsers] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:3001/api/user/all")
-      .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error("Error fetching users:", error));
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
-    <div>
-      <div className="contain-page">
-        <h2 style={{ textAlign: "center" }}>Quản lý nhân viên</h2>
-      </div>
-      <div className="user-list">
-        <div className="user-list-header">
-          <h3>Danh sách nhân viên</h3>
-          <button className="btn-add" onClick={navigateToAdduser}>
-            Thêm nhân viên
-          </button>
-        </div>
+    <Content
+      style={{
+        minHeight: 600,
+        background: colorBgContainer,
+        borderRadius: borderRadiusLG,
+      }}
+    >
+      <Row>
+        <Col span={20}>
+          <p style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
+            Quản lý người dùng
+          </p>
+        </Col>
 
-        <UserTable />
-      </div>
-    </div>
+        <Col span={4} style={{ padding: 10 }}>
+          <Button
+            icon={<PlusOutlined />}
+            style={{
+              fontWeight: "bold",
+              fontSize: 15,
+              height: 50,
+            }}
+            onClick={navigateToAddUserPage}
+          >
+            Thêm người dùng
+          </Button>
+        </Col>
+      </Row>
+      <UserTable /> {/* Use the UserTable component here */}
+    </Content>
   );
 };
 

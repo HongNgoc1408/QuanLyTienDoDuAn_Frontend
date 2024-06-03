@@ -10,6 +10,9 @@ const UserTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef(null);
 
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
@@ -29,10 +32,6 @@ const UserTable = () => {
       Table.SELECTION_NONE,
     ],
   };
-
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-  const searchInput = useRef(null);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -167,7 +166,6 @@ const UserTable = () => {
       render: (updated_at) => formatDate(updated_at),
       ...getColumnSearchProps("updated_at"),
     },
-
     {
       key: "8",
       title: "Actions",
@@ -193,10 +191,12 @@ const UserTable = () => {
   ];
 
   const formatDate = (dateString) => {
-    console.log("dateString:", dateString);
-    const formattedDate = format(new Date(dateString), "yyyy-MM-dd");
-    console.log("formattedDate:", formattedDate);
-    return formattedDate;
+    try {
+      return format(new Date(dateString), "yyyy-MM-dd");
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return dateString;
+    }
   };
 
   const handleDelete = async (id) => {
