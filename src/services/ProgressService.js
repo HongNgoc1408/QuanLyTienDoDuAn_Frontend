@@ -23,9 +23,19 @@ export const getProgresses = async () => {
   }
 };
 
-export const editProgress = async (id) => {
+export const getProgressById = async (id) => {
   try {
-    const response = await axios.put(`/progress/edit/${id}`);
+    const response = await axios.get(`/progress/get/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo dự án:", error);
+    throw error;
+  }
+};
+
+export const editProgress = async (id, progressData) => {
+  try {
+    const response = await axios.put(`/progress/edit/${id}`, progressData);
     return response.data;
   } catch (error) {
     console.error("Lỗi tạo dự án:", error);

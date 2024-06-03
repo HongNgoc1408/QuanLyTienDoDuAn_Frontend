@@ -1,13 +1,15 @@
 import { Button, DatePicker, Form, Input, Select } from "antd";
 import React from "react";
-import moment from "moment";
+import dayjs from "dayjs";
 
 const ProgressForm = ({
+  textButton,
   options,
   progress,
   handleChange,
   handleSubmit,
   handleSelectChange,
+  loading,
 }) => {
   return (
     <Form
@@ -16,8 +18,8 @@ const ProgressForm = ({
       onFinish={handleSubmit}
       initialValues={{
         ...progress,
-        start_date: progress.start_date ? moment(progress.start_date) : null,
-        end_date: progress.end_date ? moment(progress.end_date) : null,
+        start_date: progress.start_date ? dayjs(progress.start_date) : null,
+        end_date: progress.end_date ? dayjs(progress.end_date) : null,
       }}
     >
       <Form.Item
@@ -66,6 +68,7 @@ const ProgressForm = ({
       >
         <Select
           name="status"
+          value={progress.status}
           onChange={(value) =>
             handleChange({ target: { name: "status", value } })
           }
@@ -85,6 +88,7 @@ const ProgressForm = ({
       >
         <Select
           name="priority"
+          value={progress.priority}
           onChange={(value) =>
             handleChange({ target: { name: "priority", value } })
           }
@@ -101,8 +105,10 @@ const ProgressForm = ({
         rules={[{ required: true, message: "Vui lòng nhập ngày bắt đầu" }]}
       >
         <DatePicker
+          format="DD-MM-YYYY"
           style={{ width: "100%" }}
           name="start_date"
+          value={progress.start_date ? dayjs(progress.start_date) : null}
           onChange={(date, dateString) =>
             handleChange({ target: { name: "start_date", value: dateString } })
           }
@@ -115,8 +121,10 @@ const ProgressForm = ({
         rules={[{ required: true, message: "Vui lòng nhập ngày kết thúc" }]}
       >
         <DatePicker
+          format="DD-MM-YYYY"
           style={{ width: "100%" }}
           name="end_date"
+          value={progress.end_date ? dayjs(progress.end_date) : null}
           onChange={(date, dateString) =>
             handleChange({ target: { name: "end_date", value: dateString } })
           }
@@ -134,8 +142,9 @@ const ProgressForm = ({
               fontSize: "15px",
               fontWeight: "bold",
             }}
+            loading={loading}
           >
-            Thêm
+            {textButton}
           </Button>
         </div>
       </Form.Item>

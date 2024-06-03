@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ProgressForm from "../../../components/ProgressComponent/ProgressForm";
 import { addProgress } from "../../../services/ProgressService";
 import { message } from "antd";
+import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
 
 const AddProgressPage = () => {
   const [progress, setProgress] = useState({
@@ -48,6 +49,9 @@ const AddProgressPage = () => {
 
   return (
     <div>
+      <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
+        <BreadcrumbComponent />
+      </div>
       <div
         style={{
           padding: "20px",
@@ -65,6 +69,7 @@ const AddProgressPage = () => {
           Thêm tiến độ dự án
         </h2>
         <ProgressForm
+          textButton="Thêm"
           options={options}
           progress={progress}
           handleChange={handleChange}
