@@ -28,7 +28,7 @@ const HeaderComponent = () => {
           <a href="/">Logo</a>
         </div>
         <MenuComponent />
-        <ButtonComponent />
+        <ButtonComponent textButton="Tài khoản" />
       </Header>
     </div>
   );

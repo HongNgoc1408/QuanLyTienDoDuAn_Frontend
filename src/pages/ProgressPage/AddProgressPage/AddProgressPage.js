@@ -3,8 +3,11 @@ import ProgressForm from "../../../components/ProgressComponent/ProgressForm";
 import { addProgress } from "../../../services/ProgressService";
 import { message } from "antd";
 import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
+import { getUsers } from "../../../services/UserService";
 
 const AddProgressPage = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState({
     title: "",
     description: "",
@@ -15,10 +18,27 @@ const AddProgressPage = () => {
     end_date: "",
   });
 
-  const options = [
-    { label: "Option 1", value: "1" },
-    { label: "Option 2", value: "2" },
-  ];
+  // const options = [
+  //   { label: "Option 1", value: "1" },
+  //   { label: "Option 2", value: "2" },
+  // ];
+
+  const options = async () => {
+    try {
+      const users = await getUsers();
+
+      const formattedData = users.map((user, index) => ({
+        label: user.id_user,
+        value: user.id_user,
+      }));
+      setData(formattedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  options();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
