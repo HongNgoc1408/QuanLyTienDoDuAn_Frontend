@@ -1,20 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import ProfileForm from "../../../components/ProfileComponent/ProfileForm";
-import { addProfile } from "../../../services/ProfileService";
-import { message } from "antd"; 
+import {
+  editProfile,
+  getProfileById,
+} from "../../../services/ProfileService";
+import { Spin, message } from "antd";
 import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
 
+const EditProfile = () => {
+  const { id } = useParams();
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-const AddProfile = () => {
-  const [profile, setProfile] = useState({
-    title: "",
-    content: "",
-    type: "",
-    published_date: "",
-    organ: "",
-    quantity: "",
-    note: "",
-  });
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await getProfileById(id);
+        setProfile({
+          ...response,
+        });
+      } catch (error) {
+        message.error("Không thể tải dữ liệu ho so dự án");
+        console.error("Error fetching profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [id]);
 
   const options = [
     { label: "Nghị quyết - NQ", value: "Nghị quyết - NQ" },
@@ -48,16 +64,30 @@ const AddProfile = () => {
   };
 
   const handleSubmit = () => {
-    addProfile(profile)
+    setLoading(true);
+
+    editProfile(id, profile)
       .then(() => {
-        message.success("Hồ sơ đã được lưu thành công!");
-        window.location.reload();
+        console.log("Edit profile");
+        message.success("Hồ sơ dự án đã được chỉnh sửa thành công");
+        navigate("/profile");
       })
       .catch((error) => {
-        message.error("Lỗi: Hồ sơ không thể được lưu.");
+        message.error("Có lỗi xảy ra khi chỉnh sửa hồ sơ dự án");
         console.error("Error:", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   const handleSelectChange = (name, value) => {
     setProfile((prevProfile) => ({
@@ -71,13 +101,7 @@ const AddProfile = () => {
       <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
         <BreadcrumbComponent />
       </div>
-      <div
-        style={{
-          padding: "20px",
-          maxWidth: "600px",
-          margin: "0 auto",
-        }}
-      >
+      <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
         <h2
           style={{
             textAlign: "center",
@@ -85,19 +109,20 @@ const AddProfile = () => {
             color: "#1677FF",
           }}
         >
-          Thêm hồ sơ dự án
+          Hiệu chỉnh hồ sơ dự án
         </h2>
         <ProfileForm
-          textButton="Thêm"
+          textButton="Hiệu chỉnh"
           options={options}
           profile={profile}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           handleSelectChange={handleSelectChange}
+          loading={loading}
         />
       </div>
     </div>
   );
 };
 
-export default AddProfile;
+export default EditProfile;

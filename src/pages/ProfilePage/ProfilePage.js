@@ -4,6 +4,8 @@ import { Button, Col, Row, theme } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import ProfileTable from "../../components/ProfileComponent/ProfileTable";
+import BreadcrumbComponent from "../../components/BreadcrumbComponent/BreadcrumbComponent";
+
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -23,6 +25,10 @@ const ProfilePage = () => {
         borderRadius: borderRadiusLG,
       }}
     >
+      <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
+        <BreadcrumbComponent />
+      </div>
+      
       <Row>
         <Col span={20}>
           <p style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
@@ -44,7 +50,7 @@ const ProfilePage = () => {
           </Button>
         </Col>
       </Row>
-      <ProfileTable/>
+      <ProfileTable />
     </Content>
   );
 };
