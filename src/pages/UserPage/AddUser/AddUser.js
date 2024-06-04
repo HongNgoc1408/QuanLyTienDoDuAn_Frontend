@@ -49,6 +49,7 @@ const AddUser = () => {
   return (
     <div>
       <UserForm
+        textButton="Đăng ký"
         user={user}
         handleChange={handleChange}
         handleSubmit={handleSubmit}

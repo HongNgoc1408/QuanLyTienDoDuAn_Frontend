@@ -6,6 +6,7 @@ import AddProgressPage from "../pages/ProgressPage/AddProgressPage/AddProgressPa
 import EditProgressPage from "../pages/ProgressPage/EditProgressPage/EditProgressPage";
 import ProgressPage from "../pages/ProgressPage/ProgressPage";
 import AddUser from "../pages/UserPage/AddUser/AddUser";
+import EditUserPage from "../pages/UserPage/EditUserPage/EditUserPage";
 import UserPage from "../pages/UserPage/UserPage";
 
 const routes = [
@@ -65,6 +66,12 @@ const routes = [
     page: UserPage,
     isShowHeader: true,
     isShowFooter: true,
+  },
+  {
+    path: "/user/edit/:id",
+    name: "EditUserPage",
+    page: EditUserPage,
+    isShowHeader: true,
   },
   {
     path: "*",
