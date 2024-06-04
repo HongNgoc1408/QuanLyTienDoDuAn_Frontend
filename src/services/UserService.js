@@ -45,7 +45,7 @@ export const getUserCount = async () => {
 
 export const checkUserExistence = async (user) => {
   try {
-    const response = await axios.post("/api/check", user);
+    const response = await axios.post("/user/check", user);
     return response.data;
   } catch (error) {
     throw error;
