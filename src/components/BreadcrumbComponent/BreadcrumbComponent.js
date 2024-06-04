@@ -9,7 +9,6 @@ const BreadcrumbComponent = () => {
       }}
     >
       <Breadcrumb.Item>Home</Breadcrumb.Item>
-      <Breadcrumb.Item>List</Breadcrumb.Item>
       <Breadcrumb.Item>App</Breadcrumb.Item>
     </Breadcrumb>
   );

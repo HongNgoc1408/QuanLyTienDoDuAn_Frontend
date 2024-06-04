@@ -4,6 +4,7 @@ import { Button, Col, Row, theme } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import ProgressTable from "../../components/ProgressComponent/ProgressTable";
+import BreadcrumbComponent from "../../components/BreadcrumbComponent/BreadcrumbComponent";
 
 const ProgressPage = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const ProgressPage = () => {
   const navigateToAddProgressPage = () => {
     navigate("/progress/add");
   };
+  
   return (
     <Content
       style={{
@@ -22,6 +24,10 @@ const ProgressPage = () => {
         borderRadius: borderRadiusLG,
       }}
     >
+      <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
+        <BreadcrumbComponent />
+      </div>
+
       <Row>
         <Col span={20}>
           <p style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
