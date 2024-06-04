@@ -1,7 +1,6 @@
 import { Button, Form, Input } from "antd";
-import { useNavigate } from "react-router-dom";
-
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../../assets/logo.png";
 import "./UserForm.css";
 
@@ -11,6 +10,7 @@ const UserForm = ({ user, handleChange, handleSubmit }) => {
   const handleGoBack = () => {
     navigate("/user");
   };
+
   return (
     <div className="user-form-container">
       <Form
@@ -29,7 +29,13 @@ const UserForm = ({ user, handleChange, handleSubmit }) => {
         <Form.Item
           label="Tài khoản"
           name="username"
-          rules={[{ required: true, message: "Vui lòng nhập tên người dùng!" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập tên người dùng!" },
+            {
+              pattern: /^[a-zA-Z0-9]+$/,
+              message: "Tên người dùng không được chứa ký tự đặc biệt!",
+            },
+          ]}
         >
           <Input
             name="username"
@@ -41,7 +47,14 @@ const UserForm = ({ user, handleChange, handleSubmit }) => {
         <Form.Item
           label="Mật khẩu"
           name="password"
-          rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập mật khẩu!" },
+            { min: 6, message: "Mật khẩu phải có ít nhất 6 ký tự!" },
+            {
+              pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
+              message: "Mật khẩu phải chứa ít nhất một chữ cái và một chữ số!",
+            },
+          ]}
         >
           <Input.Password
             name="password"
@@ -53,7 +66,13 @@ const UserForm = ({ user, handleChange, handleSubmit }) => {
         <Form.Item
           label="Mã nhân viên"
           name="id_user"
-          rules={[{ required: true, message: "Vui lòng nhập mã nhân viên!" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập mã nhân viên!" },
+            {
+              pattern: /^[a-zA-Z0-9]+$/,
+              message: "Mã nhân viên chỉ chứa chữ và số!",
+            },
+          ]}
         >
           <Input name="id_user" value={user.id_user} onChange={handleChange} />
         </Form.Item>
@@ -61,7 +80,10 @@ const UserForm = ({ user, handleChange, handleSubmit }) => {
         <Form.Item
           label="Email"
           name="email"
-          rules={[{ required: true, message: "Vui lòng nhập địa chỉ email!" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập địa chỉ email!" },
+            { type: "email", message: "Vui lòng nhập địa chỉ email hợp lệ!" },
+          ]}
         >
           <Input name="email" value={user.email} onChange={handleChange} />
         </Form.Item>
@@ -71,6 +93,10 @@ const UserForm = ({ user, handleChange, handleSubmit }) => {
           name="fullName"
           rules={[
             { required: true, message: "Vui lòng nhập họ và tên đầy đủ!" },
+            {
+              pattern: /^[a-zA-Z\s]+$/,
+              message: "Họ và tên chỉ chứa chữ cái và khoảng trắng!",
+            },
           ]}
         >
           <Input
