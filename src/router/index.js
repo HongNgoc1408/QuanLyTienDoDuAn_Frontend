@@ -1,6 +1,7 @@
 import HomePage from "../pages/HomePage/HomePage";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import AddProfile from "../pages/ProfilePage/AddProfile/AddProfile";
+import EditProfile from "../pages/ProfilePage/EditProfile/EditProfile";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import AddProgressPage from "../pages/ProgressPage/AddProgressPage/AddProgressPage";
 import EditProgressPage from "../pages/ProgressPage/EditProgressPage/EditProgressPage";
@@ -58,6 +59,12 @@ const routes = [
     path: "/profile/add",
     name: "AddProfile",
     page: AddProfile,
+    isShowHeader: true,
+  },
+  {
+    path: "/profile/edit/:id",
+    name: "EditProfile",
+    page: EditProfile,
     isShowHeader: true,
   },
   {
