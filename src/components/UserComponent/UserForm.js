@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../../assets/logo.png";
 import "./UserForm.css";
 
-const UserForm = ({ user, handleChange, handleSubmit }) => {
+const UserForm = ({ user, handleChange, handleSubmit, textButton }) => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
@@ -116,7 +116,7 @@ const UserForm = ({ user, handleChange, handleSubmit }) => {
               htmlType="submit"
               className="register-button"
             >
-              Đăng ký
+              {textButton}
             </Button>
           </Form.Item>
         </div>
