@@ -51,3 +51,23 @@ export const checkUserExistence = async (user) => {
     throw error;
   }
 };
+
+export const getUserById = async (id) => {
+  try {
+    const response = await axios.get(`/user/get/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo dự án:", error);
+    throw error;
+  }
+};
+
+export const editUser = async (id, userData) => {
+  try {
+    const response = await axios.put(`/user/edit/${id}`, userData);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo dự án:", error);
+    throw error;
+  }
+};
