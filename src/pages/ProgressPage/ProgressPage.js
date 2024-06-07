@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 import { Content } from "antd/es/layout/layout";
 import { Button, Col, Row, theme } from "antd";
-import { DownloadOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import ProgressTable from "../../components/ProgressComponent/ProgressTable";
 import BreadcrumbComponent from "../../components/BreadcrumbComponent/BreadcrumbComponent";
-import { DownloadTableExcel } from "react-export-table-to-excel";
+
 const ProgressPage = () => {
   const navigate = useNavigate();
   const tableRef = useRef();
