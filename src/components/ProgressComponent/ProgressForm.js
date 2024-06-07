@@ -73,10 +73,10 @@ const ProgressForm = ({
             handleChange({ target: { name: "status", value } })
           }
           options={[
-            { value: "not_started", label: "Chưa bắt đầu" },
-            { value: "in_progress", label: "Đang tiến hành" },
-            { value: "completed", label: "Hoàn thành" },
-            { value: "cancel", label: "Bị hủy" },
+            { value: "Chưa bắt đầu", label: "Chưa bắt đầu" },
+            { value: "Đang tiến hành", label: "Đang tiến hành" },
+            { value: "Hoàn thành", label: "Hoàn thành" },
+            { value: "Bị hủy", label: "Bị hủy" },
           ]}
         />
       </Form.Item>
@@ -93,9 +93,9 @@ const ProgressForm = ({
             handleChange({ target: { name: "priority", value } })
           }
           options={[
-            { value: "low", label: "Thấp" },
-            { value: "medium", label: "Trung bình" },
-            { value: "high", label: "Cao" },
+            { value: "Thấp", label: "Thấp" },
+            { value: "Trung bình", label: "Trung bình" },
+            { value: "Cao", label: "Cao" },
           ]}
         />
       </Form.Item>
