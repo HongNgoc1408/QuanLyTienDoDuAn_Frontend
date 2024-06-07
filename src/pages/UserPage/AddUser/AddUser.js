@@ -32,7 +32,9 @@ const AddUser = () => {
           registerUser(user)
             .then(() => {
               message.success("Thêm nhân viên thành công");
-              window.location.reload();
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
             })
             .catch((error) => {
               message.error("Có lỗi xãy ra khi thêm nhân viên!");

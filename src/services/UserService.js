@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Thiết lập base URL
 axios.defaults.baseURL = "http://localhost:3001/api";
 
 export const registerUser = async (userData) => {
@@ -68,6 +67,16 @@ export const editUser = async (id, userData) => {
     return response.data;
   } catch (error) {
     console.error("Lỗi tạo dự án:", error);
+    throw error;
+  }
+};
+
+export const loginUser = async (userData) => {
+  try {
+    const response = await axios.post("/user/login", userData);
+    return response.data;
+  } catch (error) {
+    console.error("Error logging in:", error);
     throw error;
   }
 };

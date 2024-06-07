@@ -1,4 +1,6 @@
+import EmployeePage from "../pages/EmployeePage/EmployeePage";
 import HomePage from "../pages/HomePage/HomePage";
+import LoginPage from "../pages/LoginPage/LoginPage";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import AddProfile from "../pages/ProfilePage/AddProfile/AddProfile";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
@@ -11,9 +13,22 @@ import UserPage from "../pages/UserPage/UserPage";
 
 const routes = [
   {
+    path: "/login",
+    name: "LoginPage",
+    page: LoginPage,
+    isShowHeader: true,
+    isShowFooter: true,
+  },
+  {
     path: "/",
     name: "HomePage",
     page: HomePage,
+    isShowHeader: true,
+  },
+  {
+    path: "/employee",
+    name: "EmployeePage",
+    page: EmployeePage,
     isShowHeader: true,
   },
   {

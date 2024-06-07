@@ -204,7 +204,9 @@ const UserTable = () => {
       try {
         const users = await getUsers();
 
-        const formattedData = users.map((user, index) => ({
+        const filteredUsers = users.filter((user) => !user.isAdmin);
+
+        const formattedData = filteredUsers.map((user, index) => ({
           key: user._id,
           index: index + 1,
           username: user.username,
