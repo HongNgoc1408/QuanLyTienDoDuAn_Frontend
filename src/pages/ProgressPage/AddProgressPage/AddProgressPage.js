@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProgressForm from "../../../components/ProgressComponent/ProgressForm";
 import { addProgress } from "../../../services/ProgressService";
 import { message } from "antd";
@@ -23,22 +23,25 @@ const AddProgressPage = () => {
   //   { label: "Option 2", value: "2" },
   // ];
 
-  const options = async () => {
-    try {
-      const users = await getUsers();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const users = await getUsers();
+        console.log(users);
+        const formattedData = users.map((user) => ({
+          label: user.name, // Assuming 'name' is the field for user's name
+          value: user.id_user,
+        }));
+        setData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      const formattedData = users.map((user, index) => ({
-        label: user.id_user,
-        value: user.id_user,
-      }));
-      setData(formattedData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  options();
+    fetchData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,11 +93,12 @@ const AddProgressPage = () => {
         </h2>
         <ProgressForm
           textButton="Thêm"
-          options={options}
+          options={data}
           progress={progress}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           handleSelectChange={handleSelectChange}
+          loading={loading}
         />
       </div>
     </div>
