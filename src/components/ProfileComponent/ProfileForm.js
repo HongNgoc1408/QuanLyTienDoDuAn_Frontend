@@ -2,7 +2,6 @@ import { Button, DatePicker, Form, Input, Select, InputNumber } from "antd";
 import React from "react";
 import dayjs from "dayjs";
 
-
 const ProfileForm = ({
   textButton,
   options,
@@ -45,7 +44,6 @@ const ProfileForm = ({
         name="type"
         rules={[{ required: true, message: "Nhập loại văn bản" }]}
       >
-        {/* <Input name="type" value={profile.type} onChange={handleChange} /> */}
         <Select
           allowClear
           style={{ width: "100%" }}
@@ -65,7 +63,6 @@ const ProfileForm = ({
           format="DD-MM-YYYY"
           style={{ width: "100%" }}
           name="published_date"
-          // value={profile.published_date ? dayjs(profile.published_date) : null}
           onChange={(date, dateString) =>
             handleChange({
               target: { name: "published_date", value: dateString },
@@ -83,17 +80,51 @@ const ProfileForm = ({
       </Form.Item>
 
       <Form.Item
-        label="Số lượng bản"
-        name="quantity"
-        rules={[{ required: true, message: "Nhập số lượng bản" }]}
+        label="Số lượng bản gốc"
+        name="original"
+        rules={[{ required: true, message: "Nhập số lượng bản gốc" }]}
       >
         <InputNumber
           style={{ width: "100%" }}
-          name="quantity"
-          value={profile.quantity}
+          name="original"
+          value={profile.original}
           onChange={(value) =>
             handleChange({
-              target: { name: "quantity", value },
+              target: { name: "original", value },
+            })
+          }
+        />
+      </Form.Item>
+
+      <Form.Item
+        label="Số lượng bản chính"
+        name="offical"
+        rules={[{ required: true, message: "Nhập số lượng bản chính" }]}
+      >
+        <InputNumber
+          style={{ width: "100%" }}
+          name="offical"
+          value={profile.offical}
+          onChange={(value) =>
+            handleChange({
+              target: { name: "offical", value },
+            })
+          }
+        />
+      </Form.Item>
+
+      <Form.Item
+        label="Số lượng bản photo"
+        name="photo"
+        rules={[{ required: true, message: "Nhập số lượng bản photo" }]}
+      >
+        <InputNumber
+          style={{ width: "100%" }}
+          name="photo"
+          value={profile.photo}
+          onChange={(value) =>
+            handleChange({
+              target: { name: "photo", value },
             })
           }
         />
