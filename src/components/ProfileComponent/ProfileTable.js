@@ -3,7 +3,11 @@ import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
 import { deleteProfile, getProfile } from "../../services/ProfileService";
 import { Link } from "react-router-dom";
 import Highlighter from "react-highlight-words";
-import { SearchOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 
 const { Column, ColumnGroup } = Table;
 
@@ -143,76 +147,6 @@ const ProfileTable = () => {
       ),
   });
 
-  // const columns = [
-  //   { key: "1", title: "STT", dataIndex: "index" },
-  //   {
-  //     key: "2",
-  //     title: "Số, ký hiệu văn bản",
-  //     dataIndex: "title",
-
-  //     ...getColumnSearchProps("title"),
-  //   },
-  //   {
-  //     key: "3",
-  //     title: "Nội dung trích yếu văn bản",
-  //     dataIndex: "content",
-
-  //     ...getColumnSearchProps("content"),
-  //   },
-  //   {
-  //     key: "4",
-  //     title: "Loại văn bản",
-  //     dataIndex: "type",
-
-  //     ...getColumnSearchProps("type"),
-  //   },
-  //   {
-  //     key: "5",
-  //     title: "Ngày phát hành",
-  //     dataIndex: "published_date",
-
-  //     ...getColumnSearchProps("published_date"),
-  //   },
-  //   {
-  //     key: "6",
-  //     title: "Cơ quan ban hành",
-  //     dataIndex: "organ",
-
-  //     ...getColumnSearchProps("organ"),
-  //   },
-  //   {
-  //     key: "7",
-  //     title: "Ghi chú",
-  //     dataIndex: "note",
-
-  //     ...getColumnSearchProps("note"),
-  //   },
-  //   {
-  //     key: "8",
-  //     title: "Hoạt động",
-  //     dataIndex: "actions",
-  //     fixed: "right",
-  //     render: (_, record) => (
-  //       <span>
-  //         <Link to={`edit/${record.key}`}>
-  //           <Button type="primary">Edit</Button>
-  //         </Link>
-
-  //         <Popconfirm
-  //           title="Bạn có chắc chắn muốn xóa tiến độ này?"
-  //           onConfirm={() => handleDelete(record.key)}
-  //           okText="Yes"
-  //           cancelText="No"
-  //         >
-  //           <Button type="primary" danger style={{ marginLeft: 5 }}>
-  //             Delete
-  //           </Button>
-  //         </Popconfirm>
-  //       </span>
-  //     ),
-  //   },
-  // ];
-
   const handleDelete = async (id) => {
     try {
       await deleteProfile(id);
@@ -329,7 +263,9 @@ const ProfileTable = () => {
         render={(_, record) => (
           <span>
             <Link to={`edit/${record.key}`}>
-              <Button type="primary">Edit</Button>
+              <Button type="primary">
+                <EditOutlined style={{ fontSize: 18 }} />
+              </Button>
             </Link>
             <Popconfirm
               title="Bạn có chắc chắn muốn xóa tiến độ này?"
@@ -338,7 +274,7 @@ const ProfileTable = () => {
               cancelText="No"
             >
               <Button type="primary" danger style={{ marginLeft: 5 }}>
-                Delete
+                <DeleteOutlined style={{ fontSize: 18 }} />
               </Button>
             </Popconfirm>
           </span>
