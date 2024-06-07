@@ -273,7 +273,7 @@ const ProfileTable = () => {
               okText="Yes"
               cancelText="No"
             >
-              <Button type="primary" danger style={{ marginLeft: 5 }}>
+              <Button type="primary" danger style={{ marginLeft: 2 }}>
                 <DeleteOutlined style={{ fontSize: 18 }} />
               </Button>
             </Popconfirm>
