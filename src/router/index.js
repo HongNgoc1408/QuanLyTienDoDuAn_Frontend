@@ -17,11 +17,9 @@ const routes = [
     path: "/login",
     name: "LoginPage",
     page: LoginPage,
-    isShowHeader: true,
-    isShowFooter: true,
   },
   {
-    path: "/",
+    path: "/home",
     name: "HomePage",
     page: HomePage,
     isShowHeader: true,

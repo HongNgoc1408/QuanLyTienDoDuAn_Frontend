@@ -1,13 +1,21 @@
 import React, { Fragment } from "react";
-import { routes } from "./router";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
 import DefaultComponent from "./components/DefaultComponent/DefaultComponent";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import { routes } from "./router";
 
 function App() {
   return (
     <div>
       <Router>
         <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />{" "}
+          {/* Đường dẫn '/' chuyển hướng đến '/login' */}
           {routes.map((route) => {
             const Page = route.page;
             const Layout = route.isShowHeader ? DefaultComponent : Fragment;
@@ -23,6 +31,8 @@ function App() {
               />
             );
           })}
+          <Route path="/login" element={<LoginPage />} />{" "}
+          {/* Thêm Route cho trang Login */}
         </Routes>
       </Router>
     </div>

@@ -45,9 +45,8 @@ const AddUser = () => {
 
       await registerUser(user);
       message.success("Thêm nhân viên thành công");
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      setTimeout(5);
+      window.location.reload();
     } catch (error) {
       message.error("Có lỗi xảy ra khi kiểm tra tên người dùng hoặc đăng ký!");
       console.error("Error:", error);
