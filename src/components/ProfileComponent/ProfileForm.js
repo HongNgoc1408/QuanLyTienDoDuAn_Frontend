@@ -11,6 +11,12 @@ const ProfileForm = ({
   handleSelectChange,
   loading,
 }) => {
+  const handleDateChange = (date, dateString) => {
+    handleChange({
+      target: { name: "published_date", value: dateString },
+    });
+  };
+
   return (
     <Form
       name="profile_form"
@@ -19,7 +25,7 @@ const ProfileForm = ({
       initialValues={{
         ...profile,
         published_date: profile.published_date
-          ? dayjs(profile.published_date)
+          ? dayjs(profile.published_date, "DD-MM-YYYY")
           : null,
       }}
     >
@@ -63,11 +69,7 @@ const ProfileForm = ({
           format="DD-MM-YYYY"
           style={{ width: "100%" }}
           name="published_date"
-          onChange={(date, dateString) =>
-            handleChange({
-              target: { name: "published_date", value: dateString },
-            })
-          }
+          onChange={handleDateChange}
         />
       </Form.Item>
 
@@ -92,14 +94,14 @@ const ProfileForm = ({
         />
       </Form.Item>
 
-      <Form.Item label="Số lượng bản chính" name="official">
+      <Form.Item label="Số lượng bản chính" name="offical">
         <InputNumber
           style={{ width: "100%" }}
-          name="official"
+          name="offical"
           value={profile.official}
           onChange={(value) =>
             handleChange({
-              target: { name: "official", value },
+              target: { name: "offical", value },
             })
           }
         />

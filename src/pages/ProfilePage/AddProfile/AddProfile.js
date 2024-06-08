@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import ProfileForm from "../../../components/ProfileComponent/ProfileForm";
 import { addProfile } from "../../../services/ProfileService";
-import { message } from "antd"; 
+import { message } from "antd";
 import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
-
 
 const AddProfile = () => {
   const [profile, setProfile] = useState({
@@ -51,10 +50,8 @@ const AddProfile = () => {
     addProfile(profile)
       .then(() => {
         message.success("Hồ sơ đã được lưu thành công!");
-        setTimeout(()=>{
-          window.location.reload();
-        },1000);
-        
+        setTimeout(5);
+        window.location.reload();
       })
       .catch((error) => {
         message.error("Lỗi: Hồ sơ không thể được lưu.");
