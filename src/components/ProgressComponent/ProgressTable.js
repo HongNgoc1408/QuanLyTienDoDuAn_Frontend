@@ -3,7 +3,11 @@ import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
 import { deleteProgress, getProgresses } from "../../services/ProgressService";
 import { Link } from "react-router-dom";
 import Highlighter from "react-highlight-words";
-import { SearchOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 
 const ProgressTable = () => {
   const [data, setData] = useState([]);
@@ -230,7 +234,9 @@ const ProgressTable = () => {
       render: (_, record) => (
         <span>
           <Link to={`edit/${record.key}`}>
-            <Button type="primary">Edit</Button>
+            <Button type="primary">
+              <EditOutlined style={{ fontSize: 18 }} />
+            </Button>
           </Link>
 
           <Popconfirm
@@ -240,7 +246,7 @@ const ProgressTable = () => {
             cancelText="No"
           >
             <Button type="primary" danger style={{ marginLeft: 5 }}>
-              Delete
+              <DeleteOutlined style={{ fontSize: 18 }} />
             </Button>
           </Popconfirm>
         </span>

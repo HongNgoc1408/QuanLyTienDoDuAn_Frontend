@@ -3,7 +3,13 @@ import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
 import { deleteProfile, getProfile } from "../../services/ProfileService";
 import { Link } from "react-router-dom";
 import Highlighter from "react-highlight-words";
-import { SearchOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
+
+const { Column, ColumnGroup } = Table;
 
 const ProfileTable = () => {
   const [data, setData] = useState([]);
@@ -141,84 +147,6 @@ const ProfileTable = () => {
       ),
   });
 
-  const columns = [
-    { key: "1", title: "STT", dataIndex: "index" },
-    {
-      key: "2",
-      title: "Số, ký hiệu văn bản",
-      dataIndex: "title",
-
-      ...getColumnSearchProps("title"),
-    },
-    {
-      key: "3",
-      title: "Nội dung trích yếu văn bản",
-      dataIndex: "content",
-
-      ...getColumnSearchProps("content"),
-    },
-    {
-      key: "4",
-      title: "Loại văn bản",
-      dataIndex: "type",
-
-      ...getColumnSearchProps("type"),
-    },
-    {
-      key: "5",
-      title: "Ngày phát hành",
-      dataIndex: "published_date",
-
-      ...getColumnSearchProps("published_date"),
-    },
-    {
-      key: "6",
-      title: "Cơ quan ban hành",
-      dataIndex: "organ",
-
-      ...getColumnSearchProps("organ"),
-    },
-    {
-      key: "7",
-      title: "Số lượng bản",
-      dataIndex: "quantity",
-      sorter: (a, b) => a.quantity - b.quantity,
-
-      // ...getColumnSearchProps("quantity"),
-    },
-    {
-      key: "8",
-      title: "Ghi chú",
-      dataIndex: "note",
-
-      ...getColumnSearchProps("note"),
-    },
-    {
-      key: "9",
-      title: "Hoạt động",
-      dataIndex: "actions",
-      fixed: "right",
-      render: (_, record) => (
-        <span>
-          <Link to={`edit/${record.key}`}>
-            <Button type="primary">Edit</Button>
-          </Link>
-
-          <Popconfirm
-            title="Bạn có chắc chắn muốn xóa tiến độ này?"
-            onConfirm={() => handleDelete(record.key)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="primary" danger style={{ marginLeft: 5 }}>
-              Delete
-            </Button>
-          </Popconfirm>
-        </span>
-      ),
-    },
-  ];
-
   const handleDelete = async (id) => {
     try {
       await deleteProfile(id);
@@ -240,12 +168,12 @@ const ProfileTable = () => {
           index: index + 1,
           title: item.title,
           content: item.content,
-          type: Array.isArray(item.type)
-            ? item.type.join(", ")
-            : item.type,
+          type: Array.isArray(item.type) ? item.type.join(", ") : item.type,
           published_date: item.published_date,
           organ: item.organ,
-          quantity: item.quantity,
+          original: item.original,
+          offical: item.offical,
+          photo: item.photo,
           note: item.note,
         }));
         setData(formattedData);
@@ -263,17 +191,96 @@ const ProfileTable = () => {
   }
 
   return (
-    <>
-      <Table
-        onChange={onChange}
-        rowSelection={rowSelection}
-        columns={columns}
-        dataSource={data}
-        scroll={{
-          x: 1300,
-        }}
+    <Table
+      onChange={onChange}
+      rowSelection={rowSelection}
+      dataSource={data}
+      scroll={{
+        x: 1300,
+      }}
+    >
+      <Column title="STT" dataIndex="index" key="index" width={60}/>
+      <Column
+        title="Số, ký hiệu văn bản"
+        dataIndex="title"
+        key="title"
+        {...getColumnSearchProps("title")}
       />
-    </>
+      <Column
+        title="Nội dung trích yếu văn bản"
+        dataIndex="content"
+        key="content"
+        {...getColumnSearchProps("content")}
+      />
+      <Column
+        title="Loại văn bản"
+        dataIndex="type"
+        key="type"
+        {...getColumnSearchProps("type")}
+      />
+      <Column
+        title="Ngày phát hành"
+        dataIndex="published_date"
+        key="published_date"
+        {...getColumnSearchProps("published_date")}
+      />
+      <Column
+        title="Cơ quan ban hành"
+        dataIndex="organ"
+        key="organ"
+        {...getColumnSearchProps("organ")}
+      />
+      <ColumnGroup title="Số lượng bản">
+        <Column
+          title="Bản gốc"
+          dataIndex="original"
+          key="original"
+          sorter={(a, b) => a.original - b.original}
+        />
+        <Column
+          title="Bản chính"
+          dataIndex="offical"
+          key="offical"
+          sorter={(a, b) => a.offical - b.offical}
+        />
+        <Column
+          title="Bản photo"
+          dataIndex="photo"
+          key="photo"
+          sorter={(a, b) => a.photo - b.photo}
+        />
+      </ColumnGroup>
+      <Column
+        title="Ghi chú"
+        dataIndex="note"
+        key="note"
+        {...getColumnSearchProps("note")}
+      />
+      <Column
+        title="Hoạt động"
+        key="actions"
+        fixed="right"
+        render={(_, record) => (
+          <span>
+            <Link to={`edit/${record.key}`}>
+              <Button type="primary">
+                <EditOutlined style={{ fontSize: 18 }} />
+              </Button>
+            </Link>
+            <Popconfirm
+              title="Bạn có chắc chắn muốn xóa tiến độ này?"
+              onConfirm={() => handleDelete(record.key)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary" danger style={{ marginLeft: 5 }}>
+                <DeleteOutlined style={{ fontSize: 18 }} />
+              </Button>
+            </Popconfirm>
+          </span>
+        )}
+      />
+    </Table>
   );
 };
 

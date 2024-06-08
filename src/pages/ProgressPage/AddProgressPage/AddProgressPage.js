@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProgressForm from "../../../components/ProgressComponent/ProgressForm";
 import { addProgress } from "../../../services/ProgressService";
 import { message } from "antd";
 import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
+import { getUsers } from "../../../services/UserService";
 
 const AddProgressPage = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState({
     title: "",
     description: "",
@@ -15,10 +18,30 @@ const AddProgressPage = () => {
     end_date: "",
   });
 
-  const options = [
-    { label: "Option 1", value: "1" },
-    { label: "Option 2", value: "2" },
-  ];
+  // const options = [
+  //   { label: "Option 1", value: "1" },
+  //   { label: "Option 2", value: "2" },
+  // ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const users = await getUsers();
+        console.log(users);
+        const formattedData = users.map((user) => ({
+          label: user.name, // Assuming 'name' is the field for user's name
+          value: user.id_user,
+        }));
+        setData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -70,11 +93,12 @@ const AddProgressPage = () => {
         </h2>
         <ProgressForm
           textButton="Thêm"
-          options={options}
+          options={data}
           progress={progress}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           handleSelectChange={handleSelectChange}
+          loading={loading}
         />
       </div>
     </div>

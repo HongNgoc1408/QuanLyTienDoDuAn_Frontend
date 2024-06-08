@@ -23,6 +23,26 @@ export const getProfile = async () => {
   }
 };
 
+export const getProfileById = async (id) => {
+  try {
+    const response = await axios.get(`/profile/get/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo hồ sơ:", error);
+    throw error;
+  }
+};
+
+export const editProfile = async (id, profileData) => {
+  try {
+    const response = await axios.put(`/profile/edit/${id}`, profileData);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo hồ sơ:", error);
+    throw error;
+  }
+};
+
 export const deleteProfile = async (id) => {
   try {
     const response = await axios.delete(`/profile/delete/${id}`);

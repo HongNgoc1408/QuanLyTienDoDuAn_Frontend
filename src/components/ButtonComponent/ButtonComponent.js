@@ -1,8 +1,8 @@
 import { Button } from "antd";
 import React from "react";
 
-const ButtonComponent = () => {
-  return <Button>Tài khoản</Button>;
+const ButtonComponent = ({ textButton }) => {
+  return <Button>{textButton}</Button>;
 };
 
 export default ButtonComponent;

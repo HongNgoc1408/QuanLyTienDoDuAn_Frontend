@@ -1,26 +1,34 @@
 import { Button, DatePicker, Form, Input, Select, InputNumber } from "antd";
 import React from "react";
+import dayjs from "dayjs";
 
 const ProfileForm = ({
+  textButton,
   options,
   profile,
   handleChange,
   handleSubmit,
   handleSelectChange,
+  loading,
 }) => {
   return (
     <Form
       name="profile_form"
       layout="vertical"
       onFinish={handleSubmit}
-      initialValues={profile}
+      initialValues={{
+        ...profile,
+        published_date: profile.published_date
+          ? dayjs(profile.published_date)
+          : null,
+      }}
     >
       <Form.Item
         label="Số, ký hiệu văn bản"
         name="title"
         rules={[{ required: true, message: "Nhập số, ký hiệu văn bản" }]}
       >
-        <Input name="title" value={profile.title} onChange={handleChange} />
+        <Input name="title" onChange={handleChange} />
       </Form.Item>
 
       <Form.Item
@@ -28,11 +36,7 @@ const ProfileForm = ({
         name="content"
         rules={[{ required: true, message: "Nhập nội dung trích yếu" }]}
       >
-        <Input.TextArea
-          name="content"
-          value={profile.content}
-          onChange={handleChange}
-        />
+        <Input.TextArea name="content" onChange={handleChange} />
       </Form.Item>
 
       <Form.Item
@@ -40,12 +44,10 @@ const ProfileForm = ({
         name="type"
         rules={[{ required: true, message: "Nhập loại văn bản" }]}
       >
-        {/* <Input name="type" value={profile.type} onChange={handleChange} /> */}
         <Select
           allowClear
           style={{ width: "100%" }}
           name="type"
-          value={profile.type}
           placeholder="Vui lòng chọn"
           onChange={(value) => handleSelectChange("type", value)}
           options={options}
@@ -58,6 +60,7 @@ const ProfileForm = ({
         rules={[{ required: true, message: "Nhập ngày phát hành" }]}
       >
         <DatePicker
+          format="DD-MM-YYYY"
           style={{ width: "100%" }}
           name="published_date"
           onChange={(date, dateString) =>
@@ -76,31 +79,49 @@ const ProfileForm = ({
         <Input name="organ" value={profile.organ} onChange={handleChange} />
       </Form.Item>
 
-      <Form.Item
-        label="Số lượng bản"
-        name="quantity"
-        rules={[{ required: true, message: "Nhập số lượng bản" }]}
-      >
+      <Form.Item label="Số lượng bản gốc" name="original">
         <InputNumber
           style={{ width: "100%" }}
-          name="quantity"
-          value={profile.quantity}
+          name="original"
+          value={profile.original}
           onChange={(value) =>
             handleChange({
-              target: { name: "quantity", value },
+              target: { name: "original", value },
             })
           }
         />
       </Form.Item>
 
-      <Form.Item
-        label="Ghi chú"
-        name="note"
-        rules={[{ required: true, message: "Nhập ghi chú" }]}
-      >
+      <Form.Item label="Số lượng bản chính" name="official">
+        <InputNumber
+          style={{ width: "100%" }}
+          name="official"
+          value={profile.official}
+          onChange={(value) =>
+            handleChange({
+              target: { name: "official", value },
+            })
+          }
+        />
+      </Form.Item>
+
+      <Form.Item label="Số lượng bản photo" name="photo">
+        <InputNumber
+          style={{ width: "100%" }}
+          name="photo"
+          value={profile.photo}
+          onChange={(value) =>
+            handleChange({
+              target: { name: "photo", value },
+            })
+          }
+        />
+      </Form.Item>
+
+      <Form.Item label="Ghi chú" name="note">
         <Input.TextArea
-          name="content"
-          value={profile.content}
+          name="note"
+          value={profile.note}
           onChange={handleChange}
         />
       </Form.Item>
@@ -116,8 +137,9 @@ const ProfileForm = ({
               fontSize: "15px",
               fontWeight: "bold",
             }}
+            loading={loading}
           >
-            Thêm
+            {textButton}
           </Button>
         </div>
       </Form.Item>
