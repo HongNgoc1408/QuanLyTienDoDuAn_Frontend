@@ -2,7 +2,9 @@ import { message } from "antd";
 import React, { useState } from "react";
 import UserForm from "../../../components/UserComponent/UserForm";
 import {
-  checkUserExistence,
+  checkEmailExistence,
+  checkIdExistence,
+  checkUsernameExistence,
   registerUser,
 } from "../../../services/UserService";
 
@@ -23,29 +25,33 @@ const AddUser = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    checkUserExistence(user)
-      .then((isExisting) => {
-        if (isExisting) {
-          message.error("Người dùng đã tồn tại trong hệ thống!");
-        } else {
-          registerUser(user)
-            .then(() => {
-              message.success("Thêm nhân viên thành công");
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
-            })
-            .catch((error) => {
-              message.error("Có lỗi xãy ra khi thêm nhân viên!");
-              console.error("Error:", error);
-            });
-        }
-      })
-      .catch((error) => {
-        message.error("Có lỗi xãy ra khi kiểm tra người dùng!");
-        console.error("Error:", error);
-      });
+  const handleSubmit = async () => {
+    try {
+      const isUsernameExisting = await checkUsernameExistence(user.username);
+      if (isUsernameExisting) {
+        message.error("Tài khoản nhân viên đã tồn tại trong hệ thống!");
+        return;
+      }
+      const isIdExisting = await checkIdExistence(user.id_user);
+      if (isIdExisting) {
+        message.error("Mã nhân viên đã tồn tại trong hệ thống!");
+        return;
+      }
+      const isEmailExisting = await checkEmailExistence(user.email);
+      if (isEmailExisting) {
+        message.error("Email nhân viên đã tồn tại trong hệ thống!");
+        return;
+      }
+
+      await registerUser(user);
+      message.success("Thêm nhân viên thành công");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      message.error("Có lỗi xảy ra khi kiểm tra tên người dùng hoặc đăng ký!");
+      console.error("Error:", error);
+    }
   };
 
   return (

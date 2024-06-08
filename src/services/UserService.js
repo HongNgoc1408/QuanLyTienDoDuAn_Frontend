@@ -80,3 +80,33 @@ export const loginUser = async (userData) => {
     throw error;
   }
 };
+
+export const checkUsernameExistence = async (username) => {
+  try {
+    const response = await axios.post("/user/check/username", { username });
+    return response.data;
+  } catch (error) {
+    console.error("Error checking username existence:", error);
+    throw error;
+  }
+};
+
+export const checkIdExistence = async (id_user) => {
+  try {
+    const response = await axios.post("/user/check/id", { id_user });
+    return response.data;
+  } catch (error) {
+    console.error("Error checking ID existence:", error);
+    throw error;
+  }
+};
+
+export const checkEmailExistence = async (email) => {
+  try {
+    const response = await axios.post("/user/check/email", { email });
+    return response.data;
+  } catch (error) {
+    console.error("Error checking email existence:", error);
+    throw error;
+  }
+};
