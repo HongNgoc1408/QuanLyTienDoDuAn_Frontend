@@ -51,7 +51,10 @@ const AddProfile = () => {
     addProfile(profile)
       .then(() => {
         message.success("Hồ sơ đã được lưu thành công!");
-        window.location.reload();
+        setTimeout(()=>{
+          window.location.reload();
+        },1000);
+        
       })
       .catch((error) => {
         message.error("Lỗi: Hồ sơ không thể được lưu.");

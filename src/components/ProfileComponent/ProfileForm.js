@@ -79,11 +79,7 @@ const ProfileForm = ({
         <Input name="organ" value={profile.organ} onChange={handleChange} />
       </Form.Item>
 
-      <Form.Item
-        label="Số lượng bản gốc"
-        name="original"
-        rules={[{ required: true, message: "Nhập số lượng bản gốc" }]}
-      >
+      <Form.Item label="Số lượng bản gốc" name="original">
         <InputNumber
           style={{ width: "100%" }}
           name="original"
@@ -96,28 +92,20 @@ const ProfileForm = ({
         />
       </Form.Item>
 
-      <Form.Item
-        label="Số lượng bản chính"
-        name="offical"
-        rules={[{ required: true, message: "Nhập số lượng bản chính" }]}
-      >
+      <Form.Item label="Số lượng bản chính" name="official">
         <InputNumber
           style={{ width: "100%" }}
-          name="offical"
-          value={profile.offical}
+          name="official"
+          value={profile.official}
           onChange={(value) =>
             handleChange({
-              target: { name: "offical", value },
+              target: { name: "official", value },
             })
           }
         />
       </Form.Item>
 
-      <Form.Item
-        label="Số lượng bản photo"
-        name="photo"
-        rules={[{ required: true, message: "Nhập số lượng bản photo" }]}
-      >
+      <Form.Item label="Số lượng bản photo" name="photo">
         <InputNumber
           style={{ width: "100%" }}
           name="photo"
@@ -130,11 +118,7 @@ const ProfileForm = ({
         />
       </Form.Item>
 
-      <Form.Item
-        label="Ghi chú"
-        name="note"
-        rules={[{ required: true, message: "Nhập ghi chú" }]}
-      >
+      <Form.Item label="Ghi chú" name="note">
         <Input.TextArea
           name="note"
           value={profile.note}

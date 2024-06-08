@@ -199,7 +199,7 @@ const ProfileTable = () => {
         x: 1300,
       }}
     >
-      <Column title="STT" dataIndex="index" key="index" />
+      <Column title="STT" dataIndex="index" key="index" width={60}/>
       <Column
         title="Số, ký hiệu văn bản"
         dataIndex="title"
@@ -273,7 +273,7 @@ const ProfileTable = () => {
               okText="Yes"
               cancelText="No"
             >
-              <Button type="primary" danger style={{ marginLeft: 2 }}>
+              <Button type="primary" danger style={{ marginLeft: 5 }}>
                 <DeleteOutlined style={{ fontSize: 18 }} />
               </Button>
             </Popconfirm>
