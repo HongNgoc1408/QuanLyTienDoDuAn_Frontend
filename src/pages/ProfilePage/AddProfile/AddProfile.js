@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ProfileForm from "../../../components/ProfileComponent/ProfileForm";
 import { addProfile } from "../../../services/ProfileService";
 import { message } from "antd";
-import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
+// import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
 
 const AddProfile = () => {
   const [profile, setProfile] = useState({
@@ -13,6 +13,7 @@ const AddProfile = () => {
     organ: "",
     quantity: "",
     note: "",
+    pdfFileId: "",
   });
 
   const options = [
@@ -69,7 +70,7 @@ const AddProfile = () => {
   return (
     <div>
       <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-        <BreadcrumbComponent />
+        {/* <BreadcrumbComponent /> */}
       </div>
       <div
         style={{

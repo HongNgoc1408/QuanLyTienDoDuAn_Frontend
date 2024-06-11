@@ -1,6 +1,7 @@
-import { Button, DatePicker, Form, Input, Select, InputNumber } from "antd";
+import { Button, DatePicker, Form, Input, Select, InputNumber, Upload } from "antd";
 import React from "react";
 import dayjs from "dayjs";
+import { UploadOutlined } from "@ant-design/icons";
 
 const ProfileForm = ({
   textButton,
@@ -9,6 +10,7 @@ const ProfileForm = ({
   handleChange,
   handleSubmit,
   handleSelectChange,
+  handleFileChange,
   loading,
 }) => {
   const handleDateChange = (date, dateString) => {
@@ -126,6 +128,17 @@ const ProfileForm = ({
           value={profile.note}
           onChange={handleChange}
         />
+      </Form.Item>
+      <Form.Item label="Upload PDF" name="pdfFileId">
+        <Upload
+          name="pdfFile"
+          value={profile.pdfFileId}
+          beforeUpload={() => false} 
+          onChange={handleFileChange} 
+          accept=".pdf"
+        >
+          <Button icon={<UploadOutlined />}>Chọn file PDF</Button>
+        </Upload>
       </Form.Item>
 
       <Form.Item>

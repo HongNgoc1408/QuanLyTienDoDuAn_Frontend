@@ -46,7 +46,7 @@ const ProfilePage = () => {
             }}
             onClick={navigateToAddProfile}
           >
-            Thêm tiến độ dự án
+            Thêm hồ sơ dự án
           </Button>
         </Col>
       </Row>
