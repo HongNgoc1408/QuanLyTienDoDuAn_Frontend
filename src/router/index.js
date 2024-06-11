@@ -62,6 +62,7 @@ const routes = [
     page: EditProgressPage,
     isShowHeader: true,
   },
+
   {
     path: "/profile",
     name: "Profile",
