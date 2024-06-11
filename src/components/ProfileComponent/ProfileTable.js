@@ -14,23 +14,23 @@ const { Column, ColumnGroup } = Table;
 const ProfileTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
   };
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_INVERT,
-      Table.SELECTION_NONE,
-    ],
-  };
+  // const onSelectChange = (newSelectedRowKeys) => {
+  //   console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+  //   setSelectedRowKeys(newSelectedRowKeys);
+  // };
+  // const rowSelection = {
+  //   selectedRowKeys,
+  //   onChange: onSelectChange,
+  //   selections: [
+  //     Table.SELECTION_ALL,
+  //     Table.SELECTION_INVERT,
+  //     Table.SELECTION_NONE,
+  //   ],
+  // };
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -193,13 +193,13 @@ const ProfileTable = () => {
   return (
     <Table
       onChange={onChange}
-      rowSelection={rowSelection}
+      // rowSelection={rowSelection}
       dataSource={data}
       scroll={{
         x: 1300,
       }}
     >
-      <Column title="STT" dataIndex="index" key="index" width={60}/>
+      <Column title="STT" dataIndex="index" key="index" width={60} />
       <Column
         title="Số, ký hiệu văn bản"
         dataIndex="title"
@@ -207,12 +207,13 @@ const ProfileTable = () => {
         {...getColumnSearchProps("title")}
       />
       <Column
+        width={250}
         title="Nội dung trích yếu văn bản"
         dataIndex="content"
         key="content"
         {...getColumnSearchProps("content")}
       />
-      <Column
+      <Column width={100}
         title="Loại văn bản"
         dataIndex="type"
         key="type"
@@ -251,6 +252,7 @@ const ProfileTable = () => {
         />
       </ColumnGroup>
       <Column
+        width={150}
         title="Ghi chú"
         dataIndex="note"
         key="note"

@@ -4,7 +4,7 @@ import { Button, Col, Row, theme } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import ProfileTable from "../../components/ProfileComponent/ProfileTable";
-import BreadcrumbComponent from "../../components/BreadcrumbComponent/BreadcrumbComponent";
+// import BreadcrumbComponent from "../../components/BreadcrumbComponent/BreadcrumbComponent";
 
 
 const ProfilePage = () => {
@@ -26,7 +26,7 @@ const ProfilePage = () => {
       }}
     >
       <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-        <BreadcrumbComponent />
+        {/* <BreadcrumbComponent /> */}
       </div>
       
       <Row>

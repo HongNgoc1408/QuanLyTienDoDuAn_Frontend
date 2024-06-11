@@ -8,7 +8,7 @@ import { deleteUser, getUsers } from "../../services/UserService";
 const UserTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -17,20 +17,20 @@ const UserTable = () => {
     console.log("params", pagination, filters, sorter, extra);
   };
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  // const onSelectChange = (newSelectedRowKeys) => {
+  //   console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+  //   setSelectedRowKeys(newSelectedRowKeys);
+  // };
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_INVERT,
-      Table.SELECTION_NONE,
-    ],
-  };
+  // const rowSelection = {
+  //   selectedRowKeys,
+  //   onChange: onSelectChange,
+  //   selections: [
+  //     Table.SELECTION_ALL,
+  //     Table.SELECTION_INVERT,
+  //     Table.SELECTION_NONE,
+  //   ],
+  // };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -234,7 +234,7 @@ const UserTable = () => {
     <>
       <Table
         onChange={onChange}
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
         columns={columns}
         dataSource={data}
         scroll={{ x: 1300 }}
