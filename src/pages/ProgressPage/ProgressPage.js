@@ -1,20 +1,34 @@
 import React, { useRef } from "react";
 import { Content } from "antd/es/layout/layout";
 import { Button, Col, Row, theme } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { DownloadOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import ProgressTable from "../../components/ProgressComponent/ProgressTable";
-import BreadcrumbComponent from "../../components/BreadcrumbComponent/BreadcrumbComponent";
 
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 const ProgressPage = () => {
   const navigate = useNavigate();
-  const tableRef = useRef();
+  const tableRef = useRef(null);
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const navigateToAddProgressPage = () => {
     navigate("/progress/add");
+  };
+
+  const exportTableToExcel = () => {
+    if (!tableRef.current) return;
+    const table = tableRef.current;
+    const workbook = XLSX.utils.table_to_book(table);
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const data = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(data, "Progress_Table.xlsx");
   };
 
   return (
@@ -25,19 +39,14 @@ const ProgressPage = () => {
         borderRadius: borderRadiusLG,
       }}
     >
-      <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-        <BreadcrumbComponent />
-      </div>
-
       <Row>
-        <Col span={20}>
+        <Col span={17}>
           <p style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
             Quản lý tiến độ dự án
           </p>
         </Col>
 
-        <Col span={4} style={{ padding: 10 }}>
-          {/* textAlign: "end", marginLeft: 80 */}
+        <Col span={4} style={{ padding: 10, textAlign: "end" }}>
           <Button
             icon={<PlusOutlined />}
             style={{
@@ -50,26 +59,23 @@ const ProgressPage = () => {
             Thêm tiến độ dự án
           </Button>
         </Col>
-        {/* <Col style={{ padding: 10, textAlign: "end" }}>
-          <DownloadTableExcel
-            filename="Progresses Table"
-            sheet="Progresses"
-            currentTableRef={tableRef.current}
+        <Col span={3} style={{ padding: 10 }}>
+          <Button
+            onClick={exportTableToExcel}
+            icon={<DownloadOutlined />}
+            style={{
+              fontWeight: "bold",
+              fontSize: 15,
+              height: 50,
+            }}
           >
-            <Button
-              icon={<DownloadOutlined />}
-              style={{
-                fontWeight: "bold",
-                fontSize: 15,
-                height: 50,
-              }}
-            >
-              Xuất file excel
-            </Button>
-          </DownloadTableExcel>
-        </Col> */}
+            Xuất file excel
+          </Button>
+        </Col>
       </Row>
-      <ProgressTable ref={tableRef} />
+      <div ref={tableRef}>
+        <ProgressTable />
+      </div>
     </Content>
   );
 };

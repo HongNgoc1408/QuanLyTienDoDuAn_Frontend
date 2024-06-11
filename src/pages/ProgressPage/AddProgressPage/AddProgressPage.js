@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ProgressForm from "../../../components/ProgressComponent/ProgressForm";
 import { addProgress } from "../../../services/ProgressService";
 import { message } from "antd";
-import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
 import { getUsers } from "../../../services/UserService";
 
 const AddProgressPage = () => {
@@ -18,18 +17,13 @@ const AddProgressPage = () => {
     end_date: "",
   });
 
-  // const options = [
-  //   { label: "Option 1", value: "1" },
-  //   { label: "Option 2", value: "2" },
-  // ];
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const users = await getUsers();
-        console.log(users);
+
         const formattedData = users.map((user) => ({
-          label: user.name, // Assuming 'name' is the field for user's name
+          label: user.id_user,
           value: user.id_user,
         }));
         setData(formattedData);
@@ -61,8 +55,9 @@ const AddProgressPage = () => {
   const handleSubmit = () => {
     addProgress(progress)
       .then(() => {
-        window.location.reload();
         message.success("Thêm tiến độ dự án thành công");
+        setTimeout(5);
+        window.location.reload();
       })
       .catch((error) => {
         message.error("Có lỗi xảy ra khi thêm tiến độ dự án");
@@ -72,9 +67,6 @@ const AddProgressPage = () => {
 
   return (
     <div>
-      <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-        <BreadcrumbComponent />
-      </div>
       <div
         style={{
           padding: "20px",

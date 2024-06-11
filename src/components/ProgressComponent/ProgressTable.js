@@ -12,22 +12,9 @@ import {
 const ProgressTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
-  };
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_INVERT,
-      Table.SELECTION_NONE,
-    ],
   };
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
@@ -38,10 +25,12 @@ const ProgressTable = () => {
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
   };
+
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");
   };
+
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -146,7 +135,7 @@ const ProgressTable = () => {
   });
 
   const columns = [
-    { key: "1", title: "STT", dataIndex: "index" },
+    { key: "1", title: "STT", dataIndex: "index", width: 70 },
     {
       key: "2",
       title: "Tên dự án",
@@ -175,19 +164,19 @@ const ProgressTable = () => {
       filters: [
         {
           text: "Chưa bắt đầu",
-          value: "not_started",
+          value: "Chưa bắt đầu",
         },
         {
           text: "Đang tiến hành",
-          value: "in_progress",
+          value: "Đang tiến hành",
         },
         {
           text: "Hoàn thành",
-          value: "completed",
+          value: "Hoàn thành",
         },
         {
           text: "Bị hủy",
-          value: "cancel",
+          value: "Bị hủy",
         },
       ],
       onFilter: (value, record) => record.status.startsWith(value),
@@ -200,15 +189,15 @@ const ProgressTable = () => {
       filters: [
         {
           text: "Thấp",
-          value: "low",
+          value: "Thấp",
         },
         {
           text: "Trung bình",
-          value: "medium",
+          value: "Trung bình",
         },
         {
           text: "Cao",
-          value: "high",
+          value: "Cao",
         },
       ],
       onFilter: (value, record) => record.priority.startsWith(value),
@@ -228,7 +217,19 @@ const ProgressTable = () => {
     },
     {
       key: "9",
-      title: "Hoạt động",
+      title: "Ngày tạo",
+      dataIndex: "created_at",
+      ...getColumnSearchProps("created_at"),
+    },
+    {
+      key: "10",
+      title: "Ngày cập nhật",
+      dataIndex: "updated_at",
+      ...getColumnSearchProps("updated_at"),
+    },
+    {
+      key: "11",
+      title: "",
       dataIndex: "actions",
       fixed: "right",
       render: (_, record) => (
@@ -282,6 +283,8 @@ const ProgressTable = () => {
           priority: item.priority,
           start_date: item.start_date,
           end_date: item.end_date,
+          created_at: item.formattedCreatedAt,
+          updated_at: item.formattedUpdatedAt,
         }));
         setData(formattedData);
       } catch (error) {
@@ -300,8 +303,8 @@ const ProgressTable = () => {
   return (
     <>
       <Table
+        id="table-to-xls"
         onChange={onChange}
-        rowSelection={rowSelection}
         columns={columns}
         dataSource={data}
         scroll={{

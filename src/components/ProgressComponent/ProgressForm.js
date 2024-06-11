@@ -1,6 +1,7 @@
 import { Button, DatePicker, Form, Input, Select } from "antd";
 import React from "react";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 const ProgressForm = ({
   textButton,
@@ -11,6 +12,7 @@ const ProgressForm = ({
   handleSelectChange,
   loading,
 }) => {
+  const navigate = useNavigate();
   return (
     <Form
       name="progress_form"
@@ -133,6 +135,19 @@ const ProgressForm = ({
 
       <Form.Item>
         <div style={{ textAlign: "center" }}>
+          <Button
+            onClick={() => navigate("/progress")}
+            style={{
+              width: "25%",
+              height: "50px",
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginRight: "15px",
+            }}
+            loading={loading}
+          >
+            Trở về
+          </Button>
           <Button
             type="primary"
             htmlType="submit"
