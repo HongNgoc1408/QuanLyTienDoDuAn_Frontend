@@ -1,7 +1,7 @@
 import { Header } from "antd/es/layout/layout";
 import React from "react";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import MenuComponent from "../MenuComponent/MenuComponent";
+import { Avatar } from "antd";
 
 const HeaderComponent = () => {
   return (
@@ -28,7 +28,16 @@ const HeaderComponent = () => {
           <a href="/">Logo</a>
         </div>
         <MenuComponent />
-        <ButtonComponent textButton="Tài khoản" />
+        {/* <ButtonComponent textButton="Tài khoản" /> */}
+        <Avatar
+          size="large"
+          style={{
+            backgroundColor: "#fde3cf",
+            color: "#f56a00",
+          }}
+        >
+          U
+        </Avatar>
       </Header>
     </div>
   );

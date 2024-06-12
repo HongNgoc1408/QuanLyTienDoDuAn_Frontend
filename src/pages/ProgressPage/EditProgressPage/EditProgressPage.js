@@ -6,10 +6,11 @@ import {
 } from "../../../services/ProgressService";
 import { Spin, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
+import { getUsers } from "../../../services/UserService";
 
 const EditProgressPage = () => {
   const { id } = useParams();
+  const [data, setData] = useState([]);
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -32,10 +33,25 @@ const EditProgressPage = () => {
     fetchProgress();
   }, [id]);
 
-  const options = [
-    { label: "Option 1", value: "1" },
-    { label: "Option 2", value: "2" },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const users = await getUsers();
+
+        const formattedData = users.map((user) => ({
+          label: user.id_user,
+          value: user.id_user,
+        }));
+        setData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,9 +95,6 @@ const EditProgressPage = () => {
 
   return (
     <div>
-      <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-        <BreadcrumbComponent />
-      </div>
       <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
         <h2
           style={{
@@ -94,7 +107,7 @@ const EditProgressPage = () => {
         </h2>
         <ProgressForm
           textButton="Hiệu chỉnh"
-          options={options}
+          options={data}
           progress={progress}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
