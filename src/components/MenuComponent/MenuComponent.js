@@ -5,7 +5,7 @@ const items = [
   {
     key: "1",
     label: (
-      <a href="/" style={{ color: "inherit", textDecoration: "none" }}>
+      <a href="/home" style={{ color: "inherit", textDecoration: "none" }}>
         Trang chủ
       </a>
     ),

@@ -6,7 +6,7 @@ import {
   getProfileById,
 } from "../../../services/ProfileService";
 import { Spin, message } from "antd";
-import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
+// import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
 
 const EditProfile = () => {
   const { id } = useParams();
@@ -99,7 +99,7 @@ const EditProfile = () => {
   return (
     <div>
       <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-        <BreadcrumbComponent />
+        {/* <BreadcrumbComponent /> */}
       </div>
       <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
         <h2

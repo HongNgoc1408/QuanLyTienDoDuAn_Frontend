@@ -1,4 +1,4 @@
-import { SearchOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
@@ -129,7 +129,7 @@ const UserTable = () => {
     { key: "1", title: "STT", dataIndex: "index" },
     {
       key: "2",
-      title: "Username",
+      title: "Tên tài khoản",
       dataIndex: "username",
       ...getColumnSearchProps("username"),
     },
@@ -141,37 +141,39 @@ const UserTable = () => {
     },
     {
       key: "4",
-      title: "Full Name",
+      title: "Họ tên",
       dataIndex: "fullName",
       ...getColumnSearchProps("fullName"),
     },
     {
       key: "5",
-      title: "ID User",
+      title: "Mã nhân viên",
       dataIndex: "id_user",
       ...getColumnSearchProps("id_user"),
     },
     {
       key: "6",
-      title: "Created At",
+      title: "Ngày tạo",
       dataIndex: "created_at",
       ...getColumnSearchProps("created_at"),
     },
     {
       key: "7",
-      title: "Updated At",
+      title: "Ngày cập nhật",
       dataIndex: "updated_at",
       ...getColumnSearchProps("updated_at"),
     },
 
     {
       key: "8",
-      title: "Actions",
+      title: "",
       dataIndex: "actions",
       render: (_, record) => (
         <span>
           <Link to={`edit/${record.key}`}>
-            <Button type="primary">Edit</Button>
+            <Button type="primary">
+              <EditOutlined style={{ fontSize: 18 }} />
+            </Button>
           </Link>
           <Popconfirm
             title="Bạn có chắc chắn muốn xóa người dùng này?"
@@ -180,7 +182,7 @@ const UserTable = () => {
             cancelText="No"
           >
             <Button type="primary" danger style={{ marginLeft: 5 }}>
-              Delete
+              <DeleteOutlined style={{ fontSize: 18 }} />
             </Button>
           </Popconfirm>
         </span>
