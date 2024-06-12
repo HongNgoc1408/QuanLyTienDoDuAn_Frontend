@@ -2,6 +2,8 @@ import { Button, DatePicker, Form, Input, Select, InputNumber, Upload } from "an
 import React from "react";
 import dayjs from "dayjs";
 import { UploadOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+
 
 const ProfileForm = ({
   textButton,
@@ -18,6 +20,7 @@ const ProfileForm = ({
       target: { name: "published_date", value: dateString },
     });
   };
+  const navigate = useNavigate();
 
   return (
     <Form
@@ -143,6 +146,19 @@ const ProfileForm = ({
 
       <Form.Item>
         <div style={{ textAlign: "center" }}>
+          <Button
+            onClick={() => navigate("/profile")}
+            style={{
+              width: "25%",
+              height: "50px",
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginRight: "15px",
+            }}
+            loading={loading}
+          >
+            Trở về
+          </Button>
           <Button
             type="primary"
             htmlType="submit"

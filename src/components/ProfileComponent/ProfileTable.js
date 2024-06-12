@@ -14,23 +14,10 @@ const { Column, ColumnGroup } = Table;
 const ProfileTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
   };
-  // const onSelectChange = (newSelectedRowKeys) => {
-  //   console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-  //   setSelectedRowKeys(newSelectedRowKeys);
-  // };
-  // const rowSelection = {
-  //   selectedRowKeys,
-  //   onChange: onSelectChange,
-  //   selections: [
-  //     Table.SELECTION_ALL,
-  //     Table.SELECTION_INVERT,
-  //     Table.SELECTION_NONE,
-  //   ],
-  // };
+  
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -259,7 +246,7 @@ const ProfileTable = () => {
         {...getColumnSearchProps("note")}
       />
       <Column
-        title="Hoạt động"
+        title=""
         key="actions"
         fixed="right"
         render={(_, record) => (
