@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ProfileForm from "../../../components/ProfileComponent/ProfileForm";
 import { addProfile } from "../../../services/ProfileService";
 import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 // import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
 
 const AddProfile = () => {
@@ -47,12 +48,12 @@ const AddProfile = () => {
     }));
   };
 
+
   const handleSubmit = () => {
     addProfile(profile)
       .then(() => {
         message.success("Hồ sơ đã được lưu thành công!");
-        setTimeout(5);
-        window.location.reload();
+        navigate("/profile");
       })
       .catch((error) => {
         message.error("Lỗi: Hồ sơ không thể được lưu.");
@@ -66,6 +67,8 @@ const AddProfile = () => {
       [name]: value,
     }));
   };
+
+  const navigate = useNavigate();
 
   return (
     <div>
