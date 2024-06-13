@@ -34,6 +34,14 @@ const items = [
       </a>
     ),
   },
+  {
+    key: "5",
+    label: (
+      <a href="/docs" style={{ color: "inherit", textDecoration: "none" }}>
+        Tài liệu dự án
+      </a>
+    ),
+  },
 ];
 const MenuComponent = () => {
   return (

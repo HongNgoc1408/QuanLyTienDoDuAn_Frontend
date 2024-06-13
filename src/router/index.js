@@ -1,3 +1,4 @@
+import DocPage from "../pages/DocPage/DocPage";
 import EmployeePage from "../pages/EmployeePage/EmployeePage";
 import HomePage from "../pages/HomePage/HomePage";
 import LoginPage from "../pages/LoginPage/LoginPage";
@@ -75,7 +76,6 @@ const routes = [
     page: EditProgressPage,
     isShowHeader: true,
   },
-
   {
     path: "/profile",
     name: "Profile",
@@ -94,7 +94,12 @@ const routes = [
     page: EditProfile,
     isShowHeader: true,
   },
-
+  {
+    path: "/docs",
+    name: "DocPage",
+    page: DocPage,
+    isShowHeader: true,
+  },
   {
     path: "*",
     name: "NotFoundPage",
