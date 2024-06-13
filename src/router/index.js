@@ -45,6 +45,19 @@ const routes = [
     isShowFooter: true,
   },
   {
+    path: "/user",
+    name: "UserPage",
+    page: UserPage,
+    isShowHeader: true,
+    isShowFooter: true,
+  },
+  {
+    path: "/user/edit/:id",
+    name: "EditUserPage",
+    page: EditUserPage,
+    isShowHeader: true,
+  },
+  {
     path: "/progress",
     name: "ProgressPage",
     page: ProgressPage,
@@ -81,19 +94,7 @@ const routes = [
     page: EditProfile,
     isShowHeader: true,
   },
-  {
-    path: "/user",
-    name: "UserPage",
-    page: UserPage,
-    isShowHeader: true,
-    isShowFooter: true,
-  },
-  {
-    path: "/user/edit/:id",
-    name: "EditUserPage",
-    page: EditUserPage,
-    isShowHeader: true,
-  },
+
   {
     path: "*",
     name: "NotFoundPage",
