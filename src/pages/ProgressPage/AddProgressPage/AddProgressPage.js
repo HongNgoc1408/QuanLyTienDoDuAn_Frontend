@@ -13,8 +13,8 @@ const AddProgressPage = () => {
     assigned_to: [],
     status: "",
     priority: "",
-    start_date: "",
-    end_date: "",
+    start_date: null,
+    end_date: null,
   });
 
   useEffect(() => {

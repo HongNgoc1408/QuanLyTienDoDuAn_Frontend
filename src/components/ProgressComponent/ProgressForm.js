@@ -20,8 +20,12 @@ const ProgressForm = ({
       onFinish={handleSubmit}
       initialValues={{
         ...progress,
-        start_date: progress.start_date ? dayjs(progress.start_date) : null,
-        end_date: progress.end_date ? dayjs(progress.end_date) : null,
+        start_date: progress.start_date
+          ? dayjs(progress.start_date, "DD-MM-YYYY")
+          : null,
+        end_date: progress.end_date
+          ? dayjs(progress.end_date, "DD-MM-YYYY")
+          : null,
       }}
     >
       <Form.Item
@@ -110,7 +114,7 @@ const ProgressForm = ({
           format="DD-MM-YYYY"
           style={{ width: "100%" }}
           name="start_date"
-          value={progress.start_date ? dayjs(progress.start_date) : null}
+          // value={progress.start_date ? dayjs(progress.start_date) : null}
           onChange={(date, dateString) =>
             handleChange({ target: { name: "start_date", value: dateString } })
           }
@@ -126,7 +130,7 @@ const ProgressForm = ({
           format="DD-MM-YYYY"
           style={{ width: "100%" }}
           name="end_date"
-          value={progress.end_date ? dayjs(progress.end_date) : null}
+          // value={progress.end_date ? dayjs(progress.end_date) : null}
           onChange={(date, dateString) =>
             handleChange({ target: { name: "end_date", value: dateString } })
           }
