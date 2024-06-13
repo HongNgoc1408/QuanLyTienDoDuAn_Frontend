@@ -53,7 +53,17 @@ const EditProfile = () => {
     { label: "Công văn", value: "Công văn" },
     { label: "Công điện - CĐ", value: "Công điện - CĐ" },
     { label: "Bản ghi nhớ - BGN", value: "Bản ghi nhớ - BGN" },
+    { label: "Bản thỏa thuận - BTT", value: "Bản thỏa thuận - BTT" },
+    { label: "Giấy ủy quyền - GUQ", value: "Giấy ủy quyền - GUQ" },
+    { label: "Giấy mời - GM", value: "Giấy mời - GM" },
+    { label: " Giấy giới thiệu - GGT", value: " Giấy giới thiệu - GGT" },
+    { label: "Giấy nghỉ phép - GNP", value: "Giấy nghỉ phép - GNP" },
+    { label: "Phiếu gửi - PG", value: "Phiếu gửi - PG" },
+    { label: "Phiếu chuyển - PC", value: "Phiếu chuyển - PC" },
+    { label: "Phiếu báo - PB", value: "Phiếu báo - PB" },
+    { label: "Thư công", value: "Thư công" },
   ];
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
