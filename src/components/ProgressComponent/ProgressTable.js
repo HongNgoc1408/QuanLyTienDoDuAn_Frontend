@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
-import { deleteProgress, getProgresses } from "../../services/ProgressService";
-import { Link } from "react-router-dom";
-import Highlighter from "react-highlight-words";
 import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import Highlighter from "react-highlight-words";
+import { Link } from "react-router-dom";
+import { deleteProgress, getProgresses } from "../../services/ProgressService";
 
 const ProgressTable = () => {
   const [data, setData] = useState([]);
@@ -153,9 +153,9 @@ const ProgressTable = () => {
     {
       key: "4",
       title: "Người được giao",
-      dataIndex: "assigned_to",
+      dataIndex: "assignedTo",
 
-      ...getColumnSearchProps("assigned_to"),
+      ...getColumnSearchProps("assignedTo"),
     },
     {
       key: "5",
@@ -276,9 +276,9 @@ const ProgressTable = () => {
           index: index + 1,
           title: item.title,
           description: item.description,
-          assigned_to: Array.isArray(item.assigned_to)
-            ? item.assigned_to.join(", ")
-            : item.assigned_to,
+          assignedTo: Array.isArray(item.assignedTo)
+            ? item.assignedTo.join(", ")
+            : item.assignedTo,
           status: item.status,
           priority: item.priority,
           start_date: item.start_date,

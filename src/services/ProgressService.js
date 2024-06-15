@@ -52,3 +52,16 @@ export const deleteProgress = async (id) => {
     throw error;
   }
 };
+
+export const getProgressByUser = async (userId) => {
+  try {
+    const response = await axios.get(`/progress/user/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Lỗi lấy danh sách dự án cho người dùng có ID ${userId}:`,
+      error
+    );
+    throw error;
+  }
+};

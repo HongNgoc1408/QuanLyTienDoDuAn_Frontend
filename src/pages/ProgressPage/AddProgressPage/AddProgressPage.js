@@ -1,7 +1,7 @@
+import { message } from "antd";
 import React, { useEffect, useState } from "react";
 import ProgressForm from "../../../components/ProgressComponent/ProgressForm";
 import { addProgress } from "../../../services/ProgressService";
-import { message } from "antd";
 import { getUsers } from "../../../services/UserService";
 
 const AddProgressPage = () => {
@@ -10,7 +10,7 @@ const AddProgressPage = () => {
   const [progress, setProgress] = useState({
     title: "",
     description: "",
-    assigned_to: [],
+    assignedTo: [],
     status: "",
     priority: "",
     start_date: null,

@@ -1,8 +1,8 @@
+import { Button, Form, Input } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Input } from "antd";
-import { loginUser } from "../../services/UserService";
 import "../../assets/logo.png";
+import { loginUser } from "../../services/UserService";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -15,7 +15,7 @@ const LoginPage = () => {
       if (response === "admin") {
         navigate("/home");
       } else if (response === "employee") {
-        navigate("/EmployeePage");
+        navigate("/employee");
       } else {
         alert("Login failed!");
       }
@@ -79,16 +79,15 @@ const LoginPage = () => {
         </Form.Item>
 
         <Form.Item>
-          <div style={{textAlign: "center"}}>
+          <div style={{ textAlign: "center" }}>
             <Button
-            type="primary"
-            htmlType="submit"
-            style={{ width: "40%", height: 40,}}
-          >
-            Đăng nhập
-          </Button>
+              type="primary"
+              htmlType="submit"
+              style={{ width: "40%", height: 40 }}
+            >
+              Đăng nhập
+            </Button>
           </div>
-          
         </Form.Item>
       </Form>
     </div>
