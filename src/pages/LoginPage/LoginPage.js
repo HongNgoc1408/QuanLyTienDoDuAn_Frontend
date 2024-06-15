@@ -12,9 +12,10 @@ const LoginPage = () => {
   const handleSubmit = async (values) => {
     try {
       const response = await loginUser(values);
-      if (response === "admin") {
+      console.log(response);
+      if (response.isAdmin) {
         navigate("/home");
-      } else if (response === "employee") {
+      } else if (!response.isAdmin) {
         navigate("/employee");
       } else {
         alert("Login failed!");
