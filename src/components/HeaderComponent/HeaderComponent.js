@@ -2,8 +2,11 @@ import { Header } from "antd/es/layout/layout";
 import React from "react";
 import MenuComponent from "../MenuComponent/MenuComponent";
 import { Avatar } from "antd";
+import { useNavigate } from "react-router-dom";
+
 
 const HeaderComponent = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <Header
@@ -35,6 +38,7 @@ const HeaderComponent = () => {
             backgroundColor: "#fde3cf",
             color: "#f56a00",
           }}
+          onClick={()=>navigate("/infor")}
         >
           U
         </Avatar>
