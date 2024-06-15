@@ -1,7 +1,6 @@
 import { Spin, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
 import UserForm from "../../../components/UserComponent/UserForm";
 import { editUser, getUserById } from "../../../services/UserService";
 
@@ -64,9 +63,6 @@ const EditUserPage = () => {
 
   return (
     <div>
-      <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-        <BreadcrumbComponent />
-      </div>
       <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
         <h2
           style={{

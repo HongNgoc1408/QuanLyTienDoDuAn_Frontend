@@ -1,3 +1,4 @@
+import DocPage from "../pages/DocPage/DocPage";
 import EmployeePage from "../pages/EmployeePage/EmployeePage";
 import HomePage from "../pages/HomePage/HomePage";
 import InformationPage from "../pages/InformationPage/InformationPage";
@@ -52,6 +53,19 @@ const routes = [
     isShowFooter: true,
   },
   {
+    path: "/user",
+    name: "UserPage",
+    page: UserPage,
+    isShowHeader: true,
+    isShowFooter: true,
+  },
+  {
+    path: "/user/edit/:id",
+    name: "EditUserPage",
+    page: EditUserPage,
+    isShowHeader: true,
+  },
+  {
     path: "/progress",
     name: "ProgressPage",
     page: ProgressPage,
@@ -69,7 +83,6 @@ const routes = [
     page: EditProgressPage,
     isShowHeader: true,
   },
-
   {
     path: "/profile",
     name: "Profile",
@@ -89,16 +102,9 @@ const routes = [
     isShowHeader: true,
   },
   {
-    path: "/user",
-    name: "UserPage",
-    page: UserPage,
-    isShowHeader: true,
-    isShowFooter: true,
-  },
-  {
-    path: "/user/edit/:id",
-    name: "EditUserPage",
-    page: EditUserPage,
+    path: "/docs",
+    name: "DocPage",
+    page: DocPage,
     isShowHeader: true,
   },
   {
