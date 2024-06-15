@@ -38,7 +38,7 @@ const HeaderComponent = () => {
             backgroundColor: "#fde3cf",
             color: "#f56a00",
           }}
-          onClick={()=>navigate("/infor")}
+          onClick={()=>navigate("/information")}
         >
           U
         </Avatar>
