@@ -7,7 +7,7 @@ const EmployeePage = () => {
   const [progressList, setProgressList] = useState([]);
   const [selectedProgress, setSelectedProgress] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const user = JSON.parse(localStorage.getItem("user"));
   // Hàm gọi API để lấy danh sách dự án khi component được render
   useEffect(() => {
     fetchProgresses();
@@ -16,7 +16,7 @@ const EmployeePage = () => {
   const fetchProgresses = async () => {
     try {
       setLoading(true);
-      const data = await getProgressByUser("userId"); // Thay "userId" bằng userId của người dùng hiện tại
+      const data = await getProgressByUser(user.id_user); // Thay "userId" bằng userId của người dùng hiện tại
       setProgressList(data);
       setLoading(false);
     } catch (error) {
@@ -44,14 +44,7 @@ const EmployeePage = () => {
   return (
     <div style={{ padding: "20px" }}>
       <Space direction="vertical" style={{ width: "100%" }}>
-        <Button
-          type="primary"
-          onClick={() => setSelectedProgress({})}
-          style={{ marginBottom: "20px" }}
-        >
-          Tạo mới dự án
-        </Button>
-
+        <h1>Danh sách dự án</h1>
         {/* Hiển thị danh sách dự án */}
         {progressList.map((progress) => (
           <Card

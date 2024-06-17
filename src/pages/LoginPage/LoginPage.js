@@ -14,8 +14,10 @@ const LoginPage = () => {
       const response = await loginUser(values);
       console.log(response);
       if (response.isAdmin) {
+        localStorage.setItem("user", JSON.stringify(response));
         navigate("/home");
       } else if (!response.isAdmin) {
+        localStorage.setItem("user", JSON.stringify(response));
         navigate("/employee");
       } else {
         alert("Login failed!");
