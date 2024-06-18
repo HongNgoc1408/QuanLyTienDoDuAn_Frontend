@@ -8,6 +8,7 @@ import {
 import DefaultComponent from "./components/DefaultComponent/DefaultComponent";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { routes } from "./router";
+import ProtectedRoute from "./services/ProtectedRoute";
 
 function App() {
   return (
@@ -19,14 +20,23 @@ function App() {
           {routes.map((route) => {
             const Page = route.page;
             const Layout = route.isShowHeader ? DefaultComponent : Fragment;
+            const isProtected = route.path !== "/login";
             return (
               <Route
                 key={route.path}
                 path={route.path}
                 element={
-                  <Layout>
-                    <Page />
-                  </Layout>
+                  isProtected ? (
+                    <ProtectedRoute>
+                      <Layout>
+                        <Page />
+                      </Layout>
+                    </ProtectedRoute>
+                  ) : (
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  )
                 }
               />
             );
@@ -38,4 +48,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

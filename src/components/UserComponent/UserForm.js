@@ -64,20 +64,6 @@ const UserForm = ({ user, handleChange, handleSubmit, textButton }) => {
         </Form.Item>
 
         <Form.Item
-          label="Mã nhân viên"
-          name="id_user"
-          rules={[
-            { required: true, message: "Vui lòng nhập mã nhân viên!" },
-            {
-              pattern: /^[a-zA-Z0-9]+$/,
-              message: "Mã nhân viên chỉ chứa chữ và số!",
-            },
-          ]}
-        >
-          <Input name="id_user" value={user.id_user} onChange={handleChange} />
-        </Form.Item>
-
-        <Form.Item
           label="Email"
           name="email"
           rules={[
