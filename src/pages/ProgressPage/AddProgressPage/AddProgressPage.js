@@ -17,6 +17,10 @@ const AddProgressPage = () => {
     end_date: null,
   });
 
+  // const {
+  //   token: { colorBgContainer, borderRadiusLG },
+  // } = theme.useToken();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,6 +70,13 @@ const AddProgressPage = () => {
   };
 
   return (
+    // <Content
+    //   style={{
+    //     minHeight: 600,
+    //     background: colorBgContainer,
+    //     borderRadius: borderRadiusLG,
+    //   }}
+    // >
     <div>
       <div
         style={{
@@ -94,6 +105,7 @@ const AddProgressPage = () => {
         />
       </div>
     </div>
+    // </Content>
   );
 };
 
