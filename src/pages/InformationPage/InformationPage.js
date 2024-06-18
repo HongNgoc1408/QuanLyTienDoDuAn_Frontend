@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getUserById, editUser } from "../../services/UserService";
-import { Form, Input, Button, Card, theme, message } from "antd";
+import { Form, Input, Button, Card, theme, Radio, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Content } from "antd/es/layout/layout";
 
@@ -29,6 +29,19 @@ const InformationPage = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  const handleRadioChange = (e) => {
+    setUserData({ ...userData, sex: e.target.value });
+  };
+
+  const handlePhoneChange = (e) => {
+    const { value } = e.target;
+    // Kiểm tra giá trị nhập vào để đảm bảo số điện thoại bắt đầu từ số 0 và không chứa chữ cái
+    if (/^0[0-9]*$/.test(value) || value === "") {
+      setUserData({ ...userData, phone: value });
+    }
+  };
+
 
   const fetchUser = async () => {
     try {
@@ -195,6 +208,59 @@ const InformationPage = () => {
 
                 <Form.Item label="Mã nhân viên">
                   <span>{user.id_user}</span>
+                </Form.Item>
+
+                <Form.Item label="CCCD" name="cccd" initialValue={user.cccd}>
+                  {editing ? (
+                    <Input
+                      name="cccd"
+                      value={userData.cccd}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    <span>{user.cccd}</span>
+                  )}
+                </Form.Item>
+
+                <Form.Item
+                  label="Số điện thoại"
+                  name="phone"
+                  initialValue={user.phone}
+                  rules={[
+                    {
+                      message: "Vui lòng nhập số điện thoại!",
+                    },
+                    {
+                      pattern: /^0[0-9]*$/,
+                      message:
+                        "Số điện thoại phải bắt đầu từ số 0 và không chứa chữ cái!",
+                    },
+                  ]}
+                >
+                  {editing ? (
+                    <Input
+                      name="phone"
+                      value={userData.phone}
+                      onChange={handlePhoneChange}
+                    />
+                  ) : (
+                    <span>{user.phone}</span>
+                  )}
+                </Form.Item>
+
+                <Form.Item label="Giới tính" name="sex" initialValue={user.sex}>
+                  {editing ? (
+                    <Radio.Group
+                      name="sex"
+                      value={userData.sex}
+                      onChange={handleRadioChange}
+                    >
+                      <Radio value={true}>Nam</Radio>
+                      <Radio value={false}>Nữ</Radio>
+                    </Radio.Group>
+                  ) : (
+                    <span>{user.sex ? "Nam" : "Nữ"}</span>
+                  )}
                 </Form.Item>
 
                 <Form.Item>
