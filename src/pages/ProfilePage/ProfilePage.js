@@ -39,7 +39,6 @@ const ProfilePage = () => {
       }}
     >
       <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-        {/* <BreadcrumbComponent /> */}
       </div>
 
       <Row>

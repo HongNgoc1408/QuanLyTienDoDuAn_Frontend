@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Radio } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../../assets/logo.png";
@@ -90,6 +90,45 @@ const UserForm = ({ user, handleChange, handleSubmit, textButton }) => {
             value={user.fullName}
             onChange={handleChange}
           />
+        </Form.Item>
+
+        <Form.Item
+          label="CCCD"
+          name="cccd"
+          rules={[
+            { required: true, message: "Vui lòng nhập CCCD!" },
+            {
+              pattern: /^[0-9]+$/,
+              message: "CCCD chỉ chứa số!",
+            },
+          ]}
+        >
+          <Input name="cccd" value={user.cccd} onChange={handleChange} />
+        </Form.Item>
+
+        <Form.Item
+          label="Số điện thoại"
+          name="phone"
+          rules={[
+            { required: true, message: "Vui lòng nhập số điện thoại!" },
+            {
+              pattern: /^0[0-9]{9}$/,
+              message: "Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số!",
+            },
+          ]}
+        >
+          <Input name="phone" value={user.phone} onChange={handleChange} />
+        </Form.Item>
+
+        <Form.Item
+          label="Giới tính"
+          name="sex"
+          rules={[{ required: true, message: "Vui lòng chọn giới tính!" }]}
+        >
+          <Radio.Group name="sex" value={user.sex} onChange={handleChange}>
+            <Radio value={true}>Nam</Radio>
+            <Radio value={false}>Nữ</Radio>
+          </Radio.Group>
         </Form.Item>
 
         <div className="contain-btn">

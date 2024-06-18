@@ -33,7 +33,7 @@ const routes = [
     isShowHeader: true,
   },
   {
-    path: "/infor",
+    path: "/information",
     name: "InformationPage",
     page: InformationPage,
     isShowHeader: true,

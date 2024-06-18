@@ -17,21 +17,6 @@ const UserTable = () => {
     console.log("params", pagination, filters, sorter, extra);
   };
 
-  // const onSelectChange = (newSelectedRowKeys) => {
-  //   console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-  //   setSelectedRowKeys(newSelectedRowKeys);
-  // };
-
-  // const rowSelection = {
-  //   selectedRowKeys,
-  //   onChange: onSelectChange,
-  //   selections: [
-  //     Table.SELECTION_ALL,
-  //     Table.SELECTION_INVERT,
-  //     Table.SELECTION_NONE,
-  //   ],
-  // };
-
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -125,6 +110,7 @@ const UserTable = () => {
       ),
   });
 
+
   const columns = [
     { key: "1", title: "STT", dataIndex: "index" },
     {
@@ -153,19 +139,37 @@ const UserTable = () => {
     },
     {
       key: "6",
+      title: "Căn cước công dân",
+      dataIndex: "cccd",
+      ...getColumnSearchProps("cccd"),
+    },
+    {
+      key: "7",
+      title: "Số điện thoại",
+      dataIndex: "phone",
+      ...getColumnSearchProps("phone"),
+    },
+    {
+      key: "8",
+      title: "Giới tính",
+      dataIndex: "sex",
+      render: (text) => <span>{text ? "Nam" : "Nữ"}</span>,
+    },
+    {
+      key: "9",
       title: "Ngày tạo",
       dataIndex: "created_at",
       ...getColumnSearchProps("created_at"),
     },
     {
-      key: "7",
+      key: "10",
       title: "Ngày cập nhật",
       dataIndex: "updated_at",
       ...getColumnSearchProps("updated_at"),
     },
 
     {
-      key: "8",
+      key: "11",
       title: "",
       dataIndex: "actions",
       render: (_, record) => (
@@ -215,6 +219,9 @@ const UserTable = () => {
           email: user.email,
           fullName: user.fullName,
           id_user: user.id_user,
+          cccd: user.cccd,
+          phone: user.phone,
+          sex: user.sex,
           created_at: user.formattedCreatedAt,
           updated_at: user.formattedUpdatedAt,
         }));
