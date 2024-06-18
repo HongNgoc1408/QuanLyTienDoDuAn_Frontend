@@ -1,12 +1,19 @@
+import { Avatar, Button } from "antd";
 import { Header } from "antd/es/layout/layout";
 import React from "react";
-import MenuComponent from "../MenuComponent/MenuComponent";
-import { Avatar } from "antd";
 import { useNavigate } from "react-router-dom";
-
+import MenuComponent from "../MenuComponent/MenuComponent";
 
 const HeaderComponent = () => {
   const navigate = useNavigate();
+
+  const isLoggedIn = !!localStorage.getItem("user");
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
   return (
     <div>
       <Header
@@ -31,14 +38,27 @@ const HeaderComponent = () => {
           <a href="/">Logo</a>
         </div>
         <MenuComponent />
-        {/* <ButtonComponent textButton="Tài khoản" /> */}
+        {isLoggedIn && (
+          <Button
+            type="text"
+            style={{
+              color: "black",
+              marginRight: 20,
+              backgroundColor: "white",
+            }}
+            onClick={handleLogout}
+          >
+            Đăng xuất
+          </Button>
+        )}
         <Avatar
           size="large"
           style={{
             backgroundColor: "#fde3cf",
             color: "#f56a00",
+            marginRight: 20,
           }}
-          onClick={()=>navigate("/information")}
+          onClick={() => navigate("/information")}
         >
           U
         </Avatar>

@@ -5,8 +5,8 @@ import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import UserTable from "../../components/UserComponent/UserTable"; // Adjust the import path as needed
 
-import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import * as XLSX from "xlsx";
 
 const UserPage = () => {
   const navigate = useNavigate();
@@ -19,17 +19,17 @@ const UserPage = () => {
     navigate("/user/add"); // Adjust the path as needed
   };
 
-   const exportTableToExcel = () => {
-     if (!tableRef.current) return;
-     const table = tableRef.current;
-     const workbook = XLSX.utils.table_to_book(table);
-     const excelBuffer = XLSX.write(workbook, {
-       bookType: "xlsx",
-       type: "array",
-     });
-     const data = new Blob([excelBuffer], { type: "application/octet-stream" });
-     saveAs(data, "User_Table.xlsx");
-   };
+  const exportTableToExcel = () => {
+    if (!tableRef.current) return;
+    const table = tableRef.current;
+    const workbook = XLSX.utils.table_to_book(table);
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const data = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(data, "User_Table.xlsx");
+  };
 
   return (
     <Content
@@ -42,7 +42,7 @@ const UserPage = () => {
       <Row>
         <Col span={17}>
           <p style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-            Quản lý người dùng
+            Quản lý nhân viên
           </p>
         </Col>
 
@@ -56,7 +56,7 @@ const UserPage = () => {
             }}
             onClick={navigateToAddUserPage}
           >
-            Thêm người dùng
+            Thêm nhân viên
           </Button>
         </Col>
         <Col span={3} style={{ padding: 10 }}>
