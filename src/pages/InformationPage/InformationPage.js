@@ -59,11 +59,22 @@ const InformationPage = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "email") {
-      // Kiểm tra định dạng email
       const isValidEmail = /\S+@\S+\.\S+/.test(value);
       setValidEmail(isValidEmail);
+    } else if (name === "phone") {
+      // Lọc bỏ các ký tự không phải số và giới hạn độ dài không quá 10
+      const cleanedValue = value.replace(/[^0-9]/g, "").slice(0, 10);
+      // Cập nhật state
+      setUserData({ ...userData, [name]: cleanedValue });
+      // Kiểm tra nếu chiều dài cleanedValue lớn hơn 10, hiển thị thông báo lỗi
+      if (value.length > 10) {
+        message.error("Số điện thoại không được quá 10 chữ số!");
+      } else {
+        setPhoneError(""); // Xóa thông báo lỗi nếu đã nhập đúng
+      }
+    } else {
+      setUserData({ ...userData, [name]: value });
     }
-    setUserData({ ...userData, [name]: value });
   };
 
   const handlePasswordChange = (e) => {
@@ -74,22 +85,45 @@ const InformationPage = () => {
     setCurrentPassword(e.target.value);
   };
 
+  const handlePhoneChange = (e) => {
+  const value = e.target.value.replace(/[^0-9]/g, "");
+  if (value.length <= 10) {
+    setUserData({ ...userData, phone: value });
+  }
+};
+
+
   const handleEditUser = async () => {
     try {
-      if (!validEmail) {
+      const isValidEmail = /\S+@\S+\.\S+/.test(userData.email);
+      if (!isValidEmail) {
         message.error("Vui lòng nhập địa chỉ email hợp lệ!");
         return;
       }
+      if (phoneError) {
+        message.error(phoneError);
+        return;
+      }
+      const isValidCCCD = /^[0-9]{12}$/.test(userData.cccd);
+      if (!isValidCCCD) {
+        message.error("CCCD phải có đúng 12 chữ số!");
+        return;
+      }
+
       setLoading(true);
       await editUser(user._id, userData);
       setEditing(false);
       fetchUser();
       setLoading(false);
+      message.success("Chỉnh sửa thông tin thành công!");
     } catch (error) {
       console.error("Lỗi chỉnh sửa thông tin người dùng:", error);
       setLoading(false);
     }
   };
+
+
+
 
   const handleChangePassword = async () => {
     try {
@@ -115,6 +149,14 @@ const InformationPage = () => {
     }
   };
 
+  const handleCloseChangePassword = () => {
+    // Đặt lại state của changingPassword về false để đóng form đổi mật khẩu
+    setChangingPassword(false);
+    // Đặt lại giá trị của password và currentPassword về rỗng để làm sạch form
+    setPassword("");
+    setCurrentPassword("");
+  };
+
   if (!user) {
     return (
       <div style={{ margin: "0 auto", textAlign: "center" }}>
@@ -124,14 +166,8 @@ const InformationPage = () => {
   }
 
   return (
-    <Content
-      style={{
-        minHeight: 600,
-        background: colorBgContainer,
-        borderRadius: borderRadiusLG,
-      }}
-    >
-      <div style={{ maxWidth: "600px", margin: "0 auto", maxHeigh: "200%" }}>
+    <Content style={{ minHeight: 600 }}>
+      <div style={{ maxWidth: 600, margin: "0 auto" }}>
         <h2
           style={{
             textAlign: "center",
@@ -141,7 +177,7 @@ const InformationPage = () => {
         >
           Thông tin người dùng
         </h2>
-        <Card>
+        <Card style={{ border: "2px solid #CCD3D8" }}>
           {loading ? (
             <p>Loading...</p>
           ) : (
@@ -210,7 +246,20 @@ const InformationPage = () => {
                   <span>{user.id_user}</span>
                 </Form.Item>
 
-                <Form.Item label="CCCD" name="cccd" initialValue={user.cccd}>
+                <Form.Item
+                  label="CCCD"
+                  name="cccd"
+                  initialValue={user.cccd}
+                  rules={[
+                    {
+                      message: "Vui lòng nhập CCCD!",
+                    },
+                    {
+                      pattern: /^[0-9]{12}$/,
+                      message: "CCCD phải có đúng 12 chữ số!",
+                    },
+                  ]}
+                >
                   {editing ? (
                     <Input
                       name="cccd"
@@ -231,9 +280,9 @@ const InformationPage = () => {
                       message: "Vui lòng nhập số điện thoại!",
                     },
                     {
-                      pattern: /^0[0-9]*$/,
+                      pattern: /^0[0-9]{9}$/,
                       message:
-                        "Số điện thoại phải bắt đầu từ số 0 và không chứa chữ cái!",
+                        "Số điện thoại phải bắt đầu từ số 0 và có đúng 10 chữ số!",
                     },
                   ]}
                 >
@@ -253,7 +302,7 @@ const InformationPage = () => {
                     <Radio.Group
                       name="sex"
                       value={userData.sex}
-                      onChange={handleRadioChange}
+                      onChange={handleInputChange}
                     >
                       <Radio value={true}>Nam</Radio>
                       <Radio value={false}>Nữ</Radio>
@@ -265,7 +314,11 @@ const InformationPage = () => {
 
                 <Form.Item>
                   {editing ? (
-                    <Button type="primary" onClick={handleEditUser}>
+                    <Button
+                      type="primary"
+                      onClick={handleEditUser}
+                      style={{ marginRight: 5 }}
+                    >
                       Lưu
                     </Button>
                   ) : (
@@ -287,6 +340,8 @@ const InformationPage = () => {
                     <Form.Item
                       label="Mật khẩu hiện tại"
                       name="currentPassword"
+                      labelCol={{ span: 24 }}
+                      wrapperCol={{ span: 24 }}
                       rules={[
                         {
                           required: true,
@@ -298,12 +353,15 @@ const InformationPage = () => {
                         name="currentPassword"
                         value={currentPassword}
                         onChange={handleCurrentPasswordChange}
+                        style={{ width: "100%" }}
                       />
                     </Form.Item>
 
                     <Form.Item
                       label="Mật khẩu mới"
                       name="password"
+                      labelCol={{ span: 24 }}
+                      wrapperCol={{ span: 24 }}
                       rules={[
                         {
                           required: true,
@@ -324,12 +382,20 @@ const InformationPage = () => {
                         name="password"
                         value={password}
                         onChange={handlePasswordChange}
+                        style={{ width: "100%" }}
                       />
                     </Form.Item>
 
                     <Form.Item>
-                      <Button type="primary" onClick={handleChangePassword}>
+                      <Button
+                        type="primary"
+                        onClick={handleChangePassword}
+                        style={{ marginRight: 5 }}
+                      >
                         Lưu mật khẩu
+                      </Button>
+                      <Button onClick={handleCloseChangePassword}>
+                        Hủy bỏ
                       </Button>
                     </Form.Item>
                   </div>
