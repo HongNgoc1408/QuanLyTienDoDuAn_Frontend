@@ -173,6 +173,7 @@ const UserTable = () => {
 
     {
       key: "11",
+      width: 150,
       title: "",
       dataIndex: "actions",
       render: (_, record) => (

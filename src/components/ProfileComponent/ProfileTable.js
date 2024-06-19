@@ -162,6 +162,9 @@ const ProfileTable = () => {
           offical: item.offical,
           photo: item.photo,
           note: item.note,
+          fileId: Array.isArray(item.fileId)
+            ? item.fileId.join(" ")
+            : item.fileId,
         }));
         setData(formattedData);
       } catch (error) {
@@ -191,29 +194,32 @@ const ProfileTable = () => {
         title="Số, ký hiệu văn bản"
         dataIndex="title"
         key="title"
+        width={200}
         {...getColumnSearchProps("title")}
       />
       <Column
-        width={250}
+        width={400}
         title="Nội dung trích yếu văn bản"
         dataIndex="content"
         key="content"
         {...getColumnSearchProps("content")}
       />
       <Column
-        width={100}
+        width={200}
         title="Loại văn bản"
         dataIndex="type"
         key="type"
         {...getColumnSearchProps("type")}
       />
       <Column
+        width={200}
         title="Ngày phát hành"
         dataIndex="published_date"
         key="published_date"
         {...getColumnSearchProps("published_date")}
       />
       <Column
+        width={250}
         title="Cơ quan ban hành"
         dataIndex="organ"
         key="organ"
@@ -221,18 +227,21 @@ const ProfileTable = () => {
       />
       <ColumnGroup title="Số lượng bản">
         <Column
+          width={100}
           title="Bản gốc"
           dataIndex="original"
           key="original"
           sorter={(a, b) => a.original - b.original}
         />
         <Column
+          width={100}
           title="Bản chính"
           dataIndex="offical"
           key="offical"
           sorter={(a, b) => a.offical - b.offical}
         />
         <Column
+          width={100}
           title="Bản photo"
           dataIndex="photo"
           key="photo"
@@ -240,7 +249,7 @@ const ProfileTable = () => {
         />
       </ColumnGroup>
       <Column
-        width={150}
+        width={300}
         title="Ghi chú"
         dataIndex="note"
         key="note"
@@ -252,8 +261,10 @@ const ProfileTable = () => {
         dataIndex="fileId"
         key="fileId"
         {...getColumnSearchProps("fileId")}
+        
       />
       <Column
+        width={150}
         title=""
         key="actions"
         fixed="right" // Để cố định bên phải

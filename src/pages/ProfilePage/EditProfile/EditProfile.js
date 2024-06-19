@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ProfileForm from "../../../components/ProfileComponent/ProfileForm";
-import {
-  editProfile,
-  getProfileById,
-} from "../../../services/ProfileService";
+import { editProfile, getProfileById } from "../../../services/ProfileService";
 import { Spin, message } from "antd";
+import { getFiles } from "../../../services/DocService";
 
 const EditProfile = () => {
   const { id } = useParams();
   const [profile, setProfile] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -64,7 +63,25 @@ const EditProfile = () => {
     { label: "Phiếu báo - PB", value: "Phiếu báo - PB" },
     { label: "Thư công", value: "Thư công" },
   ];
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const docs = await getFiles();
+
+        const formattedData = docs.map((doc) => ({
+          label: doc.docname,
+          value: doc.docname,
+        }));
+        setData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -109,8 +126,7 @@ const EditProfile = () => {
 
   return (
     <div>
-      <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-      </div>
+      <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}></div>
       <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
         <h2
           style={{
@@ -124,6 +140,7 @@ const EditProfile = () => {
         <ProfileForm
           textButton="Hiệu chỉnh"
           options={options}
+          optionsFile={data}
           profile={profile}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
