@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Button, Upload, message, List, theme, Row, Col } from "antd";
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
-import {
-  uploadMultipleFiles,
-  getFiles,
-  downloadFile,
-} from "../../services/DocService";
-import { Link } from "react-router-dom";
+import { Button, Upload, message, theme, Row, Col } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { uploadMultipleFiles, getFiles } from "../../services/DocService";
 import { Content } from "antd/es/layout/layout";
 import DocTable from "../../components/DocComponent/DocTable";
 
@@ -56,8 +51,6 @@ const DocPage = () => {
     const newFileList = fileList.filter((item) => item.uid !== file.uid);
     setFileList(newFileList);
   };
-
- 
 
   const props = {
     onRemove: handleRemove,
@@ -115,28 +108,7 @@ const DocPage = () => {
           </Button>
         </Col>
       </Row>
-      <DocTable />
-      {/* <div>
-        {uploadedFiles.length > 0 && (
-          <div style={{ marginTop: 20 }}>
-            <h3>Uploaded Files:</h3>
-            <List
-              bordered
-              dataSource={uploadedFiles}
-              renderItem={(file) => (
-                <List.Item>
-                  <Link
-                    onClick={() => viewFile(file.id)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {file.docname}
-                  </Link>
-                </List.Item>
-              )}
-            />
-          </div>
-        )}
-      </div> */}
+      <DocTable files={uploadedFiles} />
     </Content>
   );
 };

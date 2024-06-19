@@ -17,7 +17,7 @@ const ProfileTable = () => {
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
   };
-  
+
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -200,7 +200,8 @@ const ProfileTable = () => {
         key="content"
         {...getColumnSearchProps("content")}
       />
-      <Column width={100}
+      <Column
+        width={100}
         title="Loại văn bản"
         dataIndex="type"
         key="type"
@@ -244,6 +245,13 @@ const ProfileTable = () => {
         dataIndex="note"
         key="note"
         {...getColumnSearchProps("note")}
+      />
+      <Column
+        width={250}
+        title="Tài liệu đính kèm"
+        dataIndex="fileId"
+        key="fileId"
+        {...getColumnSearchProps("fileId")}
       />
       <Column
         title=""
