@@ -1,4 +1,8 @@
-import { DeleteOutlined, EditOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
@@ -110,7 +114,6 @@ const UserTable = () => {
       ),
   });
 
-
   const columns = [
     { key: "1", title: "STT", dataIndex: "index" },
     {
@@ -199,6 +202,9 @@ const UserTable = () => {
       await deleteUser(id);
       message.success("Xóa người dùng thành công");
       setData(data.filter((item) => item.key !== id));
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       message.error("Có lỗi xảy ra khi xóa người dùng");
       console.error("Error:", error);
@@ -210,7 +216,7 @@ const UserTable = () => {
       try {
         const users = await getUsers();
 
-        const filteredUsers = users.filter((user) => !user.isAdmin);
+        const filteredUsers = users;
 
         const formattedData = filteredUsers.map((user, index) => ({
           key: user._id,

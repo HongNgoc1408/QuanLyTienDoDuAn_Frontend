@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { getUserById, editUser } from "../../services/UserService";
-import { Form, Input, Button, Card, theme, Radio, message } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Button, Card, Form, Input, Radio, message, theme } from "antd";
 import { Content } from "antd/es/layout/layout";
+import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { editUser, getUserById } from "../../services/UserService";
 
 const InformationPage = () => {
   const [userList, setUserList] = useState([]);
@@ -22,9 +22,23 @@ const InformationPage = () => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
+  // Sử dụng useCallback để bao bọc hàm fetchUser
+  const fetchUser = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await getUserById(user._id);
+      setUserList([data]);
+      setUserData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Lỗi lấy thông tin người dùng:", error);
+      setLoading(false);
+    }
+  }, [user._id]); // Thêm user._id vào danh sách dependency
+
   useEffect(() => {
-    fetchUser();
-  }, []);
+    fetchUser(); // Gọi fetchUser từ trong useEffect
+  }, [fetchUser]); // Thêm fetchUser vào danh sách dependency của useEffect
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -39,20 +53,6 @@ const InformationPage = () => {
     // Kiểm tra giá trị nhập vào để đảm bảo số điện thoại bắt đầu từ số 0 và không chứa chữ cái
     if (/^0[0-9]*$/.test(value) || value === "") {
       setUserData({ ...userData, phone: value });
-    }
-  };
-
-
-  const fetchUser = async () => {
-    try {
-      setLoading(true);
-      const data = await getUserById(user._id);
-      setUserList([data]);
-      setUserData(data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Lỗi lấy thông tin người dùng:", error);
-      setLoading(false);
     }
   };
 

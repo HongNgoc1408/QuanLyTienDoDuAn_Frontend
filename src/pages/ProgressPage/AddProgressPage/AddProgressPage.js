@@ -56,8 +56,9 @@ const AddProgressPage = () => {
     addProgress(progress)
       .then(() => {
         message.success("Thêm tiến độ dự án thành công");
-        setTimeout(5);
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch((error) => {
         message.error("Có lỗi xảy ra khi thêm tiến độ dự án");

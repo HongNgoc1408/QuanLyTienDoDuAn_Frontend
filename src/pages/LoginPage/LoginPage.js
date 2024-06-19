@@ -15,7 +15,7 @@ const LoginPage = () => {
       console.log(response);
       if (response.isAdmin) {
         localStorage.setItem("user", JSON.stringify(response));
-        navigate("/home");
+        navigate("/profile");
       } else if (!response.isAdmin) {
         localStorage.setItem("user", JSON.stringify(response));
         navigate("/employee");
@@ -32,11 +32,15 @@ const LoginPage = () => {
     <div
       style={{
         margin: "0 auto",
-        paddingLeft: 500,
-        paddingRight: 500,
-        paddingTop: 68,
-        paddingBottom: 50,
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        paddingTop: "5vh", // 5% của chiều cao viewport
+        paddingBottom: "5vh", // 5% của chiều cao viewport
         background: "linear-gradient(to right, #4169e1, #40e0d0)",
+        minHeight: "100vh", // Tối thiểu chiều cao của màn hình
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Form
@@ -44,18 +48,20 @@ const LoginPage = () => {
         layout="vertical"
         onFinish={handleSubmit}
         style={{
-          padding: 80,
+          width: "100%", // 100% chiều rộng của Form
+          maxWidth: 400, // Tối đa 400px chiều rộng của Form
+          padding: "5%",
           background: "#fff",
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
           borderRadius: 8,
           border: "2px solid #00bfff", // Thêm thuộc tính border để chỉnh màu viền
         }}
       >
-        <div style={{ textAlign: "center", marginBottom: 20 }}>
+        <div style={{ textAlign: "center", marginBottom: "5%" }}>
           <img
             src={require("../../assets/logo.png")}
             alt="Logo"
-            style={{ width: 200, height: "auto" }}
+            style={{ width: "60%", maxWidth: 200, height: "auto" }}
           />
         </div>
 
@@ -86,7 +92,7 @@ const LoginPage = () => {
             <Button
               type="primary"
               htmlType="submit"
-              style={{ width: "40%", height: 40 }}
+              style={{ width: "100%", height: 40 }}
             >
               Đăng nhập
             </Button>
