@@ -13,6 +13,7 @@ const ProgressForm = ({
   loading,
 }) => {
   const navigate = useNavigate();
+
   return (
     <Form
       name="progress_form"
@@ -105,6 +106,7 @@ const ProgressForm = ({
           ]}
         />
       </Form.Item>
+      
       <Form.Item
         label="Ngày bắt đầu"
         name="start_date"

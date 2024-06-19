@@ -17,6 +17,10 @@ const AddProgressPage = () => {
     end_date: null,
   });
 
+  // const {
+  //   token: { colorBgContainer, borderRadiusLG },
+  // } = theme.useToken();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -56,8 +60,9 @@ const AddProgressPage = () => {
     addProgress(progress)
       .then(() => {
         message.success("Thêm tiến độ dự án thành công");
-        setTimeout(5);
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch((error) => {
         message.error("Có lỗi xảy ra khi thêm tiến độ dự án");
@@ -66,6 +71,13 @@ const AddProgressPage = () => {
   };
 
   return (
+    // <Content
+    //   style={{
+    //     minHeight: 600,
+    //     background: colorBgContainer,
+    //     borderRadius: borderRadiusLG,
+    //   }}
+    // >
     <div>
       <div
         style={{
@@ -94,6 +106,7 @@ const AddProgressPage = () => {
         />
       </div>
     </div>
+    // </Content>
   );
 };
 

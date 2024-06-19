@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import ProfileForm from "../../../components/ProfileComponent/ProfileForm";
-import { addProfile } from "../../../services/ProfileService";
+import React, { useEffect, useState } from "react";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
+import ProfileForm from "../../../components/ProfileComponent/ProfileForm";
+import { addProfile } from "../../../services/ProfileService";
+import { getFiles } from "../../../services/DocService";
 // import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
 
 const AddProfile = () => {
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({
     title: "",
     content: "",
@@ -14,7 +18,7 @@ const AddProfile = () => {
     organ: "",
     quantity: "",
     note: "",
-    pdfFileId: "",
+    fileId: [],
   });
 
   const options = [
@@ -51,6 +55,26 @@ const AddProfile = () => {
     { label: "Thư công", value: "Thư công" },
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const docs = await getFiles();
+
+        const formattedData = docs.map((doc) => ({
+          label: doc.docname,
+          value: doc.docname,
+        }));
+        setData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile((prevProfile) => ({
@@ -58,7 +82,6 @@ const AddProfile = () => {
       [name]: value,
     }));
   };
-
 
   const handleSubmit = () => {
     addProfile(profile)
@@ -78,8 +101,6 @@ const AddProfile = () => {
       [name]: value,
     }));
   };
-
-  const navigate = useNavigate();
 
   return (
     <div>
@@ -105,10 +126,12 @@ const AddProfile = () => {
         <ProfileForm
           textButton="Thêm"
           options={options}
+          optionsFile={data}
           profile={profile}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           handleSelectChange={handleSelectChange}
+          loading={loading}
         />
       </div>
     </div>

@@ -54,12 +54,12 @@ export const downloadFile = async (fileId) => {
 //   }
 // };
 
-// export const deleteProfile = async (id) => {
-//   try {
-//     const response = await axios.delete(`/docs/delete/${id}`);
-//     return response.data;
-//   } catch (error) {
-//     console.error("Lỗi tạo hồ sơ:", error);
-//     throw error;
-//   }
-// };
+export const deleteDoc = async (id) => {
+  try {
+    const response = await axios.delete(`/docs/delete/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi tạo hồ sơ:", error);
+    throw error;
+  }
+};

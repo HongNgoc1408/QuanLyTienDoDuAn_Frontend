@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Button, Upload, message, List } from "antd";
+import { Button, Upload, message, theme, Row, Col } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import {
-  uploadMultipleFiles,
-  getFiles,
-  downloadFile,
-} from "../../services/DocService";
-import { Link } from "react-router-dom";
+import { uploadMultipleFiles, getFiles } from "../../services/DocService";
+import { Content } from "antd/es/layout/layout";
+import DocTable from "../../components/DocComponent/DocTable";
 
 const DocPage = () => {
   const [fileList, setFileList] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
 
   useEffect(() => {
     const fetchFiles = async () => {
@@ -36,8 +36,12 @@ const DocPage = () => {
       message.success("Files uploaded successfully");
       setFileList([]);
       setUploadedFiles(uploadedData);
+      setTimeout(5);
+      window.location.reload();
     } catch (error) {
-      message.error("Upload failed");
+      message.error(
+        "Upload failed! Payload document size is larger than maximum of 16777216."
+      );
     }
   };
 
@@ -50,17 +54,6 @@ const DocPage = () => {
     setFileList(newFileList);
   };
 
-  const viewFile = async (fileId) => {
-    try {
-      const file = await downloadFile(fileId);
-      const contentType = file.type || "application/octet-stream"; // Fallback to a generic binary stream
-      const url = URL.createObjectURL(new Blob([file], { type: contentType }));
-      window.open(url);
-    } catch (error) {
-      message.error("Error viewing file");
-    }
-  };
-
   const props = {
     onRemove: handleRemove,
     beforeUpload: (file) => {
@@ -68,42 +61,57 @@ const DocPage = () => {
       return false;
     },
     fileList,
+    accept: ".jpg,.jpeg,.png,.pdf,.docx,.xlxs",
   };
 
   return (
-    <div>
-      <Upload {...props} multiple onChange={handleFileChange}>
-        <Button icon={<UploadOutlined />}>Select Files</Button>
-      </Upload>
-      <Button
-        type="primary"
-        onClick={handleUpload}
-        disabled={fileList.length === 0}
-        style={{ marginTop: 16 }}
-      >
-        Upload Files
-      </Button>
-
-      {uploadedFiles.length > 0 && (
-        <div style={{ marginTop: 20 }}>
-          <h3>Uploaded Files:</h3>
-          <List
-            bordered
-            dataSource={uploadedFiles}
-            renderItem={(file) => (
-              <List.Item>
-                <Link
-                  onClick={() => viewFile(file._id)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {file.docname}
-                </Link>
-              </List.Item>
-            )}
-          />
-        </div>
-      )}
-    </div>
+    <Content
+      style={{
+        minHeight: 600,
+        background: colorBgContainer,
+        borderRadius: borderRadiusLG,
+      }}
+    >
+      <Row>
+        <Col>
+          <p style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
+            Quản lý tài liệu dự án
+          </p>
+        </Col>
+      </Row>
+      <Row style={{ padding: 10, textAlign: "start" }}>
+        <Col style={{ marginLeft: 50 }}>
+          <Upload {...props} multiple onChange={handleFileChange}>
+            <Button
+              icon={<UploadOutlined />}
+              style={{
+                fontWeight: "bold",
+                fontSize: 15,
+                height: 50,
+              }}
+            >
+              Thêm tài liệu dự án
+            </Button>
+          </Upload>
+        </Col>
+        <Col>
+          <Button
+            type="primary"
+            onClick={handleUpload}
+            disabled={fileList.length === 0}
+            style={{
+              fontWeight: "bold",
+              fontSize: 15,
+              height: 50,
+              marginLeft: 5,
+            }}
+          >
+            Upload
+          </Button>
+        </Col>
+      </Row>
+      <DocTable files={uploadedFiles} />
+    </Content>
   );
 };
 

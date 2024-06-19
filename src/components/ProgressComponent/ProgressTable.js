@@ -135,9 +135,10 @@ const ProgressTable = () => {
   });
 
   const columns = [
-    { key: "1", title: "STT", dataIndex: "index", width: 70 },
+    { key: "1", title: "STT", dataIndex: "index", width: 60 },
     {
       key: "2",
+      width: 300,
       title: "Tên dự án",
       dataIndex: "title",
 
@@ -145,6 +146,7 @@ const ProgressTable = () => {
     },
     {
       key: "3",
+      width: 400,
       title: "Mô tả dự án",
       dataIndex: "description",
 
@@ -152,6 +154,7 @@ const ProgressTable = () => {
     },
     {
       key: "4",
+      width: 200,
       title: "Người được giao",
       dataIndex: "assignedTo",
 
@@ -159,6 +162,7 @@ const ProgressTable = () => {
     },
     {
       key: "5",
+      width: 150,
       title: "Trạng thái",
       dataIndex: "status",
       filters: [
@@ -184,6 +188,7 @@ const ProgressTable = () => {
     },
     {
       key: "6",
+      width: 150,
       title: "Độ ưu tiên",
       dataIndex: "priority",
       filters: [
@@ -205,53 +210,62 @@ const ProgressTable = () => {
     },
     {
       key: "7",
+      width: 150,
       title: "Ngày bắt đầu",
       dataIndex: "start_date",
       ...getColumnSearchProps("start_date"),
     },
     {
       key: "8",
+      width: 150,
       title: "Ngày kết thúc",
       dataIndex: "end_date",
       ...getColumnSearchProps("end_date"),
     },
     {
       key: "9",
+      width: 150,
       title: "Ngày tạo",
       dataIndex: "created_at",
       ...getColumnSearchProps("created_at"),
     },
     {
       key: "10",
+      width: 150,
       title: "Ngày cập nhật",
       dataIndex: "updated_at",
       ...getColumnSearchProps("updated_at"),
     },
     {
       key: "11",
+      width: 150,
       title: "",
       dataIndex: "actions",
-      fixed: "right",
-      render: (_, record) => (
-        <span>
-          <Link to={`edit/${record.key}`}>
-            <Button type="primary">
-              <EditOutlined style={{ fontSize: 18 }} />
-            </Button>
-          </Link>
+      fixed: "right", // Để cố định bên phải
+      render: (_, record) => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const isAdmin = user && user.isAdmin;
 
-          <Popconfirm
-            title="Bạn có chắc chắn muốn xóa tiến độ này?"
-            onConfirm={() => handleDelete(record.key)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="primary" danger style={{ marginLeft: 5 }}>
-              <DeleteOutlined style={{ fontSize: 18 }} />
-            </Button>
-          </Popconfirm>
-        </span>
-      ),
+        return isAdmin ? (
+          <span>
+            <Link to={`edit/${record.key}`}>
+              <Button type="primary">
+                <EditOutlined style={{ fontSize: 18 }} />
+              </Button>
+            </Link>
+            <Popconfirm
+              title="Bạn có chắc chắn muốn xóa người dùng này?"
+              onConfirm={() => handleDelete(record.key)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary" danger style={{ marginLeft: 5 }}>
+                <DeleteOutlined style={{ fontSize: 18 }} />
+              </Button>
+            </Popconfirm>
+          </span>
+        ) : null;
+      },
     },
   ];
 

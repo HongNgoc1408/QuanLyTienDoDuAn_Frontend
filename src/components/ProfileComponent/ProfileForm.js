@@ -1,18 +1,16 @@
-import { Button, DatePicker, Form, Input, Select, InputNumber, Upload } from "antd";
+import { Button, DatePicker, Form, Input, Select, InputNumber } from "antd";
 import React from "react";
 import dayjs from "dayjs";
-import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-
 
 const ProfileForm = ({
   textButton,
   options,
+  optionsFile,
   profile,
   handleChange,
   handleSubmit,
   handleSelectChange,
-  handleFileChange,
   loading,
 }) => {
   const handleDateChange = (date, dateString) => {
@@ -132,16 +130,27 @@ const ProfileForm = ({
           onChange={handleChange}
         />
       </Form.Item>
-      <Form.Item label="Upload PDF" name="pdfFileId">
-        <Upload
-          name="pdfFile"
-          value={profile.pdfFileId}
-          beforeUpload={() => false} 
-          onChange={handleFileChange} 
-          accept=".pdf"
-        >
-          <Button icon={<UploadOutlined />}>Chọn file PDF</Button>
-        </Upload>
+  
+      <Form.Item
+        label="Tài liệu đính kèm"
+        name="fileId"
+        rules={[
+          {
+            required: true,
+            message: "Vui lòng chọn tài liệu đính kèm của dự án",
+          },
+        ]}
+      >
+        <Select
+          mode="multiple"
+          allowClear
+          style={{ width: "100%" }}
+          name="fileId"
+          value={profile.fileId}
+          placeholder="Vui lòng chọn tài liệu đính kèm"
+          onChange={(value) => handleSelectChange("fileId", value)}
+          options={optionsFile}
+        />
       </Form.Item>
 
       <Form.Item>

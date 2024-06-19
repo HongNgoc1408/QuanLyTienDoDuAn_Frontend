@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
-import { deleteProfile, getProfile } from "../../services/ProfileService";
-import { Link } from "react-router-dom";
-import Highlighter from "react-highlight-words";
 import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import Highlighter from "react-highlight-words";
+import { Link } from "react-router-dom";
+import { deleteProfile, getProfile } from "../../services/ProfileService";
 
 const { Column, ColumnGroup } = Table;
 
@@ -17,7 +17,7 @@ const ProfileTable = () => {
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
   };
-  
+
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -162,6 +162,9 @@ const ProfileTable = () => {
           offical: item.offical,
           photo: item.photo,
           note: item.note,
+          fileId: Array.isArray(item.fileId)
+            ? item.fileId.join(" ")
+            : item.fileId,
         }));
         setData(formattedData);
       } catch (error) {
@@ -191,28 +194,32 @@ const ProfileTable = () => {
         title="Số, ký hiệu văn bản"
         dataIndex="title"
         key="title"
+        width={200}
         {...getColumnSearchProps("title")}
       />
       <Column
-        width={250}
+        width={400}
         title="Nội dung trích yếu văn bản"
         dataIndex="content"
         key="content"
         {...getColumnSearchProps("content")}
       />
-      <Column width={100}
+      <Column
+        width={200}
         title="Loại văn bản"
         dataIndex="type"
         key="type"
         {...getColumnSearchProps("type")}
       />
       <Column
+        width={200}
         title="Ngày phát hành"
         dataIndex="published_date"
         key="published_date"
         {...getColumnSearchProps("published_date")}
       />
       <Column
+        width={250}
         title="Cơ quan ban hành"
         dataIndex="organ"
         key="organ"
@@ -220,18 +227,21 @@ const ProfileTable = () => {
       />
       <ColumnGroup title="Số lượng bản">
         <Column
+          width={100}
           title="Bản gốc"
           dataIndex="original"
           key="original"
           sorter={(a, b) => a.original - b.original}
         />
         <Column
+          width={100}
           title="Bản chính"
           dataIndex="offical"
           key="offical"
           sorter={(a, b) => a.offical - b.offical}
         />
         <Column
+          width={100}
           title="Bản photo"
           dataIndex="photo"
           key="photo"
@@ -239,35 +249,49 @@ const ProfileTable = () => {
         />
       </ColumnGroup>
       <Column
-        width={150}
+        width={300}
         title="Ghi chú"
         dataIndex="note"
         key="note"
         {...getColumnSearchProps("note")}
       />
       <Column
+        width={250}
+        title="Tài liệu đính kèm"
+        dataIndex="fileId"
+        key="fileId"
+        {...getColumnSearchProps("fileId")}
+        
+      />
+      <Column
+        width={150}
         title=""
         key="actions"
-        fixed="right"
-        render={(_, record) => (
-          <span>
-            <Link to={`edit/${record.key}`}>
-              <Button type="primary">
-                <EditOutlined style={{ fontSize: 18 }} />
-              </Button>
-            </Link>
-            <Popconfirm
-              title="Bạn có chắc chắn muốn xóa tiến độ này?"
-              onConfirm={() => handleDelete(record.key)}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button type="primary" danger style={{ marginLeft: 5 }}>
-                <DeleteOutlined style={{ fontSize: 18 }} />
-              </Button>
-            </Popconfirm>
-          </span>
-        )}
+        fixed="right" // Để cố định bên phải
+        render={(_, record) => {
+          const user = JSON.parse(localStorage.getItem("user"));
+          const isAdmin = user && user.isAdmin;
+
+          return isAdmin ? (
+            <span>
+              <Link to={`edit/${record.key}`}>
+                <Button type="primary">
+                  <EditOutlined style={{ fontSize: 18 }} />
+                </Button>
+              </Link>
+              <Popconfirm
+                title="Bạn có chắc chắn muốn xóa tiến độ này?"
+                onConfirm={() => handleDelete(record.key)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button type="primary" danger style={{ marginLeft: 5 }}>
+                  <DeleteOutlined style={{ fontSize: 18 }} />
+                </Button>
+              </Popconfirm>
+            </span>
+          ) : null;
+        }}
       />
     </Table>
   );
