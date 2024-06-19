@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { getUserById, editUser } from "../../services/UserService";
 import { Form, Input, Button, Card, Radio, message } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -22,11 +22,7 @@ const InformationPage = () => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getUserById(user._id);
@@ -37,7 +33,13 @@ const InformationPage = () => {
       console.error("Lỗi lấy thông tin người dùng:", error);
       setLoading(false);
     }
-  };
+  }, [user._id]);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+
 
   const [phoneError, setPhoneError] = useState("");
 
@@ -71,12 +73,11 @@ const InformationPage = () => {
   };
 
   const handlePhoneChange = (e) => {
-  const value = e.target.value.replace(/[^0-9]/g, "");
-  if (value.length <= 10) {
-    setUserData({ ...userData, phone: value });
-  }
-};
-
+    const value = e.target.value.replace(/[^0-9]/g, "");
+    if (value.length <= 10) {
+      setUserData({ ...userData, phone: value });
+    }
+  };
 
   const handleEditUser = async () => {
     try {
@@ -106,9 +107,6 @@ const InformationPage = () => {
       setLoading(false);
     }
   };
-
-
-
 
   const handleChangePassword = async () => {
     try {
