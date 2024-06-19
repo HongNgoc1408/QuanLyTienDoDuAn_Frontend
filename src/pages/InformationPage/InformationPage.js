@@ -1,6 +1,6 @@
-import { Button, Card, Form, Input, Radio, message, theme } from "antd";
+import { Button, Card, Form, Input, Radio, message } from "antd";
 import { Content } from "antd/es/layout/layout";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { editUser, getUserById } from "../../services/UserService";
 
@@ -22,8 +22,11 @@ const InformationPage = () => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  // Sử dụng useCallback để bao bọc hàm fetchUser
-  const fetchUser = useCallback(async () => {
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
     try {
       setLoading(true);
       const data = await getUserById(user._id);
@@ -34,27 +37,9 @@ const InformationPage = () => {
       console.error("Lỗi lấy thông tin người dùng:", error);
       setLoading(false);
     }
-  }, [user._id]); // Thêm user._id vào danh sách dependency
-
-  useEffect(() => {
-    fetchUser(); // Gọi fetchUser từ trong useEffect
-  }, [fetchUser]); // Thêm fetchUser vào danh sách dependency của useEffect
-
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
-  const handleRadioChange = (e) => {
-    setUserData({ ...userData, sex: e.target.value });
   };
 
-  const handlePhoneChange = (e) => {
-    const { value } = e.target;
-    // Kiểm tra giá trị nhập vào để đảm bảo số điện thoại bắt đầu từ số 0 và không chứa chữ cái
-    if (/^0[0-9]*$/.test(value) || value === "") {
-      setUserData({ ...userData, phone: value });
-    }
-  };
+  const [phoneError, setPhoneError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -86,12 +71,11 @@ const InformationPage = () => {
   };
 
   const handlePhoneChange = (e) => {
-  const value = e.target.value.replace(/[^0-9]/g, "");
-  if (value.length <= 10) {
-    setUserData({ ...userData, phone: value });
-  }
-};
-
+    const value = e.target.value.replace(/[^0-9]/g, "");
+    if (value.length <= 10) {
+      setUserData({ ...userData, phone: value });
+    }
+  };
 
   const handleEditUser = async () => {
     try {
@@ -121,9 +105,6 @@ const InformationPage = () => {
       setLoading(false);
     }
   };
-
-
-
 
   const handleChangePassword = async () => {
     try {
