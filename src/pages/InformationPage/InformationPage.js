@@ -39,14 +39,27 @@ const InformationPage = () => {
     }
   };
 
+  const [phoneError, setPhoneError] = useState("");
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "email") {
-      // Kiểm tra định dạng email
       const isValidEmail = /\S+@\S+\.\S+/.test(value);
       setValidEmail(isValidEmail);
+    } else if (name === "phone") {
+      // Lọc bỏ các ký tự không phải số và giới hạn độ dài không quá 10
+      const cleanedValue = value.replace(/[^0-9]/g, "").slice(0, 10);
+      // Cập nhật state
+      setUserData({ ...userData, [name]: cleanedValue });
+      // Kiểm tra nếu chiều dài cleanedValue lớn hơn 10, hiển thị thông báo lỗi
+      if (value.length > 10) {
+        message.error("Số điện thoại không được quá 10 chữ số!");
+      } else {
+        setPhoneError(""); // Xóa thông báo lỗi nếu đã nhập đúng
+      }
+    } else {
+      setUserData({ ...userData, [name]: value });
     }
-    setUserData({ ...userData, [name]: value });
   };
 
   const handlePasswordChange = (e) => {
@@ -57,22 +70,45 @@ const InformationPage = () => {
     setCurrentPassword(e.target.value);
   };
 
+  const handlePhoneChange = (e) => {
+  const value = e.target.value.replace(/[^0-9]/g, "");
+  if (value.length <= 10) {
+    setUserData({ ...userData, phone: value });
+  }
+};
+
+
   const handleEditUser = async () => {
     try {
-      if (!validEmail) {
+      const isValidEmail = /\S+@\S+\.\S+/.test(userData.email);
+      if (!isValidEmail) {
         message.error("Vui lòng nhập địa chỉ email hợp lệ!");
         return;
       }
+      if (phoneError) {
+        message.error(phoneError);
+        return;
+      }
+      const isValidCCCD = /^[0-9]{12}$/.test(userData.cccd);
+      if (!isValidCCCD) {
+        message.error("CCCD phải có đúng 12 chữ số!");
+        return;
+      }
+
       setLoading(true);
       await editUser(user._id, userData);
       setEditing(false);
       fetchUser();
       setLoading(false);
+      message.success("Chỉnh sửa thông tin thành công!");
     } catch (error) {
       console.error("Lỗi chỉnh sửa thông tin người dùng:", error);
       setLoading(false);
     }
   };
+
+
+
 
   const handleChangePassword = async () => {
     try {
@@ -239,7 +275,7 @@ const InformationPage = () => {
                     <Input
                       name="phone"
                       value={userData.phone}
-                      onChange={handleInputChange}
+                      onChange={handlePhoneChange}
                     />
                   ) : (
                     <span>{user.phone}</span>
@@ -263,7 +299,11 @@ const InformationPage = () => {
 
                 <Form.Item>
                   {editing ? (
-                    <Button type="primary" onClick={handleEditUser}>
+                    <Button
+                      type="primary"
+                      onClick={handleEditUser}
+                      style={{ marginRight: 5 }}
+                    >
                       Lưu
                     </Button>
                   ) : (
@@ -285,6 +325,8 @@ const InformationPage = () => {
                     <Form.Item
                       label="Mật khẩu hiện tại"
                       name="currentPassword"
+                      labelCol={{ span: 24 }}
+                      wrapperCol={{ span: 24 }}
                       rules={[
                         {
                           required: true,
@@ -303,6 +345,8 @@ const InformationPage = () => {
                     <Form.Item
                       label="Mật khẩu mới"
                       name="password"
+                      labelCol={{ span: 24 }}
+                      wrapperCol={{ span: 24 }}
                       rules={[
                         {
                           required: true,
@@ -331,7 +375,7 @@ const InformationPage = () => {
                       <Button
                         type="primary"
                         onClick={handleChangePassword}
-                        style={{ margin: 5 }}
+                        style={{ marginRight: 5 }}
                       >
                         Lưu mật khẩu
                       </Button>
