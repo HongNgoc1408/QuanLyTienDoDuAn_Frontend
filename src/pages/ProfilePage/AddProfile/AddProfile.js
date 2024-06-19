@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { message } from "antd";
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileForm from "../../../components/ProfileComponent/ProfileForm";
 import { addProfile } from "../../../services/ProfileService";
-import { message } from "antd";
-import { useNavigate } from "react-router-dom";
 import { getFiles } from "../../../services/DocService";
 // import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
 
