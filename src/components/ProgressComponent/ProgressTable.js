@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
-import { deleteProgress, getProgresses } from "../../services/ProgressService";
-import { Link } from "react-router-dom";
-import Highlighter from "react-highlight-words";
 import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import Highlighter from "react-highlight-words";
+import { Link } from "react-router-dom";
+import { deleteProgress, getProgresses } from "../../services/ProgressService";
 
 const ProgressTable = () => {
   const [data, setData] = useState([]);
@@ -153,9 +153,9 @@ const ProgressTable = () => {
     {
       key: "4",
       title: "Người được giao",
-      dataIndex: "assigned_to",
+      dataIndex: "assignedTo",
 
-      ...getColumnSearchProps("assigned_to"),
+      ...getColumnSearchProps("assignedTo"),
     },
     {
       key: "5",
@@ -231,27 +231,31 @@ const ProgressTable = () => {
       key: "11",
       title: "",
       dataIndex: "actions",
-      fixed: "right",
-      render: (_, record) => (
-        <span>
-          <Link to={`edit/${record.key}`}>
-            <Button type="primary">
-              <EditOutlined style={{ fontSize: 18 }} />
-            </Button>
-          </Link>
+      fixed: "right", // Để cố định bên phải
+      render: (_, record) => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const isAdmin = user && user.isAdmin;
 
-          <Popconfirm
-            title="Bạn có chắc chắn muốn xóa tiến độ này?"
-            onConfirm={() => handleDelete(record.key)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="primary" danger style={{ marginLeft: 5 }}>
-              <DeleteOutlined style={{ fontSize: 18 }} />
-            </Button>
-          </Popconfirm>
-        </span>
-      ),
+        return isAdmin ? (
+          <span>
+            <Link to={`edit/${record.key}`}>
+              <Button type="primary">
+                <EditOutlined style={{ fontSize: 18 }} />
+              </Button>
+            </Link>
+            <Popconfirm
+              title="Bạn có chắc chắn muốn xóa người dùng này?"
+              onConfirm={() => handleDelete(record.key)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary" danger style={{ marginLeft: 5 }}>
+                <DeleteOutlined style={{ fontSize: 18 }} />
+              </Button>
+            </Popconfirm>
+          </span>
+        ) : null;
+      },
     },
   ];
 
@@ -276,9 +280,9 @@ const ProgressTable = () => {
           index: index + 1,
           title: item.title,
           description: item.description,
-          assigned_to: Array.isArray(item.assigned_to)
-            ? item.assigned_to.join(", ")
-            : item.assigned_to,
+          assignedTo: Array.isArray(item.assignedTo)
+            ? item.assignedTo.join(", ")
+            : item.assignedTo,
           status: item.status,
           priority: item.priority,
           start_date: item.start_date,

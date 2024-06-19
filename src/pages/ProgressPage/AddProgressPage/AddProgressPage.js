@@ -1,7 +1,7 @@
+import { message } from "antd";
 import React, { useEffect, useState } from "react";
 import ProgressForm from "../../../components/ProgressComponent/ProgressForm";
 import { addProgress } from "../../../services/ProgressService";
-import { message } from "antd";
 import { getUsers } from "../../../services/UserService";
 
 const AddProgressPage = () => {
@@ -10,7 +10,7 @@ const AddProgressPage = () => {
   const [progress, setProgress] = useState({
     title: "",
     description: "",
-    assigned_to: [],
+    assignedTo: [],
     status: "",
     priority: "",
     start_date: null,
@@ -60,8 +60,9 @@ const AddProgressPage = () => {
     addProgress(progress)
       .then(() => {
         message.success("Thêm tiến độ dự án thành công");
-        setTimeout(5);
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch((error) => {
         message.error("Có lỗi xảy ra khi thêm tiến độ dự án");

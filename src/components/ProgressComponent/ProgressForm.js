@@ -1,6 +1,6 @@
 import { Button, DatePicker, Form, Input, Select } from "antd";
-import React from "react";
 import dayjs from "dayjs";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProgressForm = ({
@@ -51,7 +51,7 @@ const ProgressForm = ({
 
       <Form.Item
         label="Người được giao dự án"
-        name="assigned_to"
+        name="assignedTo"
         rules={[
           { required: true, message: "Vui lòng nhập người được giao dự án" },
         ]}
@@ -60,10 +60,10 @@ const ProgressForm = ({
           mode="multiple"
           allowClear
           style={{ width: "100%" }}
-          name="assigned_to"
-          value={progress.assigned_to}
+          name="assignedTo"
+          value={progress.assignedTo}
           placeholder="Vui lòng chọn"
-          onChange={(value) => handleSelectChange("assigned_to", value)}
+          onChange={(value) => handleSelectChange("assignedTo", value)}
           options={options}
         />
       </Form.Item>

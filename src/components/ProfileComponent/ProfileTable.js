@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
-import { deleteProfile, getProfile } from "../../services/ProfileService";
-import { Link } from "react-router-dom";
-import Highlighter from "react-highlight-words";
 import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import Highlighter from "react-highlight-words";
+import { Link } from "react-router-dom";
+import { deleteProfile, getProfile } from "../../services/ProfileService";
 
 const { Column, ColumnGroup } = Table;
 
@@ -256,26 +256,31 @@ const ProfileTable = () => {
       <Column
         title=""
         key="actions"
-        fixed="right"
-        render={(_, record) => (
-          <span>
-            <Link to={`edit/${record.key}`}>
-              <Button type="primary">
-                <EditOutlined style={{ fontSize: 18 }} />
-              </Button>
-            </Link>
-            <Popconfirm
-              title="Bạn có chắc chắn muốn xóa tiến độ này?"
-              onConfirm={() => handleDelete(record.key)}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button type="primary" danger style={{ marginLeft: 5 }}>
-                <DeleteOutlined style={{ fontSize: 18 }} />
-              </Button>
-            </Popconfirm>
-          </span>
-        )}
+        fixed="right" // Để cố định bên phải
+        render={(_, record) => {
+          const user = JSON.parse(localStorage.getItem("user"));
+          const isAdmin = user && user.isAdmin;
+
+          return isAdmin ? (
+            <span>
+              <Link to={`edit/${record.key}`}>
+                <Button type="primary">
+                  <EditOutlined style={{ fontSize: 18 }} />
+                </Button>
+              </Link>
+              <Popconfirm
+                title="Bạn có chắc chắn muốn xóa tiến độ này?"
+                onConfirm={() => handleDelete(record.key)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button type="primary" danger style={{ marginLeft: 5 }}>
+                  <DeleteOutlined style={{ fontSize: 18 }} />
+                </Button>
+              </Popconfirm>
+            </span>
+          ) : null;
+        }}
       />
     </Table>
   );

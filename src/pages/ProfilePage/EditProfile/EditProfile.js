@@ -6,7 +6,6 @@ import {
   getProfileById,
 } from "../../../services/ProfileService";
 import { Spin, message } from "antd";
-// import BreadcrumbComponent from "../../../components/BreadcrumbComponent/BreadcrumbComponent";
 
 const EditProfile = () => {
   const { id } = useParams();
@@ -34,10 +33,12 @@ const EditProfile = () => {
 
   const options = [
     { label: "Nghị quyết - NQ", value: "Nghị quyết - NQ" },
+    { label: "Nghị định - NĐ", value: "Nghị định - NĐ" },
     { label: "Quyết định - QĐ", value: "Quyết định - QĐ" },
     { label: "Chỉ thị - CT", value: "Chỉ thị - CT" },
     { label: "Quy chế - QC", value: "Quy chế - QC" },
     { label: "Quy định - QYĐ", value: "Quy định - QYĐ" },
+    { label: "Thông Tư - TT", value: "Thông tư - TT" },
     { label: "Thông cáo - TC", value: "Thông cáo - TC" },
     { label: "Thông báo - TB", value: "Thông báo - TB" },
     { label: "Hướng dẫn - HD", value: "Hướng dẫn - HD" },
@@ -109,7 +110,6 @@ const EditProfile = () => {
   return (
     <div>
       <div style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-        {/* <BreadcrumbComponent /> */}
       </div>
       <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
         <h2

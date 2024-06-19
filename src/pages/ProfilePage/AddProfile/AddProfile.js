@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { message } from "antd";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ProfileForm from "../../../components/ProfileComponent/ProfileForm";
 import { addProfile } from "../../../services/ProfileService";
 import { message } from "antd";
@@ -23,10 +26,12 @@ const AddProfile = () => {
 
   const options = [
     { label: "Nghị quyết - NQ", value: "Nghị quyết - NQ" },
+    { label: "Nghị định - NĐ", value: "Nghị định - NĐ" },
     { label: "Quyết định - QĐ", value: "Quyết định - QĐ" },
     { label: "Chỉ thị - CT", value: "Chỉ thị - CT" },
     { label: "Quy chế - QC", value: "Quy chế - QC" },
     { label: "Quy định - QYĐ", value: "Quy định - QYĐ" },
+    { label: "Thông Tư - TT", value: "Thông tư - TT" },
     { label: "Thông cáo - TC", value: "Thông cáo - TC" },
     { label: "Thông báo - TB", value: "Thông báo - TB" },
     { label: "Hướng dẫn - HD", value: "Hướng dẫn - HD" },

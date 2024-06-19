@@ -1,6 +1,7 @@
 import DocPage from "../pages/DocPage/DocPage";
 import EmployeePage from "../pages/EmployeePage/EmployeePage";
 import HomePage from "../pages/HomePage/HomePage";
+import InformationPage from "../pages/InformationPage/InformationPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import AddProfile from "../pages/ProfilePage/AddProfile/AddProfile";
@@ -29,6 +30,12 @@ const routes = [
     path: "/employee",
     name: "EmployeePage",
     page: EmployeePage,
+    isShowHeader: true,
+  },
+  {
+    path: "/information",
+    name: "InformationPage",
+    page: InformationPage,
     isShowHeader: true,
   },
   {
