@@ -2,17 +2,21 @@ import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons";
 import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { Link } from "react-router-dom";
 import { deleteProfile, getProfile } from "../../services/ProfileService";
+import { downloadFile, getFiles} from "../../services/DocService";
+
 
 const { Column, ColumnGroup } = Table;
 
 const ProfileTable = () => {
   const [data, setData] = useState([]);
+  const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
@@ -31,6 +35,28 @@ const ProfileTable = () => {
     clearFilters();
     setSearchText("");
   };
+
+
+  const viewFile = async (fileId) => {
+    try {
+      const doc = docs.find((doc) => doc.key === fileId);
+      if (!doc) {
+        message.error("Không tìm thấy tài liệu");
+        return;
+      }
+
+      const file = await downloadFile(doc.key);
+      const contentType = file.type || "application/octet-stream";
+      const url = URL.createObjectURL(new Blob([file], { type: contentType }));
+      window.open(url);
+    } catch (error) {
+      message.error("Lỗi khi xem tài liệu");
+      console.error("Error:", error);
+    }
+  };
+
+
+
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -148,9 +174,9 @@ const ProfileTable = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const profilees = await getProfile();
+        const profiles = await getProfile();
 
-        const formattedData = profilees.map((item, index) => ({
+        const formattedData = profiles.map((item, index) => ({
           key: item._id,
           index: index + 1,
           title: item.title,
@@ -163,10 +189,36 @@ const ProfileTable = () => {
           photo: item.photo,
           note: item.note,
           fileId: Array.isArray(item.fileId)
-            ? item.fileId.join(" ")
-            : item.fileId,
+            ? item.fileId
+            : item.fileId
+            ? [item.fileId]
+            : [],
         }));
         setData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const docs = await getFiles();
+
+        const formattedData = docs.map((item, index) => ({
+          key: item.id,
+          index: index + 1,
+          docname: item.docname,
+          contentType: item.contentType,
+          data: item.data,
+          created_at: item.formattedCreatedAt,
+          updated_at: item.formattedUpdatedAt,
+        }));
+        setDocs(formattedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -183,7 +235,6 @@ const ProfileTable = () => {
   return (
     <Table
       onChange={onChange}
-      // rowSelection={rowSelection}
       dataSource={data}
       scroll={{
         x: 1300,
@@ -255,14 +306,33 @@ const ProfileTable = () => {
         key="note"
         {...getColumnSearchProps("note")}
       />
+      
       <Column
         width={250}
         title="Tài liệu đính kèm"
         dataIndex="fileId"
         key="fileId"
         {...getColumnSearchProps("fileId")}
-        
+        render={(fileIds) =>
+          fileIds.map((fileId) => {
+            const doc = docs.find((doc) => doc.docname === fileId);
+            if (!doc) return null;
+
+            return (
+              <div key={doc.key}>
+                <Link
+                  onClick={() => viewFile(doc.key)}
+                  style={{ cursor: "pointer", color: "#1890ff" }}
+                >
+                  <DownloadOutlined style={{ marginRight: 8 }} />
+                  {doc.docname}
+                </Link>
+              </div>
+            );
+          })
+        }
       />
+
       <Column
         width={150}
         title=""

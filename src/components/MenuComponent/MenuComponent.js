@@ -3,7 +3,7 @@ import React from "react";
 
 const MenuComponent = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  const isAdmin = user && user.isAdmin;
+  const role = user && user.role === "ADMIN";
 
   // Mảng items gốc
   const defaultItems = [
@@ -37,7 +37,7 @@ const MenuComponent = () => {
   ];
 
   // Thêm mục "Nhân viên" nếu là admin
-  const items = isAdmin
+  const items = role
     ? [
         // ...defaultItems.slice(0, 1), // Sao chép từng phần tử từ defaultItems, chỉ giữ lại phần tử đầu tiên
         {

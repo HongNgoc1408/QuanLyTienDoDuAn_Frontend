@@ -12,8 +12,8 @@ const LoginPage = () => {
   const handleSubmit = async (values) => {
     try {
       const response = await loginUser(values);
-      console.log(response);
-      if (response.isAdmin) {
+      console.log(response.role);
+      if (response.role === "ADMIN") {
         localStorage.setItem("user", JSON.stringify(response));
         navigate("/profile");
       } else if (!response.isAdmin) {
