@@ -28,12 +28,21 @@ const AddProgressPage = () => {
     const fetchData = async () => {
       try {
         const users = await getUsers();
+        const staffUsers = users.filter((user) => user.role === "STAFF");
 
-        const formattedData = users.map((user) => ({
-          label: user.id_user,
-          value: user.id_user,
+        const formattedData = staffUsers.map((staffUser) => ({
+          label: staffUser.id_user,
+          value: staffUser.id_user,
+          role: staffUser.role,
         }));
         setData(formattedData);
+        const managerUsers = users.filter((user) => user.role === "MANAGER");
+        const formatted = managerUsers.map((managerUser) => ({
+          label: managerUser.id_user,
+          value: managerUser.id_user,
+          role: managerUser.role,
+        }));
+        setData(formatted);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {

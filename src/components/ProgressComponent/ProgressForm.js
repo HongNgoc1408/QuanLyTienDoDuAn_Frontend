@@ -51,6 +51,24 @@ const ProgressForm = ({
       </Form.Item>
 
       <Form.Item
+        label="Người quản lý dự án"
+        name="manager"
+        rules={[
+          { required: true, message: "Vui lòng chọn người quản lý dự án" },
+        ]}
+      >
+        <Select
+          allowClear
+          style={{ width: "100%" }}
+          name="manager"
+          value={progress.manager}
+          placeholder="Vui lòng chọn"
+          onChange={(value) => handleSelectChange("manager", value)}
+          options={options}
+        />
+      </Form.Item>
+
+      <Form.Item
         label="Người được giao dự án"
         name="assignedTo"
         rules={[
