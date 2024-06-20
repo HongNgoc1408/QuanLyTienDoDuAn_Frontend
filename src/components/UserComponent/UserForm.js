@@ -131,6 +131,17 @@ const UserForm = ({ user, handleChange, handleSubmit, textButton }) => {
           </Radio.Group>
         </Form.Item>
 
+        <Form.Item
+          label="Chức vụ"
+          name="role"
+          rules={[{ required: true, message: "Vui lòng chọn chức vụ!" }]}
+        >
+          <Radio.Group name="role" value={user.role} onChange={handleChange}>
+            <Radio value={"MANAGER"}>Trưởng phòng</Radio>
+            <Radio value={"STAFF"}>Nhân viên</Radio>
+          </Radio.Group>
+        </Form.Item>
+
         <div className="contain-btn">
           <Form.Item className="form-item">
             <Button className="back-button" onClick={handleGoBack}>
