@@ -39,7 +39,9 @@ const DocPage = () => {
       setTimeout(5);
       window.location.reload();
     } catch (error) {
-      message.error("Upload failed!");
+      message.error(
+        "Upload failed! Payload document size is larger than maximum of 16777216."
+      );
     }
   };
 

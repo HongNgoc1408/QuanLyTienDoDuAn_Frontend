@@ -98,8 +98,8 @@ const UserForm = ({ user, handleChange, handleSubmit, textButton }) => {
           rules={[
             { required: true, message: "Vui lòng nhập CCCD!" },
             {
-              pattern: /^[0-9]{12}$/,
-              message: "CCCD phải có đúng 12 chữ số!",
+              pattern: /^[0-9]+$/,
+              message: "CCCD chỉ chứa số!",
             },
           ]}
         >

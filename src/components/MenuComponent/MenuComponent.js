@@ -39,7 +39,7 @@ const MenuComponent = () => {
   // Thêm mục "Nhân viên" nếu là admin
   const items = role
     ? [
-        ...defaultItems.slice(0, 1), // Sao chép từng phần tử từ defaultItems, chỉ giữ lại phần tử đầu tiên
+        // ...defaultItems.slice(0, 1), // Sao chép từng phần tử từ defaultItems, chỉ giữ lại phần tử đầu tiên
         {
           key: "1",
           label: (
@@ -51,7 +51,7 @@ const MenuComponent = () => {
             </a>
           ),
         },
-        ...defaultItems.slice(1), // Sao chép từng phần tử từ defaultItems, bắt đầu từ phần tử thứ hai
+        ...defaultItems.slice(0), // Sao chép từng phần tử từ defaultItems, bắt đầu từ phần tử thứ hai
       ]
     : [
         ...defaultItems.slice(0, 2), // Sao chép từng phần tử từ defaultItems, giữ lại hai phần tử đầu tiên
