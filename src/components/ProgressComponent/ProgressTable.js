@@ -162,6 +162,14 @@ const ProgressTable = () => {
     },
     {
       key: "5",
+      width: 200,
+      title: "Hồ sơ",
+      dataIndex: "profileId",
+
+      ...getColumnSearchProps("profileId"),
+    },
+    {
+      key: "6",
       width: 150,
       title: "Trạng thái",
       dataIndex: "status",
@@ -179,6 +187,10 @@ const ProgressTable = () => {
           value: "Hoàn thành",
         },
         {
+          text: "Chậm tiến độ",
+          value: "Chậm tiến độ",
+        },
+        {
           text: "Bị hủy",
           value: "Bị hủy",
         },
@@ -187,7 +199,7 @@ const ProgressTable = () => {
       filterSearch: true,
     },
     {
-      key: "6",
+      key: "7",
       width: 150,
       title: "Độ ưu tiên",
       dataIndex: "priority",
@@ -209,35 +221,35 @@ const ProgressTable = () => {
       filterSearch: true,
     },
     {
-      key: "7",
+      key: "8",
       width: 150,
       title: "Ngày bắt đầu",
       dataIndex: "start_date",
       ...getColumnSearchProps("start_date"),
     },
     {
-      key: "8",
+      key: "9",
       width: 150,
       title: "Ngày kết thúc",
       dataIndex: "end_date",
       ...getColumnSearchProps("end_date"),
     },
     {
-      key: "9",
+      key: "10 ",
       width: 150,
       title: "Ngày tạo",
       dataIndex: "created_at",
       ...getColumnSearchProps("created_at"),
     },
     {
-      key: "10",
+      key: "11",
       width: 150,
       title: "Ngày cập nhật",
       dataIndex: "updated_at",
       ...getColumnSearchProps("updated_at"),
     },
     {
-      key: "11",
+      key: "12",
       width: 150,
       title: "",
       dataIndex: "actions",
@@ -293,6 +305,9 @@ const ProgressTable = () => {
           assignedTo: Array.isArray(item.assignedTo)
             ? item.assignedTo.join(", ")
             : item.assignedTo,
+          profileId: Array.isArray(item.profileId)
+            ? item.profileId.join(", ")
+            : item.profileId,
           status: item.status,
           priority: item.priority,
           start_date: item.start_date,

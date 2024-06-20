@@ -3,14 +3,17 @@ import React, { useEffect, useState } from "react";
 import ProgressForm from "../../../components/ProgressComponent/ProgressForm";
 import { addProgress } from "../../../services/ProgressService";
 import { getUsers } from "../../../services/UserService";
+import { getProfile } from "../../../services/ProfileService";
 
 const AddProgressPage = () => {
   const [data, setData] = useState([]);
+  const [profileId, setProfileId] = useState([]);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState({
     title: "",
     description: "",
     assignedTo: [],
+    profileId: [],
     status: "",
     priority: "",
     start_date: null,
@@ -31,6 +34,26 @@ const AddProgressPage = () => {
           value: user.id_user,
         }));
         setData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const profiles = await getProfile();
+
+        const formattedData = profiles.map((profile) => ({
+          label: profile.title,
+          value: profile.title,
+        }));
+        setProfileId(formattedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -98,6 +121,7 @@ const AddProgressPage = () => {
         <ProgressForm
           textButton="Thêm"
           options={data}
+          optionsProfileId={profileId}
           progress={progress}
           handleChange={handleChange}
           handleSubmit={handleSubmit}

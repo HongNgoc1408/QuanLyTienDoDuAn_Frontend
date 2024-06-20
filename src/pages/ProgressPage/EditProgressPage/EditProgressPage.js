@@ -7,10 +7,12 @@ import {
 import { Spin, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUsers } from "../../../services/UserService";
+import { getProfile } from "../../../services/ProfileService";
 
 const EditProgressPage = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
+  const [profileId, setProfileId] = useState([]);
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -43,6 +45,26 @@ const EditProgressPage = () => {
           value: user.id_user,
         }));
         setData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const profiles = await getProfile();
+
+        const formattedData = profiles.map((profile) => ({
+          label: profile.title,
+          value: profile.title,
+        }));
+        setProfileId(formattedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -108,6 +130,7 @@ const EditProgressPage = () => {
         <ProgressForm
           textButton="Hiệu chỉnh"
           options={data}
+          optionsProfileId={profileId}
           progress={progress}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
