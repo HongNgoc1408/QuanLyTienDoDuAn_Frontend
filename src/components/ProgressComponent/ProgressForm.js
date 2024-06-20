@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const ProgressForm = ({
   textButton,
   options,
+  optionsProfileId,
   progress,
   handleChange,
   handleSubmit,
@@ -69,6 +70,23 @@ const ProgressForm = ({
       </Form.Item>
 
       <Form.Item
+        label="Hồ sơ"
+        name="profileId"
+        rules={[{ required: true, message: "Vui lòng chọn hồ sơ dự án" }]}
+      >
+        <Select
+          mode="multiple"
+          allowClear
+          style={{ width: "100%" }}
+          name="profileId"
+          value={progress.profileId}
+          placeholder="Vui lòng chọn"
+          onChange={(value) => handleSelectChange("profileId", value)}
+          options={optionsProfileId}
+        />
+      </Form.Item>
+
+      <Form.Item
         label="Trạng thái"
         name="status"
         rules={[{ required: true, message: "Vui lòng chọn trạng thái dự án" }]}
@@ -83,6 +101,7 @@ const ProgressForm = ({
             { value: "Chưa bắt đầu", label: "Chưa bắt đầu" },
             { value: "Đang tiến hành", label: "Đang tiến hành" },
             { value: "Hoàn thành", label: "Hoàn thành" },
+            { value: "Chậm tiến độ", label: "Chậm tiến độ" },
             { value: "Bị hủy", label: "Bị hủy" },
           ]}
         />
@@ -106,7 +125,7 @@ const ProgressForm = ({
           ]}
         />
       </Form.Item>
-      
+
       <Form.Item
         label="Ngày bắt đầu"
         name="start_date"
