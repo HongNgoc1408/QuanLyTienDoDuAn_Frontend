@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const ProgressForm = ({
   textButton,
   options,
+  options1,
   optionsProfileId,
   progress,
   handleChange,
@@ -58,13 +59,12 @@ const ProgressForm = ({
         ]}
       >
         <Select
-          allowClear
           style={{ width: "100%" }}
           name="manager"
           value={progress.manager}
           placeholder="Vui lòng chọn"
           onChange={(value) => handleSelectChange("manager", value)}
-          options={options}
+          options={options1}
         />
       </Form.Item>
 

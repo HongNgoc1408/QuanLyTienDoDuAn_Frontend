@@ -264,7 +264,7 @@ const ProgressTable = () => {
       fixed: "right", // Để cố định bên phải
       render: (_, record) => {
         const user = JSON.parse(localStorage.getItem("user"));
-        const isAdmin = user && user.role == "ADMIN";
+        const isAdmin = user && user.role === "ADMIN";
 
         return isAdmin ? (
           <span>
