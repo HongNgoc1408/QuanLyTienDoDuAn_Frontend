@@ -1,16 +1,15 @@
 import {
   DeleteOutlined,
+  DownloadOutlined,
   EditOutlined,
   SearchOutlined,
-  DownloadOutlined,
 } from "@ant-design/icons";
 import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { Link } from "react-router-dom";
+import { downloadFile, getFiles } from "../../services/DocService";
 import { deleteProfile, getProfile } from "../../services/ProfileService";
-import { downloadFile, getFiles} from "../../services/DocService";
-
 
 const { Column, ColumnGroup } = Table;
 
@@ -36,7 +35,6 @@ const ProfileTable = () => {
     setSearchText("");
   };
 
-
   const viewFile = async (fileId) => {
     try {
       const doc = docs.find((doc) => doc.key === fileId);
@@ -54,8 +52,6 @@ const ProfileTable = () => {
       console.error("Error:", error);
     }
   };
-
-
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
@@ -306,7 +302,7 @@ const ProfileTable = () => {
         key="note"
         {...getColumnSearchProps("note")}
       />
-      
+
       <Column
         width={250}
         title="Tài liệu đính kèm"
@@ -340,7 +336,7 @@ const ProfileTable = () => {
         fixed="right" // Để cố định bên phải
         render={(_, record) => {
           const user = JSON.parse(localStorage.getItem("user"));
-          const isAdmin = user && user.isAdmin;
+          const isAdmin = user && user.role === "ADMIN";
 
           return isAdmin ? (
             <span>
