@@ -155,13 +155,21 @@ const ProgressTable = () => {
     {
       key: "4",
       width: 200,
+      title: "Người quản lý",
+      dataIndex: "manager",
+
+      ...getColumnSearchProps("manager"),
+    },
+    {
+      key: "5",
+      width: 200,
       title: "Người được giao",
       dataIndex: "assignedTo",
 
       ...getColumnSearchProps("assignedTo"),
     },
     {
-      key: "5",
+      key: "6",
       width: 200,
       title: "Hồ sơ",
       dataIndex: "profileId",
@@ -169,7 +177,7 @@ const ProgressTable = () => {
       ...getColumnSearchProps("profileId"),
     },
     {
-      key: "6",
+      key: "7",
       width: 150,
       title: "Trạng thái",
       dataIndex: "status",
@@ -199,7 +207,7 @@ const ProgressTable = () => {
       filterSearch: true,
     },
     {
-      key: "7",
+      key: "8",
       width: 150,
       title: "Độ ưu tiên",
       dataIndex: "priority",
@@ -221,42 +229,42 @@ const ProgressTable = () => {
       filterSearch: true,
     },
     {
-      key: "8",
+      key: "9",
       width: 150,
       title: "Ngày bắt đầu",
       dataIndex: "start_date",
       ...getColumnSearchProps("start_date"),
     },
     {
-      key: "9",
+      key: "10",
       width: 150,
       title: "Ngày kết thúc",
       dataIndex: "end_date",
       ...getColumnSearchProps("end_date"),
     },
     {
-      key: "10 ",
+      key: "11",
       width: 150,
       title: "Ngày tạo",
       dataIndex: "created_at",
       ...getColumnSearchProps("created_at"),
     },
     {
-      key: "11",
+      key: "12",
       width: 150,
       title: "Ngày cập nhật",
       dataIndex: "updated_at",
       ...getColumnSearchProps("updated_at"),
     },
     {
-      key: "12",
+      key: "13",
       width: 150,
       title: "",
       dataIndex: "actions",
       fixed: "right", // Để cố định bên phải
       render: (_, record) => {
         const user = JSON.parse(localStorage.getItem("user"));
-        const isAdmin = user && user.role == "ADMIN";
+        const isAdmin = user && user.role === "ADMIN";
 
         return isAdmin ? (
           <span>
@@ -302,6 +310,7 @@ const ProgressTable = () => {
           index: index + 1,
           title: item.title,
           description: item.description,
+          manager: item.manager,
           assignedTo: Array.isArray(item.assignedTo)
             ? item.assignedTo.join(", ")
             : item.assignedTo,
