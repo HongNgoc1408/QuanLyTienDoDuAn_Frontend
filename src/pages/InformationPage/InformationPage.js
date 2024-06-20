@@ -3,9 +3,6 @@ import { getUserById, editUser } from "../../services/UserService";
 import { Form, Input, Button, Card, Radio, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Content } from "antd/es/layout/layout";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { editUser, getUserById } from "../../services/UserService";
 
 const InformationPage = () => {
   const [userList, setUserList] = useState([]);
