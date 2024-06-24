@@ -20,6 +20,7 @@ const EmployeePage = () => {
       setLoading(true);
       const data = await getProgressByUser(user.id_user); // Thay "userId" bằng userId của người dùng hiện tại
       setProgressList(data);
+      console.log(data);
       setLoading(false);
     } catch (error) {
       console.error("Lỗi lấy danh sách dự án:", error);
@@ -91,11 +92,17 @@ const EmployeePage = () => {
               <p>
                 <strong>Độ ưu tiên:</strong> {progress.priority}
               </p>
+              <p>{progress.manager}</p>
             </div>
 
-            <Button type="primary" onClick={() => handleEditProgress(progress)}>
-              Chỉnh sửa
-            </Button>
+            {user.id === progress.manager && (
+              <Button
+                type="primary"
+                onClick={() => handleEditProgress(progress)}
+              >
+                Chỉnh sửa
+              </Button>
+            )}
           </Card>
         ))}
 
