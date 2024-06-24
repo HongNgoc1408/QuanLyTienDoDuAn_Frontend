@@ -5,6 +5,8 @@ import InformationPage from "../pages/InformationPage/InformationPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import AddProfile from "../pages/ProfilePage/AddProfile/AddProfile";
+import DetailProfilePage from "../pages/ProfilePage/DetailProfile/DetailProfilePage";
+import ListDetailProfilePage from "../pages/ProfilePage/DetailProfile/ListDetailProfilePage";
 import EditProfile from "../pages/ProfilePage/EditProfile/EditProfile";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import AddProgressPage from "../pages/ProgressPage/AddProgressPage/AddProgressPage";
@@ -84,6 +86,12 @@ const routes = [
     isShowHeader: true,
   },
   {
+    path: "progress/profile/detail",
+    name: "ListDetailProfilePage",
+    page: ListDetailProfilePage,
+    isShowHeader: true,
+  },
+  {
     path: "/profile",
     name: "Profile",
     page: ProfilePage,
@@ -99,6 +107,12 @@ const routes = [
     path: "/profile/edit/:id",
     name: "EditProfile",
     page: EditProfile,
+    isShowHeader: true,
+  },
+  {
+    path: "/profile/detail/:id",
+    name: "DetailProfile",
+    page: DetailProfilePage,
     isShowHeader: true,
   },
   {

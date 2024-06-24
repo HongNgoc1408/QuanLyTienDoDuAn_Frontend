@@ -11,10 +11,11 @@ import Highlighter from "react-highlight-words";
 import { Link } from "react-router-dom";
 import { downloadFile, getFiles } from "../../services/DocService";
 import { deleteProfile, getProfile } from "../../services/ProfileService";
+import { getProgresses } from "../../services/ProgressService";
 
 const { Column, ColumnGroup } = Table;
 
-const ProfileTable = () => {
+const ProfileDetailTable = () => {
   const [data, setData] = useState([]);
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -172,34 +173,61 @@ const ProfileTable = () => {
     const fetchData = async () => {
       try {
         const profiles = await getProfile();
+        const progresses = await getProgresses();
 
-        const formattedData = profiles.map((item, index) => ({
+        // Map progresses to progress data with proper formatting
+        const progressesData = progresses.map((item, index) => ({
           key: item._id,
           index: index + 1,
-          title: item.title,
-          content: item.content,
-          type: Array.isArray(item.type) ? item.type.join(", ") : item.type,
-          published_date: item.published_date,
-          organ: item.organ,
-          original: item.original,
-          offical: item.offical,
-          photo: item.photo,
-          note: item.note,
-          fileId: Array.isArray(item.fileId)
-            ? item.fileId
-            : item.fileId
-            ? [item.fileId]
-            : [],
-          created_at: item.formattedCreatedAt,
-          updated_at: item.formattedUpdatedAt,
+          profileId: Array.isArray(item.profileId)
+            ? item.profileId.join(", ")
+            : item.profileId,
         }));
-        setData(formattedData);
+
+        // Map profiles and integrate progress data
+        const formattedData = profiles.map((profile, index) => {
+          const progress = progressesData.find(
+            (progress) => progress.profileId === profile.title
+          );
+          if (progress) {
+            return {
+              key: profile._id,
+              index: index + 1,
+              title: profile.title,
+              content: profile.content,
+              type: Array.isArray(profile.type)
+                ? profile.type.join(", ")
+                : profile.type,
+              published_date: profile.published_date,
+              organ: profile.organ,
+              original: profile.original,
+              offical: profile.offical,
+              photo: profile.photo,
+              note: profile.note,
+              fileId: Array.isArray(profile.fileId)
+                ? profile.fileId
+                : profile.fileId
+                ? [profile.fileId]
+                : [],
+              created_at: profile.formattedCreatedAt,
+              updated_at: profile.formattedUpdatedAt,
+            };
+          }else{
+            return null;
+          }
+          
+        }
+        
+      )
+        setData(formattedData); 
+       
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
@@ -238,6 +266,7 @@ const ProfileTable = () => {
       scroll={{
         x: 1300,
       }}
+      
     >
       <Column title="STT" dataIndex="index" key="index" width={60} />
       <Column
@@ -246,6 +275,7 @@ const ProfileTable = () => {
         key="title"
         width={200}
         {...getColumnSearchProps("title")}
+       
       />
       <Column
         width={400}
@@ -358,7 +388,7 @@ const ProfileTable = () => {
           return isAdmin ? (
             <span>
               <Link to={`detail/${record.key}`}>
-                <Button style={{backgroundColor: "greenyellow"}}>
+                <Button style={{ backgroundColor: "greenyellow" }}>
                   <EyeOutlined style={{ fontSize: 18 }} />
                 </Button>
               </Link>
@@ -385,4 +415,4 @@ const ProfileTable = () => {
   );
 };
 
-export default ProfileTable;
+export default ProfileDetailTable;

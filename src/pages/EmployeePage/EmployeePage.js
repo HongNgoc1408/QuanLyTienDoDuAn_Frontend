@@ -95,7 +95,7 @@ const EmployeePage = () => {
               <p>{progress.manager}</p>
             </div>
 
-            {user.id === progress.manager && (
+            {user.role === "MANAGER" && (
               <Button
                 type="primary"
                 onClick={() => handleEditProgress(progress)}
