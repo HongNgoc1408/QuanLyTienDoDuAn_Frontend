@@ -175,7 +175,6 @@ const ProfileDetailTable = () => {
         const profiles = await getProfile();
         const progresses = await getProgresses();
 
-        // Map progresses to progress data with proper formatting
         const progressesData = progresses.map((item, index) => ({
           key: item._id,
           index: index + 1,
@@ -184,43 +183,40 @@ const ProfileDetailTable = () => {
             : item.profileId,
         }));
 
-        // Map profiles and integrate progress data
-        const formattedData = profiles.map((profile, index) => {
-          const progress = progressesData.find(
-            (progress) => progress.profileId === profile.title
-          );
-          if (progress) {
-            return {
-              key: profile._id,
-              index: index + 1,
-              title: profile.title,
-              content: profile.content,
-              type: Array.isArray(profile.type)
-                ? profile.type.join(", ")
-                : profile.type,
-              published_date: profile.published_date,
-              organ: profile.organ,
-              original: profile.original,
-              offical: profile.offical,
-              photo: profile.photo,
-              note: profile.note,
-              fileId: Array.isArray(profile.fileId)
-                ? profile.fileId
-                : profile.fileId
-                ? [profile.fileId]
-                : [],
-              created_at: profile.formattedCreatedAt,
-              updated_at: profile.formattedUpdatedAt,
-            };
-          }else{
+        const formattedData = profiles
+          .map((profile, index) => {
+            const progress = progressesData.find(
+              (progress) => progress.profileId === profile.title
+            );
+            if (progress) {
+              return {
+                key: profile._id,
+                index: index + 1,
+                title: profile.title,
+                content: profile.content,
+                type: Array.isArray(profile.type)
+                  ? profile.type.join(", ")
+                  : profile.type,
+                published_date: profile.published_date,
+                organ: profile.organ,
+                original: profile.original,
+                offical: profile.offical,
+                photo: profile.photo,
+                note: profile.note,
+                fileId: Array.isArray(profile.fileId)
+                  ? profile.fileId
+                  : profile.fileId
+                  ? [profile.fileId]
+                  : [],
+                created_at: profile.formattedCreatedAt,
+                updated_at: profile.formattedUpdatedAt,
+              };
+            }
             return null;
-          }
-          
-        }
-        
-      )
-        setData(formattedData); 
-       
+          })
+          .filter((item) => item !== null); // Lọc các giá trị null
+
+        setData(formattedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -266,7 +262,6 @@ const ProfileDetailTable = () => {
       scroll={{
         x: 1300,
       }}
-      
     >
       <Column title="STT" dataIndex="index" key="index" width={60} />
       <Column
@@ -275,7 +270,6 @@ const ProfileDetailTable = () => {
         key="title"
         width={200}
         {...getColumnSearchProps("title")}
-       
       />
       <Column
         width={400}
@@ -343,6 +337,7 @@ const ProfileDetailTable = () => {
         key="fileId"
         {...getColumnSearchProps("fileId")}
         render={(fileIds) =>
+          Array.isArray(fileIds) &&
           fileIds.map((fileId) => {
             const doc = docs.find((doc) => doc.docname === fileId);
             if (!doc) return null;
