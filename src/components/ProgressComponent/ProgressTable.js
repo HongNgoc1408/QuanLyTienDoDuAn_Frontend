@@ -1,6 +1,7 @@
 import {
   DeleteOutlined,
   EditOutlined,
+  EyeOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
@@ -175,6 +176,18 @@ const ProgressTable = () => {
       dataIndex: "profileId",
 
       ...getColumnSearchProps("profileId"),
+      render: (_, record) => {
+        return (
+          <Space>
+            <span>{record.profileId}</span>
+            <Link to={`profile/detail`}>
+              <Button type="primary" icon={<EyeOutlined />} >
+                
+              </Button>
+            </Link>
+          </Space>
+        );
+      },
     },
     {
       key: "7",

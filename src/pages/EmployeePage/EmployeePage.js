@@ -93,9 +93,14 @@ const EmployeePage = () => {
               </p>
             </div>
 
-            <Button type="primary" onClick={() => handleEditProgress(progress)}>
-              Chỉnh sửa
-            </Button>
+            {user.role === "MANAGER" && (
+              <Button
+                type="primary"
+                onClick={() => handleEditProgress(progress)}
+              >
+                Chỉnh sửa
+              </Button>
+            )}
           </Card>
         ))}
 
