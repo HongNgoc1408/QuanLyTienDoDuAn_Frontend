@@ -181,9 +181,7 @@ const ProgressTable = () => {
           <Space>
             <span>{record.profileId}</span>
             <Link to={`profile/detail`}>
-              <Button type="primary" icon={<EyeOutlined />} >
-                
-              </Button>
+              <Button type="primary" icon={<EyeOutlined />}></Button>
             </Link>
           </Space>
         );
@@ -328,7 +326,7 @@ const ProgressTable = () => {
             ? item.assignedTo.join(", ")
             : item.assignedTo,
           profileId: Array.isArray(item.profileId)
-            ? item.profileId.join(", ")
+            ? item.profileId.map((profile) => profile.title).join(", ") // Ví dụ lấy title của từng profile
             : item.profileId,
           status: item.status,
           priority: item.priority,
@@ -337,7 +335,9 @@ const ProgressTable = () => {
           created_at: item.formattedCreatedAt,
           updated_at: item.formattedUpdatedAt,
         }));
+
         setData(formattedData);
+        console.log(formattedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
