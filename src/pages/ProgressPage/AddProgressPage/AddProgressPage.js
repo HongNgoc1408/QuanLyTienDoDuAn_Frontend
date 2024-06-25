@@ -55,16 +55,17 @@ const AddProgressPage = () => {
     const fetchData = async () => {
       try {
         const users = await getUsers();
-        console.log(users);
+        // console.log(users);
 
         const managerUsers = users.filter((user) => user.role === "MANAGER");
-console.log(managerUsers);
+        // console.log(managerUsers);
         const formatted = managerUsers.map((managerUser) => ({
           label: managerUser.id_user,
           value: managerUser.id_user,
           role: managerUser.role,
         }));
 
+        console.log(formatted);
         setData1(formatted);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -83,7 +84,23 @@ console.log(managerUsers);
 
         const formattedData = profiles.map((profile) => ({
           label: profile.title,
-          value: profile.title,
+          value: profile._id,
+          profile: {
+            _id: profile._id,
+            title: profile.title,
+            content: profile.content,
+            type: profile.type,
+            published_date: profile.published_date,
+            organ: profile.organ,
+            quantity: profile.quantity,
+            original: profile.original,
+            official: profile.official,
+            photo: profile.photo,
+            note: profile.note,
+            fileId: profile.fileId,
+            created_at: profile.created_at,
+            updated_at: profile.updated_at,
+          },
         }));
         setProfileId(formattedData);
       } catch (error) {
@@ -112,7 +129,12 @@ console.log(managerUsers);
   };
 
   const handleSubmit = () => {
-    addProgress(progress)
+    // Map profileId values to include the full profile data
+    const profiles = profileId
+      .filter((p) => progress.profileId.includes(p.value))
+      .map((p) => p.profile);
+
+    addProgress({ ...progress, profileId: profiles })
       .then(() => {
         message.success("Thêm tiến độ dự án thành công");
         setTimeout(() => {
@@ -154,11 +176,14 @@ console.log(managerUsers);
           textButton="Thêm"
           options={data}
           options1={data1}
-          optionsProfileId={profileId}
+          optionsProfileId={profileId.map((p) => ({
+            label: p.label,
+            value: p.value,
+          }))}
           progress={progress}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
-          handleSelectChange={handleSelectChange}
+          handleSelectChange={handleSelectChange} // Add this line
           loading={loading}
         />
       </div>
