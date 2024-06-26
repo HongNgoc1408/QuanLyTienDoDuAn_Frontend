@@ -1,20 +1,19 @@
+import { Spin, message } from "antd";
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import ProgressForm from "../../../components/ProgressComponent/ProgressForm";
+import { getProfile } from "../../../services/ProfileService";
 import {
   editProgress,
   getProgressById,
 } from "../../../services/ProgressService";
-import { Spin, message } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
 import { getUsers } from "../../../services/UserService";
-import { getProfile } from "../../../services/ProfileService";
 
 const EditProgressPage = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
-
   const [data1, setData1] = useState([]);
-  const [profileId, setProfileId] = useState([]);
+  const [profileOptions, setProfileOptions] = useState([]);
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -25,6 +24,7 @@ const EditProgressPage = () => {
         const response = await getProgressById(id);
         setProgress({
           ...response,
+          profileId: response.profileId.map((profile) => profile._id),
         });
       } catch (error) {
         message.error("Không thể tải dữ liệu tiến độ dự án");
@@ -41,16 +41,12 @@ const EditProgressPage = () => {
     const fetchData = async () => {
       try {
         const users = await getUsers();
-        console.log(users);
-
         const staffUsers = users.filter((user) => user.role === "STAFF");
-
         const formattedData = staffUsers.map((staffUser) => ({
           label: staffUser.id_user,
           value: staffUser.id_user,
           role: staffUser.role,
         }));
-
         setData(formattedData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -66,16 +62,12 @@ const EditProgressPage = () => {
     const fetchData = async () => {
       try {
         const users = await getUsers();
-        console.log(users);
-
         const managerUsers = users.filter((user) => user.role === "MANAGER");
-        console.log(managerUsers);
         const formatted = managerUsers.map((managerUser) => ({
           label: managerUser.id_user,
           value: managerUser.id_user,
           role: managerUser.role,
         }));
-
         setData1(formatted);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -88,23 +80,23 @@ const EditProgressPage = () => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProfiles = async () => {
       try {
         const profiles = await getProfile();
-
         const formattedData = profiles.map((profile) => ({
           label: profile.title,
-          value: profile.title,
+          value: profile._id,
+          profile: profile,
         }));
-        setProfileId(formattedData);
+        setProfileOptions(formattedData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching profiles:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchProfiles();
   }, []);
 
   const handleChange = (e) => {
@@ -125,7 +117,11 @@ const EditProgressPage = () => {
   const handleSubmit = () => {
     setLoading(true);
 
-    editProgress(id, progress)
+    const profiles = profileOptions
+      .filter((p) => progress.profileId.includes(p.value))
+      .map((p) => p.profile);
+
+    editProgress(id, { ...progress, profileId: profiles })
       .then(() => {
         message.success("Tiến độ dự án đã được chỉnh sửa thành công");
         navigate("/progress");
@@ -163,7 +159,7 @@ const EditProgressPage = () => {
           textButton="Hiệu chỉnh"
           options={data}
           options1={data1}
-          optionsProfileId={profileId}
+          optionsProfileId={profileOptions}
           progress={progress}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
