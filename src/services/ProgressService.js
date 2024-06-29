@@ -65,3 +65,20 @@ export const getProgressByUser = async (userId) => {
     throw error;
   }
 };
+
+export const editProfileIdProgress = async (
+  progressId,
+  profileId,
+  updatedProfile
+) => {
+  try {
+    const response = await axios.patch(
+      `/progress/editProfile/${progressId}/${profileId}`,
+      updatedProfile
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi chỉnh sửa profile trong progress:", error);
+    throw error;
+  }
+};

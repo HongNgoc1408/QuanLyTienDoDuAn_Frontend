@@ -6,11 +6,12 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import AddProfile from "../pages/ProfilePage/AddProfile/AddProfile";
 import DetailProfilePage from "../pages/ProfilePage/DetailProfile/DetailProfilePage";
-import ListDetailProfilePage from "../pages/ProfilePage/DetailProfile/ListDetailProfilePage";
 import EditProfile from "../pages/ProfilePage/EditProfile/EditProfile";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import AddProgressPage from "../pages/ProgressPage/AddProgressPage/AddProgressPage";
+import EditProfileIdPage from "../pages/ProgressPage/EditProfileIdPage/EditProfileIdPage";
 import EditProgressPage from "../pages/ProgressPage/EditProgressPage/EditProgressPage";
+import ListDetailProfilePage from "../pages/ProgressPage/ListDetailProfilePage";
 import ProgressPage from "../pages/ProgressPage/ProgressPage";
 import AddUser from "../pages/UserPage/AddUser/AddUser";
 import EditUserPage from "../pages/UserPage/EditUserPage/EditUserPage";
@@ -86,11 +87,17 @@ const routes = [
     isShowHeader: true,
   },
   {
-    path: "progress/profile/detail",
+    path: "progress/profile/detail/:id",
     name: "ListDetailProfilePage",
     page: ListDetailProfilePage,
     isShowHeader: true,
   },
+  // {
+  //   path: "/profile/editProfile/:id/:profileId",
+  //   name: "EditProfileIdPage",
+  //   page: EditProfileIdPage,
+  //   isShowHeader: true,
+  // },
   {
     path: "/profile",
     name: "Profile",

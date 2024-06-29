@@ -3,7 +3,8 @@ import React from "react";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 
-const ProfileForm = ({
+const ProgressProfileForm = ({
+  id,
   textButton,
   options,
   optionsFile,
@@ -156,7 +157,7 @@ const ProfileForm = ({
       <Form.Item>
         <div style={{ textAlign: "center" }}>
           <Button
-            onClick={() => navigate(`/profile`)}
+            onClick={() => navigate(`progress/profile/detail/${id}`)}
             style={{
               width: "25%",
               height: "50px",
@@ -187,4 +188,4 @@ const ProfileForm = ({
   );
 };
 
-export default ProfileForm;
+export default ProgressProfileForm;

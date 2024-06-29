@@ -176,13 +176,13 @@ const ProgressTable = () => {
       dataIndex: "profileId",
 
       ...getColumnSearchProps("profileId"),
-      render: (_, record) => {
+      render: (index, record) => {
         return (
           <Space>
-            <span>{record.profileId}</span>
-            <Link to={`profile/detail`}>
+            <Link to={`profile/detail/${record.key}`}>{record.profileId}</Link>
+            {/* <Link>
               <Button type="primary" icon={<EyeOutlined />}></Button>
-            </Link>
+            </Link> */}
           </Space>
         );
       },
@@ -325,9 +325,10 @@ const ProgressTable = () => {
           assignedTo: Array.isArray(item.assignedTo)
             ? item.assignedTo.join(", ")
             : item.assignedTo,
-          profileId: Array.isArray(item.profileId)
-            ? item.profileId.map((profile) => profile.title).join(", ") // Ví dụ lấy title của từng profile
-            : item.profileId,
+          profileId: item.profileId.length,
+          // profileId: Array.isArray(item.profileId)
+          //   ? item.profileId.map((profile) => profile.title).join(", ") // Ví dụ lấy title của từng profile
+          //   : item.profileId,
           status: item.status,
           priority: item.priority,
           start_date: item.start_date,

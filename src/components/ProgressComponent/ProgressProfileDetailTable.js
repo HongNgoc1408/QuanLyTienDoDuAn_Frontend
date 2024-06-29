@@ -8,30 +8,33 @@ import {
 import { Button, Input, Popconfirm, Space, Spin, Table, message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { downloadFile, getFiles } from "../../services/DocService";
-import { deleteProfile, getProfile } from "../../services/ProfileService";
-import { getProgresses } from "../../services/ProgressService";
+import { getProgressById } from "../../services/ProgressService";
+import { deleteProfile } from "../../services/ProfileService";
 
 const { Column, ColumnGroup } = Table;
 
-const ProfileDetailTable = () => {
+const ProgressProfileDetailTable = () => {
+  const { id } = useParams();
   const [data, setData] = useState([]);
   const [docs, setDocs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
 
+  const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+
+  const onChange = (pagination, filters, sorter, extra) => {
+    console.log("params", pagination, filters, sorter, extra);
+  };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
   };
+
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");
@@ -158,98 +161,78 @@ const ProfileDetailTable = () => {
       ),
   });
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteProfile(id);
-      message.success("Xóa hồ sơ thành công");
-      setData(data.filter((item) => item.key !== id));
-    } catch (error) {
-      message.error("Có lỗi xảy ra khi xóa hồ sơ dự án");
-      console.error("Error:", error);
-    }
-  };
+  // const handleDelete = async (id) => {
+  //   try {
+  //     await deleteProfile(id);
+  //     message.success("Xóa hồ sơ thành công");
+  //     setData(data.filter((item) => item.key !== id));
+  //   } catch (error) {
+  //     message.error("Có lỗi xảy ra khi xóa hồ sơ dự án");
+  //     console.error("Error:", error);
+  //   }
+  // };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProgressData = async () => {
       try {
-        const profiles = await getProfile();
-        const progresses = await getProgresses();
+        const response = await getProgressById(id);
 
-        const progressesData = progresses.map((item, index) => ({
+        const formattedData = response.profileId.map((item, index) => ({
           key: item._id,
           index: index + 1,
-          profileId: Array.isArray(item.profileId)
-            ? item.profileId.join(", ")
-            : item.profileId,
-        }));
-
-        const formattedData = profiles
-          .map((profile, index) => {
-            const progress = progressesData.find(
-              (progress) => progress.profileId === profile.title
-            );
-            if (progress) {
-              return {
-                key: profile._id,
-                index: index + 1,
-                title: profile.title,
-                content: profile.content,
-                type: Array.isArray(profile.type)
-                  ? profile.type.join(", ")
-                  : profile.type,
-                published_date: profile.published_date,
-                organ: profile.organ,
-                original: profile.original,
-                offical: profile.offical,
-                photo: profile.photo,
-                note: profile.note,
-                fileId: Array.isArray(profile.fileId)
-                  ? profile.fileId
-                  : profile.fileId
-                  ? [profile.fileId]
-                  : [],
-                created_at: profile.formattedCreatedAt,
-                updated_at: profile.formattedUpdatedAt,
-              };
-            }
-            return null;
-          })
-          .filter((item) => item !== null); // Lọc các giá trị null
-
-        setData(formattedData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const docs = await getFiles();
-
-        const formattedData = docs.map((item, index) => ({
-          key: item.id,
-          index: index + 1,
-          docname: item.docname,
-          contentType: item.contentType,
-          data: item.data,
+          title: item.title,
+          content: item.content,
+          type: Array.isArray(item.type) ? item.type.join(", ") : item.type,
+          published_date: item.published_date,
+          organ: item.organ,
+          original: item.original,
+          offical: item.offical,
+          photo: item.photo,
+          note: item.note,
+          fileId: Array.isArray(item.fileId)
+            ? item.fileId
+            : item.fileId
+            ? [item.fileId]
+            : [],
           created_at: item.formattedCreatedAt,
           updated_at: item.formattedUpdatedAt,
         }));
-        setDocs(formattedData);
+        setData(formattedData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching progress data:", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchData();
-  }, []);
+
+    const fetchDocsData = async () => {
+      try {
+        const docs = await getFiles();
+        console.log("Docs Data:", docs);
+        if (Array.isArray(docs)) {
+          const formattedDocs = docs.map((item, index) => ({
+            key: item.id,
+            index: index + 1,
+            docname: item.docname,
+            contentType: item.contentType,
+            data: item.data,
+            created_at: item.formattedCreatedAt,
+            updated_at: item.formattedUpdatedAt,
+          }));
+          setDocs(formattedDocs);
+        } else {
+          console.error("Docs data is not an array:", docs);
+        }
+      } catch (error) {
+        console.error("Error fetching docs data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProgressData();
+    fetchDocsData();
+  }, [id]);
 
   if (loading) {
     return <Spin size="large" />;
@@ -329,16 +312,18 @@ const ProfileDetailTable = () => {
         key="note"
         {...getColumnSearchProps("note")}
       />
-
       <Column
         width={250}
         title="Tài liệu đính kèm"
         dataIndex="fileId"
         key="fileId"
         {...getColumnSearchProps("fileId")}
-        render={(fileIds) =>
-          Array.isArray(fileIds) &&
-          fileIds.map((fileId) => {
+        render={(fileIds) => {
+          if (!Array.isArray(fileIds)) {
+            return null;
+          }
+
+          return fileIds.map((fileId) => {
             const doc = docs.find((doc) => doc.docname === fileId);
             if (!doc) return null;
 
@@ -353,41 +338,40 @@ const ProfileDetailTable = () => {
                 </Link>
               </div>
             );
-          })
-        }
+          });
+        }}
       />
-
       <Column
         width={300}
         title="Ngày tạo"
         dataIndex="created_at"
+        key="created_at"
         {...getColumnSearchProps("created_at")}
       />
-
       <Column
         width={300}
         title="Ngày cập nhật"
         dataIndex="updated_at"
+        key="updated_at"
         {...getColumnSearchProps("updated_at")}
       />
-
       <Column
-        width={200}
+        width={100}
         title=""
         key="actions"
-        fixed="right" // Để cố định bên phải
+        fixed="right"
         render={(_, record) => {
           const user = JSON.parse(localStorage.getItem("user"));
           const isAdmin = user && user.role === "ADMIN";
 
           return isAdmin ? (
             <span>
-              <Link to={`detail/${record.key}`}>
+              <Link to={`/profile/detail/${record.key}`}>
                 <Button style={{ backgroundColor: "greenyellow" }}>
                   <EyeOutlined style={{ fontSize: 18 }} />
                 </Button>
               </Link>
-              <Link to={`edit/${record.key}`}>
+              {/* <Link to={`/profile/editProfile/${id}/${record.key}`}>
                 <Button type="primary" style={{ marginLeft: 5 }}>
                   <EditOutlined style={{ fontSize: 18 }} />
                 </Button>
@@ -401,7 +385,7 @@ const ProfileDetailTable = () => {
                 <Button type="primary" danger style={{ marginLeft: 5 }}>
                   <DeleteOutlined style={{ fontSize: 18 }} />
                 </Button>
-              </Popconfirm>
+              </Popconfirm> */}
             </span>
           ) : null;
         }}
@@ -410,4 +394,4 @@ const ProfileDetailTable = () => {
   );
 };
 
-export default ProfileDetailTable;
+export default ProgressProfileDetailTable;

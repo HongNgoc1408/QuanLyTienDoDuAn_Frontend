@@ -1,13 +1,14 @@
 import { DownloadOutlined } from "@ant-design/icons";
-import { Form, message } from "antd";
+import { Button, Form, message } from "antd";
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { downloadFile, getFiles } from "../../services/DocService";
 
 const ProfileDetail = ({ profile, loading }) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [docs, setDocs] = useState([]);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,12 +64,11 @@ const ProfileDetail = ({ profile, loading }) => {
           : null,
       }}
     >
-        <div>
-            <Form.Item label="Số, ký hiệu văn bản" name="title">
-                <span>{profile.title}</span>
-            </Form.Item>
-        </div>
-      
+      <div>
+        <Form.Item label="Số, ký hiệu văn bản" name="title">
+          <span>{profile.title}</span>
+        </Form.Item>
+      </div>
 
       <Form.Item label="Nội dung trích yếu" name="content">
         <span>{profile.content}</span>
@@ -120,6 +120,23 @@ const ProfileDetail = ({ profile, loading }) => {
               </div>
             );
           })}
+      </Form.Item>
+      <Form.Item>
+        <div style={{ textAlign: "center" }}>
+          <Button
+            onClick={() => navigate("/profile")}
+            style={{
+              width: "25%",
+              height: "50px",
+              fontSize: "15px",
+              fontWeight: "bold",
+              marginRight: "15px",
+            }}
+            loading={loading}
+          >
+            Trở về
+          </Button>
+        </div>
       </Form.Item>
     </Form>
   );
