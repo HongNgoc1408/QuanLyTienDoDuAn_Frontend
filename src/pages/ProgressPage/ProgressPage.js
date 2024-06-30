@@ -42,7 +42,7 @@ const ProgressPage = () => {
       <Row>
         <Col span={17}>
           <p style={{ paddingLeft: 50, fontSize: 20, fontWeight: "bold" }}>
-            Quản lý tiến độ dự án
+            Quản lý danh sách tiến độ dự án
           </p>
         </Col>
 

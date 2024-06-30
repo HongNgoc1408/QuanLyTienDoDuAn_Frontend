@@ -15,7 +15,7 @@ const LoginPage = () => {
       console.log(response.role);
       if (response.role === "ADMIN") {
         localStorage.setItem("user", JSON.stringify(response));
-        navigate("/profile");
+        navigate("/progress");
       } else if (!response.isAdmin) {
         localStorage.setItem("user", JSON.stringify(response));
         navigate("/employee");
