@@ -180,9 +180,6 @@ const ProgressTable = () => {
         return (
           <Space>
             <Link to={`profile/detail/${record.key}`}>{record.profileId}</Link>
-            {/* <Link>
-              <Button type="primary" icon={<EyeOutlined />}></Button>
-            </Link> */}
           </Space>
         );
       },
@@ -269,7 +266,7 @@ const ProgressTable = () => {
     },
     {
       key: "13",
-      width: 150,
+      width: 200,
       title: "",
       dataIndex: "actions",
       fixed: "right", // Để cố định bên phải
@@ -279,8 +276,13 @@ const ProgressTable = () => {
 
         return isAdmin ? (
           <span>
+            <Link to={`detail/${record.key}`}>
+              <Button style={{ backgroundColor: "greenyellow" }}>
+                <EyeOutlined style={{ fontSize: 18 }} />
+              </Button>
+            </Link>
             <Link to={`edit/${record.key}`}>
-              <Button type="primary">
+              <Button type="primary" style={{ marginLeft: 5 }}>
                 <EditOutlined style={{ fontSize: 18 }} />
               </Button>
             </Link>

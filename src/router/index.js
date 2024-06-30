@@ -9,6 +9,7 @@ import DetailProfilePage from "../pages/ProfilePage/DetailProfile/DetailProfileP
 import EditProfile from "../pages/ProfilePage/EditProfile/EditProfile";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import AddProgressPage from "../pages/ProgressPage/AddProgressPage/AddProgressPage";
+import DetailProgressPage from "../pages/ProgressPage/DetailProgressPage/DetailProgressPage";
 import EditProfileIdPage from "../pages/ProgressPage/EditProfileIdPage/EditProfileIdPage";
 import EditProgressPage from "../pages/ProgressPage/EditProgressPage/EditProgressPage";
 import ListDetailProfilePage from "../pages/ProgressPage/ListDetailProfilePage";
@@ -84,6 +85,12 @@ const routes = [
     path: "/progress/edit/:id",
     name: "EditProgressPage",
     page: EditProgressPage,
+    isShowHeader: true,
+  },
+  {
+    path: "/progress/detail/:id",
+    name: "DetailProgress",
+    page: DetailProgressPage,
     isShowHeader: true,
   },
   {
