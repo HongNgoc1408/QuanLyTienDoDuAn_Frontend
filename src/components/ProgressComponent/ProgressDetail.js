@@ -1,4 +1,4 @@
-import { Button, Form } from "antd";
+import { Button, Form, Progress } from "antd";
 import dayjs from "dayjs";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,10 +13,10 @@ const ProgressDetail = ({ progress, loading }) => {
       initialValues={{
         ...progress,
         start_date: progress.start_date
-          ? dayjs(progress.start_date, "DD-MM-YYYY")
+          ? dayjs(progress.start_date, "dd-MM-yyyy")
           : null,
         end_date: progress.end_date
-          ? dayjs(progress.end_date, "DD-MM-YYYY")
+          ? dayjs(progress.end_date, "dd-MM-yyyy")
           : null,
       }}
     >
@@ -33,7 +33,9 @@ const ProgressDetail = ({ progress, loading }) => {
       </Form.Item>
 
       <Form.Item label="Người được giao dự án" name="assignedTo">
-        <span>{progress.assignedTo}</span>
+        <span>
+           {progress.assignedTo}
+        </span>
       </Form.Item>
 
       <Form.Item label="Hồ sơ" name="profileId">
@@ -57,7 +59,9 @@ const ProgressDetail = ({ progress, loading }) => {
       <Form.Item label="Ngày kết thúc" name="end_date">
         <span>{progress.end_date}</span>
       </Form.Item>
-
+      <Form.Item label="Phần trăm hoàn thành" name="percent">
+        <Progress strokeLinecap="butt" percent={progress.percent} />
+      </Form.Item>
       <Form.Item>
         <div style={{ textAlign: "center" }}>
           <Button

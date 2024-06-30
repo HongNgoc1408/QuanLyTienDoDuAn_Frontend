@@ -18,8 +18,12 @@ const DetailProgressPage = () => {
     const fetchProgress = async () => {
       try {
         const response = await getProgressById(id);
+        console.log(response);
         setProgress({
           ...response,
+          assignedTo: Array.isArray(response.assignedTo)
+            ? response.assignedTo.join(", ")
+            : response.assignedTo,
           profileId: response.profileId.length,
         });
       } catch (error) {

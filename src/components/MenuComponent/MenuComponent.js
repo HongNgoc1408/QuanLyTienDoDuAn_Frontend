@@ -10,19 +10,19 @@ const MenuComponent = () => {
     {
       key: "2",
       label: (
-        <a href="/profile" style={{ color: "inherit", textDecoration: "none" }}>
-          Hồ sơ dự án
+        <a
+          href="/progress"
+          style={{ color: "inherit", textDecoration: "none" }}
+        >
+          Tiến độ dự án
         </a>
       ),
     },
     {
       key: "3",
       label: (
-        <a
-          href="/progress"
-          style={{ color: "inherit", textDecoration: "none" }}
-        >
-          Tiến độ dự án
+        <a href="/profile" style={{ color: "inherit", textDecoration: "none" }}>
+          Hồ sơ dự án
         </a>
       ),
     },
