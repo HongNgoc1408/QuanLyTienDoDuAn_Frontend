@@ -56,7 +56,7 @@ const ProgressPage = () => {
             }}
             onClick={navigateToAddProgressPage}
           >
-            Thêm tiến độ dự án
+            Thêm dự án
           </Button>
         </Col>
         <Col span={3} style={{ padding: 10 }}>
